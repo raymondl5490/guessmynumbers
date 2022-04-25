@@ -1,20 +1,14 @@
 require('./bootstrap');
+import { createApp } from 'vue';
 
-import {createApp} from 'vue';
 import store from './store';
+import Home from "./pages/Home.vue";
 
-const initApp = () => {
-    // Register top level components
+const app = createApp({});
 
-    createApp({
-        data() {
-            return {
-                message: "Initial App"
-            }
-        }
-    })
-        .use(store)
-        .mount('#app');
-};
+// Load Components
+app.component('Home', Home);
 
-initApp();
+app.use(store);
+app.mount('#app');
+
