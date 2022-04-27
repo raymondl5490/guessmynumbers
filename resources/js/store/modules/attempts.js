@@ -10,6 +10,9 @@ export default defineStore('attempts', {
         async createAttempt(playerId, payload) {
             this.currentAttempt = await attemptApi.createAttempt(playerId, payload);
         },
+        async getCurrentAttempt(playerId) {
+            this.currentAttempt = await attemptApi.getCurrentAttempt(playerId);
+        }
     },
 }, {
     persist: true,

@@ -1,46 +1,72 @@
 import {defineStore} from "pinia";
 
 import { guessApi } from '../../api';
-import {usePlayerStore} from "../index";
-import {concat} from "lodash";
+import {useAttemptStore, useGameStore, usePlayerStore} from "../index";
+import {forEach} from "lodash";
 
 export default defineStore('guesses', {
     state: () => ({
         guess: [],
+        guesses: [],
     }),
     getters: {
         currentGuess() {
-            const playerStore = usePlayerStore();
             return {
-                row: playerStore.currentAttempt.guesses ? playerStore.currentAttempt.guesses.length + 1 : 1,
+                row: this.guesses.length + 1,
                 number_one: this.guess[0],
                 number_two: this.guess[1],
                 number_three: this.guess[2],
             }
         },
-        guesses() {
-            const playerStore = usePlayerStore();
-            const guesses = playerStore.currentAttempt.guesses ?? []
-            return concat(guesses, this.currentGuess);
+        existingGuessNumbers() {
+            const numbers = [];
+            forEach(this.guesses, guess => {
+                numbers.push([
+                    guess.number_one,
+                    guess.number_two,
+                    guess.number_three
+                ]);
+            });
+
+            return numbers;
         }
     },
     actions: {
         async addNumberToGuess(number) {
+            if (this.guess.length >= 3) {
+                return;
+            }
+
+            if (this.guesses.length >= 3) {
+                return;
+            }
+
             this.guess.push(number);
+
+            const gameStore = useGameStore();
+            gameStore.addNumberToGameState(this.currentGuess.row - 1, this.guess.length - 1, number);
 
             if (this.guess.length === 3) {
                 const playerStore = usePlayerStore();
-                await this.saveGuess(playerStore.currentPlayer.id, playerStore.currentAttempt.id, this.currentGuess);
+                const attemptStore = useAttemptStore();
+                await this.saveGuess(playerStore.currentPlayer.id, attemptStore.currentAttempt.id, this.currentGuess);
             }
         },
         removeNumberFromGuess() {
             this.guess.pop();
+            const gameStore = useGameStore();
+            gameStore.removeNumberFromGameState(this.currentGuess.row - 1);
+        },
+        resetGuess() {
+            this.guess = [];
         },
         async saveGuess(playerId, attemptId, payload) {
-            const playerStore = usePlayerStore();
             await guessApi.createGuess(playerId, attemptId, payload);
-            this.guess = [];
-            await playerStore.getPlayer(playerStore.currentPlayer.id);
+            await this.getGuesses(playerId, attemptId);
+            this.resetGuess();
+        },
+        async getGuesses(playerId, attemptId) {
+            this.guesses = await guessApi.getGuesses(playerId, attemptId);
         }
     }
 });

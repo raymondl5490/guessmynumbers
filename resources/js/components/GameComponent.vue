@@ -2,12 +2,24 @@
     <div class="w-screen h-screen">
         <div class="w-full h-full flex flex-col justify-center items-center">
             <div
-                v-for="row in rows"
+                v-for="(row, index) in board"
                 class="flex flex-row"
             >
-                <NumberSquareComponent :guessed-number="row[0] ?? null"/>
-                <NumberSquareComponent :guessed-number="row[1] ?? null"/>
-                <NumberSquareComponent :guessed-number="row[2] ?? null"/>
+                <NumberSquareComponent
+                    :guessed-number="row[0] ?? null"
+                    :correct-number="currentGame.number_one"
+                    :submitted="isRowSubmitted(index)"
+                />
+                <NumberSquareComponent
+                    :guessed-number="row[1] ?? null"
+                    :correct-number="currentGame.number_two"
+                    :submitted="isRowSubmitted(index)"
+                />
+                <NumberSquareComponent
+                    :guessed-number="row[2] ?? null"
+                    :correct-number="currentGame.number_three"
+                    :submitted="isRowSubmitted(index)"
+                />
             </div>
 
             <div class="flex flex-row">
@@ -21,7 +33,7 @@
 </template>
 <script>
 import {mapActions, mapState} from "pinia";
-import {useGameStore, useGuessStore, usePlayerStore} from "../store";
+import {useAttemptStore, useGameStore, useGuessStore, usePlayerStore} from "../store";
 import NumberSquareComponent from "./NumberSquareComponent";
 import InputNumbersComponent from "./InputNumbersComponent";
 import {forEach} from "lodash";
@@ -31,35 +43,18 @@ export default {
         InputNumbersComponent,
         NumberSquareComponent,
     },
-    data() {
-        return {
-            gridColumns: 3,
-            gridRows: 3,
-        }
-    },
+    data() {},
     computed: {
-        ...mapState(useGameStore, ['currentGame']),
+        ...mapState(useGameStore, ['currentGame', 'board']),
         ...mapState(useGuessStore, ['currentGuess', 'guesses']),
-        ...mapState(usePlayerStore, ['currentPlayer', 'currentAttempt']),
-        rows() {
-            const rows = [
-                [],
-                [],
-                []
-            ];
-
-            forEach(this.guesses, guess => {
-                console.log({ guess })
-                rows[guess.row - 1][0] = guess.number_one ?? null;
-                rows[guess.row - 1][1] = guess.number_two ?? null;
-                rows[guess.row - 1][2] = guess.number_three ?? null;
-            })
-
-            return rows;
-        }
+        ...mapState(useAttemptStore, ['currentAttempt']),
+        ...mapState(usePlayerStore, ['currentPlayer']),
     },
     methods: {
         ...mapActions(useGuessStore, ['addNumberToGuess', 'removeNumberFromGuess']),
+        isRowSubmitted(index) {
+            return this.board[index].length === 3 && this.board[index][2] !== null;
+        },
         onNumberSelected(number) {
             this.addNumberToGuess(number);
         },
