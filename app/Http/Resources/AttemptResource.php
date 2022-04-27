@@ -11,7 +11,7 @@ class AttemptResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  Request  $request
+     * @param Request $request
      * @return array
      */
     public function toArray($request): array
@@ -19,7 +19,9 @@ class AttemptResource extends JsonResource
         /** @var Attempt|AttemptResource $this */
         return [
             'id' => $this->id,
+            'player_id' => $this->player_id,
             'game_id' => $this->game_id,
+            'guesses' => GuessResource::collection($this->guesses),
             'won' => $this->won,
         ];
     }

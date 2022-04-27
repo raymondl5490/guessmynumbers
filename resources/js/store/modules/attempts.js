@@ -1,28 +1,16 @@
-import { attemptApi } from '../../api'
+import {attemptApi} from '../../api';
+import {defineStore} from 'pinia';
 
-const state = () => ({
-    currentAttempt: {}
-})
-
-const getters = {}
-
-const actions = {
-    async createAttempt({commit}, gameId) {
-        const currentAttempt = await attemptApi.createAttempt(gameId);
-        commit('setCurrentAttempt', currentAttempt)
+export default defineStore('attempts', {
+    state: () => ({
+        currentAttempt: {},
+    }),
+    getters: {},
+    actions: {
+        async createAttempt(playerId, payload) {
+            this.currentAttempt = await attemptApi.createAttempt(playerId, payload);
+        },
     },
-}
-
-const mutations = {
-    setCurrentAttempt(state, value) {
-        state.currentAttempt = value
-    }
-}
-
-export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
-}
+}, {
+    persist: true,
+});

@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateAttemptRequest;
 use App\Http\Resources\AttemptResource;
+use App\Models\Attempt;
 use App\Models\Game;
+use App\Models\Player;
 
 class AttemptController extends Controller
 {
     /**
-     * @param Game $game
+     * @param CreateAttemptRequest $request
+     * @param Player $player
      * @return AttemptResource
      */
-    public function store(Game $game): AttemptResource
+    public function store(CreateAttemptRequest $request, Player $player): AttemptResource
     {
-        $attempt = $game->attempts()->create();
+        /** @var Attempt $attempt */
+        $attempt = $player->attempts()->create($request->validated());
 
         return new AttemptResource($attempt);
     }
