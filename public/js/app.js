@@ -19729,15 +19729,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var pinia__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! pinia */ "./node_modules/pinia/dist/pinia.esm-browser.js");
+/* harmony import */ var pinia__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! pinia */ "./node_modules/pinia/dist/pinia.esm-browser.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
 /* harmony import */ var _NumberSquareComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NumberSquareComponent */ "./resources/js/components/NumberSquareComponent.vue");
 /* harmony import */ var _InputNumbersComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./InputNumbersComponent */ "./resources/js/components/InputNumbersComponent.vue");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -19754,8 +19757,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       gridRows: 3
     };
   },
-  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_3__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useGameStore, ['currentGame'])), (0,pinia__WEBPACK_IMPORTED_MODULE_3__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useGuessStore, ['currentGuess', 'guesses'])), (0,pinia__WEBPACK_IMPORTED_MODULE_3__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.usePlayerStore, ['currentPlayer', 'currentAttempt'])),
-  methods: _objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_3__.mapActions)(_store__WEBPACK_IMPORTED_MODULE_0__.useGuessStore, ['addNumberToGuess', 'removeNumberFromGuess'])), {}, {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useGameStore, ['currentGame'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useGuessStore, ['currentGuess', 'guesses'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.usePlayerStore, ['currentPlayer', 'currentAttempt'])), {}, {
+    rows: function rows() {
+      var rows = [[], [], []];
+      (0,lodash__WEBPACK_IMPORTED_MODULE_3__.forEach)(this.guesses, function (guess) {
+        var _guess$number_one, _guess$number_two, _guess$number_three;
+
+        console.log({
+          guess: guess
+        });
+        rows[guess.row - 1][0] = (_guess$number_one = guess.number_one) !== null && _guess$number_one !== void 0 ? _guess$number_one : null;
+        rows[guess.row - 1][1] = (_guess$number_two = guess.number_two) !== null && _guess$number_two !== void 0 ? _guess$number_two : null;
+        rows[guess.row - 1][2] = (_guess$number_three = guess.number_three) !== null && _guess$number_three !== void 0 ? _guess$number_three : null;
+      });
+      return rows;
+    }
+  }),
+  methods: _objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapActions)(_store__WEBPACK_IMPORTED_MODULE_0__.useGuessStore, ['addNumberToGuess', 'removeNumberFromGuess'])), {}, {
     onNumberSelected: function onNumberSelected(number) {
       this.addNumberToGuess(number);
     },
@@ -19809,9 +19827,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     handleNumberClick: function handleNumberClick(number) {
-      console.log({
-        number: number
-      });
       this.$emit('number-selected', number);
     },
     handleNumberDeleted: function handleNumberDeleted() {
@@ -19970,18 +19985,30 @@ var _hoisted_3 = {
 var _hoisted_4 = {
   "class": "flex flex-row"
 };
-var _hoisted_5 = {
-  "class": "flex flex-row"
-};
-var _hoisted_6 = {
-  "class": "flex flex-row"
-};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_NumberSquareComponent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("NumberSquareComponent");
 
   var _component_InputNumbersComponent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputNumbersComponent");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumbersComponent, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.rows, function (row) {
+    var _row$, _row$2, _row$3;
+
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent, {
+      "guessed-number": (_row$ = row[0]) !== null && _row$ !== void 0 ? _row$ : null
+    }, null, 8
+    /* PROPS */
+    , ["guessed-number"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent, {
+      "guessed-number": (_row$2 = row[1]) !== null && _row$2 !== void 0 ? _row$2 : null
+    }, null, 8
+    /* PROPS */
+    , ["guessed-number"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent, {
+      "guessed-number": (_row$3 = row[2]) !== null && _row$3 !== void 0 ? _row$3 : null
+    }, null, 8
+    /* PROPS */
+    , ["guessed-number"])]);
+  }), 256
+  /* UNKEYED_FRAGMENT */
+  )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumbersComponent, {
     onNumberSelected: $options.onNumberSelected,
     onNumberDeleted: $options.onNumberDeleted
   }, null, 8
@@ -20045,10 +20072,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "w-20 h-20 bg-gray-300 m-2"
+  "class": "w-20 h-20 bg-gray-300 m-2 text-2xl text-gray-900 flex justify-center items-center"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.guessedNumber), 1
+  /* TEXT */
+  );
 }
 
 /***/ }),
@@ -20604,9 +20633,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var pinia__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! pinia */ "./node_modules/pinia/dist/pinia.esm-browser.js");
+/* harmony import */ var pinia__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! pinia */ "./node_modules/pinia/dist/pinia.esm-browser.js");
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api */ "./resources/js/api/index.js");
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../index */ "./resources/js/store/index.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -20616,49 +20647,87 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,pinia__WEBPACK_IMPORTED_MODULE_3__.defineStore)('guesses', {
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,pinia__WEBPACK_IMPORTED_MODULE_4__.defineStore)('guesses', {
   state: function state() {
     return {
-      currentGuess: []
+      guess: []
     };
   },
   getters: {
-    guesses: function guesses() {
+    currentGuess: function currentGuess() {
       var playerStore = (0,_index__WEBPACK_IMPORTED_MODULE_2__.usePlayerStore)();
-      return playerStore.currentAttempt.guesses;
+      return {
+        row: playerStore.currentAttempt.guesses ? playerStore.currentAttempt.guesses.length + 1 : 1,
+        number_one: this.guess[0],
+        number_two: this.guess[1],
+        number_three: this.guess[2]
+      };
+    },
+    guesses: function guesses() {
+      var _playerStore$currentA;
+
+      var playerStore = (0,_index__WEBPACK_IMPORTED_MODULE_2__.usePlayerStore)();
+      var guesses = (_playerStore$currentA = playerStore.currentAttempt.guesses) !== null && _playerStore$currentA !== void 0 ? _playerStore$currentA : [];
+      return (0,lodash__WEBPACK_IMPORTED_MODULE_3__.concat)(guesses, this.currentGuess);
     }
   },
   actions: {
     addNumberToGuess: function addNumberToGuess(number) {
-      if (this.currentGuess.length === 3) {
-        return;
-      }
-
-      this.currentGuess.push(number);
-    },
-    removeNumberFromGuess: function removeNumberFromGuess() {
-      this.currentGuess.pop();
-    },
-    saveGuess: function saveGuess(playerId, attemptId, payload) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var playerStore;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return _api__WEBPACK_IMPORTED_MODULE_1__.guessApi.createGuess(playerId, attemptId, payload);
+                _this.guess.push(number);
 
-              case 2:
-                _this.currentGuess = [];
+                if (!(_this.guess.length === 3)) {
+                  _context.next = 5;
+                  break;
+                }
 
-              case 3:
+                playerStore = (0,_index__WEBPACK_IMPORTED_MODULE_2__.usePlayerStore)();
+                _context.next = 5;
+                return _this.saveGuess(playerStore.currentPlayer.id, playerStore.currentAttempt.id, _this.currentGuess);
+
+              case 5:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
+      }))();
+    },
+    removeNumberFromGuess: function removeNumberFromGuess() {
+      this.guess.pop();
+    },
+    saveGuess: function saveGuess(playerId, attemptId, payload) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var playerStore;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                playerStore = (0,_index__WEBPACK_IMPORTED_MODULE_2__.usePlayerStore)();
+                _context2.next = 3;
+                return _api__WEBPACK_IMPORTED_MODULE_1__.guessApi.createGuess(playerId, attemptId, payload);
+
+              case 3:
+                _this2.guess = [];
+                _context2.next = 6;
+                return playerStore.getPlayer(playerStore.currentPlayer.id);
+
+              case 6:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     }
   }
