@@ -37,7 +37,6 @@ export default {
     },
     methods: {
         handleNumberClick(number) {
-            console.log({ number })
             this.$emit('number-selected', number);
         },
         handleNumberDeleted() {

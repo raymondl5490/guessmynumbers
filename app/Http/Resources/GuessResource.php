@@ -18,6 +18,7 @@ class GuessResource extends JsonResource
         /** @var Guess|GuessResource $this */
         return [
             'id' => $this->id,
+            'row' => $this->row,
             'attempt_id' => $this->attempt_id,
             'number_one' => $this->number_one,
             'number_two' => $this->number_two,

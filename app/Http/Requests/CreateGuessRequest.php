@@ -14,7 +14,7 @@ class CreateGuessRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'attempt_id' => ['required', 'integer', 'exists:attempts,id'],
+            'row' => ['required', 'integer', 'min:1', 'max:3'],
             'number_one' => ['required', 'integer', 'min:0', 'max:9'],
             'number_two' => ['required', 'integer', 'min:0', 'max:9'],
             'number_three' => ['required', 'integer', 'min:0', 'max:9'],

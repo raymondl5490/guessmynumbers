@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * Properties
  * @property int $id
+ * @property int $row
  * @property int $attempt_id
  * @property int $number_one
  * @property int $number_two
@@ -29,7 +30,7 @@ class Guess extends Model
      * @var string[]
      */
     protected $fillable = [
-        'attempt_id',
+        'row',
         'number_one',
         'number_two',
         'number_three',
