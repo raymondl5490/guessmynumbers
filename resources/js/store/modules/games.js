@@ -1,28 +1,19 @@
-import { currentGameApi } from '../../api'
+import {currentGameApi} from '../../api'
+import {defineStore} from "pinia";
 
-const state = () => ({
-    currentGame: {}
-})
+export default defineStore('games', {
+    state: () => ({
+        currentGame: {},
+    }),
+    getters: {
 
-const getters = {}
-
-const actions = {
-    async getCurrentGame({commit}) {
-        const currentGame = await currentGameApi.getCurrentGame();
-        commit('setCurrentGame', currentGame)
     },
-}
-
-const mutations = {
-    setCurrentGame(state, value) {
-        state.currentGame = value
-    }
-}
-
-export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
-}
+    actions: {
+        async getCurrentGame() {
+            this.currentGame = await currentGameApi.getCurrentGame();
+        },
+    },
+    persistedState: {
+        persist: false,
+    },
+})

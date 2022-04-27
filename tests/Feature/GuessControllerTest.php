@@ -25,7 +25,7 @@ class GuessControllerTest extends TestCase
 
         $this->assertDatabaseCount('guesses', 0);
 
-        $response = $this->post(route('guesses.store', ['game' => $attempt->game, 'attempt' => $attempt]), $guessArray);
+        $response = $this->post(route('guesses.store', ['player' => $attempt->player, 'attempt' => $attempt]), $guessArray);
 
         $response->assertCreated();
 
