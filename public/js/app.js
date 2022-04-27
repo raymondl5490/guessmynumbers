@@ -19751,29 +19751,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     InputNumbersComponent: _InputNumbersComponent__WEBPACK_IMPORTED_MODULE_2__["default"],
     NumberSquareComponent: _NumberSquareComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  data: function data() {
-    return {
-      gridColumns: 3,
-      gridRows: 3
-    };
-  },
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useGameStore, ['currentGame'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useGuessStore, ['currentGuess', 'guesses'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.usePlayerStore, ['currentPlayer', 'currentAttempt'])), {}, {
-    rows: function rows() {
-      var rows = [[], [], []];
-      (0,lodash__WEBPACK_IMPORTED_MODULE_3__.forEach)(this.guesses, function (guess) {
-        var _guess$number_one, _guess$number_two, _guess$number_three;
-
-        console.log({
-          guess: guess
-        });
-        rows[guess.row - 1][0] = (_guess$number_one = guess.number_one) !== null && _guess$number_one !== void 0 ? _guess$number_one : null;
-        rows[guess.row - 1][1] = (_guess$number_two = guess.number_two) !== null && _guess$number_two !== void 0 ? _guess$number_two : null;
-        rows[guess.row - 1][2] = (_guess$number_three = guess.number_three) !== null && _guess$number_three !== void 0 ? _guess$number_three : null;
-      });
-      return rows;
-    }
-  }),
+  data: function data() {},
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useGameStore, ['currentGame', 'board'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useGuessStore, ['currentGuess', 'guesses'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useAttemptStore, ['currentAttempt'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.usePlayerStore, ['currentPlayer'])),
   methods: _objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapActions)(_store__WEBPACK_IMPORTED_MODULE_0__.useGuessStore, ['addNumberToGuess', 'removeNumberFromGuess'])), {}, {
+    isRowSubmitted: function isRowSubmitted(index) {
+      return this.board[index].length === 3 && this.board[index][2] !== null;
+    },
     onNumberSelected: function onNumberSelected(number) {
       this.addNumberToGuess(number);
     },
@@ -19803,11 +19786,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
+/* harmony import */ var pinia__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! pinia */ "./node_modules/pinia/dist/pinia.esm-browser.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+      numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      rowOne: [0, 1, 2, 3, 4],
+      rowTwo: [5, 6, 7, 8, 9]
     };
   },
   created: function created() {
@@ -19823,14 +19818,70 @@ __webpack_require__.r(__webpack_exports__);
       if (key === 'Backspace') {
         _this.handleNumberDeleted();
       }
+
+      if (key === 'Enter') {
+        _this.handleSubmit();
+      }
     });
   },
+  computed: _objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_2__.mapState)(_store__WEBPACK_IMPORTED_MODULE_1__.useGameStore, ['board', 'correctNumbers'])), (0,pinia__WEBPACK_IMPORTED_MODULE_2__.mapState)(_store__WEBPACK_IMPORTED_MODULE_1__.useGuessStore, ['existingGuessNumbers', 'guess'])),
   methods: {
+    isNumberOnBoard: function isNumberOnBoard(number) {
+      var flatBoard = (0,lodash__WEBPACK_IMPORTED_MODULE_0__.flatten)(this.board);
+      return (0,lodash__WEBPACK_IMPORTED_MODULE_0__.includes)(flatBoard, number);
+    },
+    isNumberCorrect: function isNumberCorrect(number) {
+      return (0,lodash__WEBPACK_IMPORTED_MODULE_0__.includes)(this.correctNumbers, number);
+    },
+    isNumberInCorrectSpot: function isNumberInCorrectSpot(number) {
+      var correctIndex = (0,lodash__WEBPACK_IMPORTED_MODULE_0__.indexOf)(this.correctNumbers, number);
+      var inCorrectSpot = false;
+      (0,lodash__WEBPACK_IMPORTED_MODULE_0__.forEach)(this.existingGuessNumbers, function (existingNumbers) {
+        if (existingNumbers[correctIndex] === number) {
+          inCorrectSpot = true;
+        }
+      });
+      return inCorrectSpot;
+    },
+    isNumberUsedMultipleTimes: function isNumberUsedMultipleTimes(number) {
+      return (0,lodash__WEBPACK_IMPORTED_MODULE_0__.filter)(this.correctNumbers, number).length > 1;
+    },
+    hasNumberBeenSubmitted: function hasNumberBeenSubmitted(number) {
+      var submitted = false;
+      (0,lodash__WEBPACK_IMPORTED_MODULE_0__.forEach)(this.existingGuessNumbers, function (existingNumbers) {
+        if ((0,lodash__WEBPACK_IMPORTED_MODULE_0__.includes)(existingNumbers, number)) {
+          submitted = true;
+        }
+      });
+      return submitted;
+    },
+    getNumberStyle: function getNumberStyle(number) {
+      if (!this.isNumberOnBoard(number)) {
+        return;
+      }
+
+      if (!this.hasNumberBeenSubmitted(number)) {
+        return 'bg-gray-500 text-white';
+      }
+
+      if (this.isNumberCorrect(number) && this.isNumberInCorrectSpot(number)) {
+        return 'bg-green-500 text-white';
+      }
+
+      if (this.isNumberCorrect(number) && !this.isNumberInCorrectSpot(number)) {
+        return 'bg-yellow-500 text-white';
+      }
+
+      return 'bg-gray-500 text-white';
+    },
     handleNumberClick: function handleNumberClick(number) {
       this.$emit('number-selected', number);
     },
     handleNumberDeleted: function handleNumberDeleted() {
       this.$emit('number-deleted');
+    },
+    handleSubmit: function handleSubmit() {
+      this.$emit('submit');
     },
     handleKey: function handleKey(event) {
       console.log({
@@ -19853,14 +19904,97 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var pinia_dist_pinia_esm_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! pinia/dist/pinia.esm-browser */ "./node_modules/pinia/dist/pinia.esm-browser.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    guessedNumber: {
-      type: Number
+    correctNumber: {
+      type: Number,
+      required: true
     },
-    style: {
-      type: String,
-      "default": ''
+    guessedNumber: {
+      type: Number,
+      "default": null
+    },
+    submitted: {
+      type: Boolean,
+      "default": false
+    }
+  },
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,pinia_dist_pinia_esm_browser__WEBPACK_IMPORTED_MODULE_2__.mapState)(_store__WEBPACK_IMPORTED_MODULE_1__.useGameStore, ['board', 'correctNumbers'])), (0,pinia_dist_pinia_esm_browser__WEBPACK_IMPORTED_MODULE_2__.mapState)(_store__WEBPACK_IMPORTED_MODULE_1__.useGuessStore, ['existingGuessNumbers', 'guess'])), {}, {
+    style: function style() {
+      if (this.submitted && this.guessedNumber === this.correctNumber) {
+        return 'bg-green-500';
+      } else if (this.submitted && this.isNumberCorrect(this.guessedNumber)) {
+        return 'bg-yellow-500';
+      } else if (this.submitted && this.guessedNumber !== this.correctNumber) {
+        return 'bg-gray-500';
+      }
+
+      if (this.guessedNumber !== null && this.guessedNumber !== undefined) {
+        return 'bg-gray-500';
+      }
+    }
+  }),
+  methods: {
+    isNumberOnBoard: function isNumberOnBoard(number) {
+      var flatBoard = (0,lodash__WEBPACK_IMPORTED_MODULE_0__.flatten)(this.board);
+      return (0,lodash__WEBPACK_IMPORTED_MODULE_0__.includes)(flatBoard, number);
+    },
+    isNumberCorrect: function isNumberCorrect(number) {
+      return (0,lodash__WEBPACK_IMPORTED_MODULE_0__.includes)(this.correctNumbers, number);
+    },
+    isNumberInCorrectSpot: function isNumberInCorrectSpot(number) {
+      var correctIndex = (0,lodash__WEBPACK_IMPORTED_MODULE_0__.indexOf)(this.correctNumbers, number);
+      var inCorrectSpot = false;
+      (0,lodash__WEBPACK_IMPORTED_MODULE_0__.forEach)(this.existingGuessNumbers, function (existingNumbers) {
+        if (existingNumbers[correctIndex] === number) {
+          inCorrectSpot = true;
+        }
+      });
+      return inCorrectSpot;
+    },
+    isNumberUsedMultipleTimes: function isNumberUsedMultipleTimes(number) {
+      return (0,lodash__WEBPACK_IMPORTED_MODULE_0__.filter)(this.correctNumbers, number).length > 1;
+    },
+    hasNumberBeenSubmitted: function hasNumberBeenSubmitted(number) {
+      var submitted = false;
+      (0,lodash__WEBPACK_IMPORTED_MODULE_0__.forEach)(this.existingGuessNumbers, function (existingNumbers) {
+        if ((0,lodash__WEBPACK_IMPORTED_MODULE_0__.includes)(existingNumbers, number)) {
+          submitted = true;
+        }
+      });
+      return submitted;
+    },
+    getNumberStyle: function getNumberStyle(number) {
+      if (!this.isNumberOnBoard(number)) {
+        return;
+      }
+
+      if (!this.hasNumberBeenSubmitted(number)) {
+        return 'bg-gray-500 text-white';
+      }
+
+      if (this.isNumberCorrect(number) && this.isNumberInCorrectSpot(number)) {
+        return 'bg-green-500 text-white';
+      }
+
+      if (this.isNumberCorrect(number) && !this.isNumberInCorrectSpot(number)) {
+        return 'bg-yellow-500 text-white';
+      }
+
+      return 'bg-gray-500 text-white';
     }
   }
 });
@@ -19943,10 +20077,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               });
 
             case 9:
-              _context.next = 11;
+              if (!(0,lodash__WEBPACK_IMPORTED_MODULE_2__.isEmpty)(_this.guesses)) {
+                _context.next = 12;
+                break;
+              }
+
+              _context.next = 12;
+              return _this.getGuesses(_this.currentPlayer.id, _this.currentAttempt.id);
+
+            case 12:
+              _context.next = 14;
               return _this.getPlayer(_this.currentPlayer.id);
 
-            case 11:
+            case 14:
+              _context.next = 16;
+              return _this.initializeBoard();
+
+            case 16:
             case "end":
               return _context.stop();
           }
@@ -19954,8 +20101,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, _callee);
     }))();
   },
-  computed: _objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_3__.usePlayerStore, ['currentPlayer', 'currentAttempt'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_3__.useGameStore, ['currentGame'])),
-  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapActions)(_store__WEBPACK_IMPORTED_MODULE_3__.usePlayerStore, ['createPlayer', 'getPlayer'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapActions)(_store__WEBPACK_IMPORTED_MODULE_3__.useGameStore, ['getCurrentGame'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapActions)(_store__WEBPACK_IMPORTED_MODULE_3__.useAttemptStore, ['createAttempt']))
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_3__.usePlayerStore, ['currentPlayer'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_3__.useAttemptStore, ['currentAttempt'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_3__.useGameStore, ['currentGame'])),
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapActions)(_store__WEBPACK_IMPORTED_MODULE_3__.usePlayerStore, ['createPlayer', 'getPlayer'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapActions)(_store__WEBPACK_IMPORTED_MODULE_3__.useGameStore, ['getCurrentGame', 'initializeBoard'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapActions)(_store__WEBPACK_IMPORTED_MODULE_3__.useGuessStore, ['getGuesses'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapActions)(_store__WEBPACK_IMPORTED_MODULE_3__.useAttemptStore, ['createAttempt', 'getCurrentAttempt']))
 });
 
 /***/ }),
@@ -19990,22 +20137,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_InputNumbersComponent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputNumbersComponent");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.rows, function (row) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.board, function (row, index) {
     var _row$, _row$2, _row$3;
 
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent, {
-      "guessed-number": (_row$ = row[0]) !== null && _row$ !== void 0 ? _row$ : null
+      "guessed-number": (_row$ = row[0]) !== null && _row$ !== void 0 ? _row$ : null,
+      "correct-number": _ctx.currentGame.number_one,
+      submitted: $options.isRowSubmitted(index)
     }, null, 8
     /* PROPS */
-    , ["guessed-number"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent, {
-      "guessed-number": (_row$2 = row[1]) !== null && _row$2 !== void 0 ? _row$2 : null
+    , ["guessed-number", "correct-number", "submitted"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent, {
+      "guessed-number": (_row$2 = row[1]) !== null && _row$2 !== void 0 ? _row$2 : null,
+      "correct-number": _ctx.currentGame.number_two,
+      submitted: $options.isRowSubmitted(index)
     }, null, 8
     /* PROPS */
-    , ["guessed-number"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent, {
-      "guessed-number": (_row$3 = row[2]) !== null && _row$3 !== void 0 ? _row$3 : null
+    , ["guessed-number", "correct-number", "submitted"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent, {
+      "guessed-number": (_row$3 = row[2]) !== null && _row$3 !== void 0 ? _row$3 : null,
+      "correct-number": _ctx.currentGame.number_three,
+      submitted: $options.isRowSubmitted(index)
     }, null, 8
     /* PROPS */
-    , ["guessed-number"])]);
+    , ["guessed-number", "correct-number", "submitted"])]);
   }), 256
   /* UNKEYED_FRAGMENT */
   )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumbersComponent, {
@@ -20032,28 +20185,52 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
+  "class": "flex flex-col font-bold"
+};
+var _hoisted_2 = {
+  "class": "flex flex-row my-2"
+};
+var _hoisted_3 = ["onClick"];
+var _hoisted_4 = {
   "class": "flex flex-row"
 };
-var _hoisted_2 = ["onClick"];
+var _hoisted_5 = ["onClick"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.numbers, function (number) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.rowOne, function (number) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: number,
-      "class": "flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 bg-gray-200 hover:bg-gray-400",
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 bg-gray-200 hover:bg-gray-500 hover:text-white", $options.getNumberStyle(number)]),
       onClick: function onClick($event) {
         return $options.handleNumberClick(number);
       }
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(number), 9
-    /* TEXT, PROPS */
-    , _hoisted_2);
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(number), 11
+    /* TEXT, CLASS, PROPS */
+    , _hoisted_3);
   }), 128
   /* KEYED_FRAGMENT */
   )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "flex justify-center items-center mx-1 px-3 cursor-pointer rounded-full w-auto h-8 bg-gray-200 text-red-600 hover:bg-gray-400 hover:text-red-400",
+    "class": "flex justify-center items-center mx-1 px-3 cursor-pointer rounded-full w-auto h-8 bg-gray-200 text-red-600 hover:bg-gray-500 hover:text-red-400",
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.handleNumberDeleted && $options.handleNumberDeleted.apply($options, arguments);
     })
-  }, "Delete")]);
+  }, "Delete ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.rowTwo, function (number) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+      key: number,
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 bg-gray-200 hover:bg-gray-500 hover:text-white", $options.getNumberStyle(number)]),
+      onClick: function onClick($event) {
+        return $options.handleNumberClick(number);
+      }
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(number), 11
+    /* TEXT, CLASS, PROPS */
+    , _hoisted_5);
+  }), 128
+  /* KEYED_FRAGMENT */
+  )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "flex justify-center items-center mx-1 px-3 cursor-pointer rounded-full w-auto h-8 bg-gray-200 text-green-600 hover:bg-gray-400 hover:text-green-400",
+    onClick: _cache[1] || (_cache[1] = function () {
+      return $options.handleSubmit && $options.handleSubmit.apply($options, arguments);
+    })
+  }, "Submit ")])]);
 }
 
 /***/ }),
@@ -20071,12 +20248,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _hoisted_1 = {
-  "class": "w-20 h-20 bg-gray-300 m-2 text-2xl text-gray-900 flex justify-center items-center"
-};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.guessedNumber), 1
-  /* TEXT */
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["w-20 h-20 m-1 bg-gray-200 text-3xl font-bold text-white flex justify-center items-center", $options.style])
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.guessedNumber), 3
+  /* TEXT, CLASS */
   );
 }
 
@@ -20129,10 +20305,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              console.log({
-                payload: payload
-              });
-              _context.next = 3;
+              _context.next = 2;
               return axios.post("players/".concat(playerId, "/attempts"), payload).then(function (response) {
                 return response.data.data;
               })["catch"](function (error) {
@@ -20141,15 +20314,41 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
               });
 
-            case 3:
+            case 2:
               return _context.abrupt("return", _context.sent);
 
-            case 4:
+            case 3:
             case "end":
               return _context.stop();
           }
         }
       }, _callee);
+    }))();
+  },
+  getCurrentAttempt: function getCurrentAttempt(playerId) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return axios.get("players/".concat(playerId, "/attempts/current")).then(function (response) {
+                return response.data.data;
+              })["catch"](function (error) {
+                console.log({
+                  error: error
+                });
+              });
+
+            case 2:
+              return _context2.abrupt("return", _context2.sent);
+
+            case 3:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
     }))();
   }
 });
@@ -20250,6 +20449,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }
       }, _callee);
+    }))();
+  },
+  getGuesses: function getGuesses(playerId, attemptId) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return axios.get("players/".concat(playerId, "/attempts/").concat(attemptId, "/guesses")).then(function (response) {
+                return response.data.data;
+              })["catch"](function (error) {
+                console.log({
+                  error: error
+                });
+              });
+
+            case 2:
+              return _context2.abrupt("return", _context2.sent);
+
+            case 3:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
     }))();
   }
 });
@@ -20551,6 +20776,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    getCurrentAttempt: function getCurrentAttempt(playerId) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return _api__WEBPACK_IMPORTED_MODULE_1__.attemptApi.getCurrentAttempt(playerId);
+
+              case 2:
+                _this2.currentAttempt = _context2.sent;
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   }
 }, {
@@ -20573,7 +20820,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api */ "./resources/js/api/index.js");
-/* harmony import */ var pinia__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! pinia */ "./node_modules/pinia/dist/pinia.esm-browser.js");
+/* harmony import */ var pinia__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! pinia */ "./node_modules/pinia/dist/pinia.esm-browser.js");
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../index */ "./resources/js/store/index.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -20582,14 +20832,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,pinia__WEBPACK_IMPORTED_MODULE_2__.defineStore)('games', {
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,pinia__WEBPACK_IMPORTED_MODULE_4__.defineStore)('games', {
   state: function state() {
     return {
-      currentGame: {}
+      currentGame: {},
+      board: [[], [], []]
     };
   },
-  getters: {},
+  getters: {
+    correctNumbers: function correctNumbers() {
+      return [this.currentGame.number_one, this.currentGame.number_two, this.currentGame.number_three];
+    },
+    finalNumber: function finalNumber() {
+      return this.board[2][2];
+    }
+  },
   actions: {
+    addNumberToGameState: function addNumberToGameState(row, column, number) {
+      this.board[row][column] = number;
+    },
+    removeNumberFromGameState: function removeNumberFromGameState(row) {
+      if (!(0,lodash__WEBPACK_IMPORTED_MODULE_3__.isEmpty)(this.finalNumber) || this.finalNumber === 0) {
+        return;
+      }
+
+      this.board[row].pop();
+    },
     getCurrentGame: function getCurrentGame() {
       var _this = this;
 
@@ -20611,6 +20881,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    initializeBoard: function initializeBoard() {
+      var _this2 = this;
+
+      var guessStore = (0,_index__WEBPACK_IMPORTED_MODULE_2__.useGuessStore)();
+      (0,lodash__WEBPACK_IMPORTED_MODULE_3__.forEach)(guessStore.guesses, function (guess) {
+        _this2.board[guess.row - 1][0] = guess.number_one;
+        _this2.board[guess.row - 1][1] = guess.number_two;
+        _this2.board[guess.row - 1][2] = guess.number_three;
+      });
     }
   },
   persistedState: {
@@ -20651,25 +20931,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,pinia__WEBPACK_IMPORTED_MODULE_4__.defineStore)('guesses', {
   state: function state() {
     return {
-      guess: []
+      guess: [],
+      guesses: []
     };
   },
   getters: {
     currentGuess: function currentGuess() {
-      var playerStore = (0,_index__WEBPACK_IMPORTED_MODULE_2__.usePlayerStore)();
       return {
-        row: playerStore.currentAttempt.guesses ? playerStore.currentAttempt.guesses.length + 1 : 1,
+        row: this.guesses.length + 1,
         number_one: this.guess[0],
         number_two: this.guess[1],
         number_three: this.guess[2]
       };
     },
-    guesses: function guesses() {
-      var _playerStore$currentA;
-
-      var playerStore = (0,_index__WEBPACK_IMPORTED_MODULE_2__.usePlayerStore)();
-      var guesses = (_playerStore$currentA = playerStore.currentAttempt.guesses) !== null && _playerStore$currentA !== void 0 ? _playerStore$currentA : [];
-      return (0,lodash__WEBPACK_IMPORTED_MODULE_3__.concat)(guesses, this.currentGuess);
+    existingGuessNumbers: function existingGuessNumbers() {
+      var numbers = [];
+      (0,lodash__WEBPACK_IMPORTED_MODULE_3__.forEach)(this.guesses, function (guess) {
+        numbers.push([guess.number_one, guess.number_two, guess.number_three]);
+      });
+      return numbers;
     }
   },
   actions: {
@@ -20677,23 +20957,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var playerStore;
+        var gameStore, playerStore, attemptStore;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                if (!(_this.guess.length >= 3)) {
+                  _context.next = 2;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 2:
+                if (!(_this.guesses.length >= 3)) {
+                  _context.next = 4;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 4:
                 _this.guess.push(number);
 
+                gameStore = (0,_index__WEBPACK_IMPORTED_MODULE_2__.useGameStore)();
+                gameStore.addNumberToGameState(_this.currentGuess.row - 1, _this.guess.length - 1, number);
+
                 if (!(_this.guess.length === 3)) {
-                  _context.next = 5;
+                  _context.next = 12;
                   break;
                 }
 
                 playerStore = (0,_index__WEBPACK_IMPORTED_MODULE_2__.usePlayerStore)();
-                _context.next = 5;
-                return _this.saveGuess(playerStore.currentPlayer.id, playerStore.currentAttempt.id, _this.currentGuess);
+                attemptStore = (0,_index__WEBPACK_IMPORTED_MODULE_2__.useAttemptStore)();
+                _context.next = 12;
+                return _this.saveGuess(playerStore.currentPlayer.id, attemptStore.currentAttempt.id, _this.currentGuess);
 
-              case 5:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -20703,31 +21003,58 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     removeNumberFromGuess: function removeNumberFromGuess() {
       this.guess.pop();
+      var gameStore = (0,_index__WEBPACK_IMPORTED_MODULE_2__.useGameStore)();
+      gameStore.removeNumberFromGameState(this.currentGuess.row - 1);
+    },
+    resetGuess: function resetGuess() {
+      this.guess = [];
     },
     saveGuess: function saveGuess(playerId, attemptId, payload) {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var playerStore;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                playerStore = (0,_index__WEBPACK_IMPORTED_MODULE_2__.usePlayerStore)();
-                _context2.next = 3;
+                _context2.next = 2;
                 return _api__WEBPACK_IMPORTED_MODULE_1__.guessApi.createGuess(playerId, attemptId, payload);
 
-              case 3:
-                _this2.guess = [];
-                _context2.next = 6;
-                return playerStore.getPlayer(playerStore.currentPlayer.id);
+              case 2:
+                _context2.next = 4;
+                return _this2.getGuesses(playerId, attemptId);
 
-              case 6:
+              case 4:
+                _this2.resetGuess();
+
+              case 5:
               case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
+      }))();
+    },
+    getGuesses: function getGuesses(playerId, attemptId) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return _api__WEBPACK_IMPORTED_MODULE_1__.guessApi.getGuesses(playerId, attemptId);
+
+              case 2:
+                _this3.guesses = _context3.sent;
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
       }))();
     }
   }
@@ -20748,11 +21075,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var pinia__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! pinia */ "./node_modules/pinia/dist/pinia.esm-browser.js");
+/* harmony import */ var pinia__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! pinia */ "./node_modules/pinia/dist/pinia.esm-browser.js");
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api */ "./resources/js/api/index.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../index */ "./resources/js/store/index.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -20761,25 +21085,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,pinia__WEBPACK_IMPORTED_MODULE_4__.defineStore)('players', {
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,pinia__WEBPACK_IMPORTED_MODULE_2__.defineStore)('players', {
   state: function state() {
     return {
       currentPlayer: {}
     };
   },
-  getters: {
-    currentAttempt: function currentAttempt() {
-      var _filter$;
-
-      var gameStore = (0,_index__WEBPACK_IMPORTED_MODULE_3__.useGameStore)();
-      var attempts = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.get)(this.currentPlayer, 'attempts');
-      return (_filter$ = (0,lodash__WEBPACK_IMPORTED_MODULE_2__.filter)(attempts, function (attempt) {
-        return attempt.game_id === gameStore.currentGame.id;
-      })[0]) !== null && _filter$ !== void 0 ? _filter$ : {};
-    }
-  },
+  getters: {},
   actions: {
     getPlayer: function getPlayer(playerId) {
       var _this = this;

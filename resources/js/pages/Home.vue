@@ -7,7 +7,7 @@
 
 import GameComponent from "../components/GameComponent";
 import {isEmpty} from 'lodash';
-import {useGameStore, useAttemptStore, usePlayerStore} from '../store';
+import {useGameStore, useAttemptStore, usePlayerStore, useGuessStore} from '../store';
 import {mapActions, mapState, mapGetters} from 'pinia';
 
 export default {
@@ -30,17 +30,25 @@ export default {
             });
         }
 
+        if (isEmpty(this.guesses)) {
+            await this.getGuesses(this.currentPlayer.id, this.currentAttempt.id);
+        }
+
         // Refresh the player
         await this.getPlayer(this.currentPlayer.id);
+
+        await this.initializeBoard();
     },
     computed: {
-        ...mapState(usePlayerStore, ['currentPlayer', 'currentAttempt']),
+        ...mapState(usePlayerStore, ['currentPlayer']),
+        ...mapState(useAttemptStore, ['currentAttempt']),
         ...mapState(useGameStore, ['currentGame']),
     },
     methods: {
         ...mapActions(usePlayerStore, ['createPlayer', 'getPlayer']),
-        ...mapActions(useGameStore, ['getCurrentGame']),
-        ...mapActions(useAttemptStore, ['createAttempt']),
+        ...mapActions(useGameStore, ['getCurrentGame', 'initializeBoard']),
+        ...mapActions(useGuessStore, ['getGuesses']),
+        ...mapActions(useAttemptStore, ['createAttempt', 'getCurrentAttempt']),
     }
 }
 </script>
