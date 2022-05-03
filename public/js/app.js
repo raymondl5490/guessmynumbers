@@ -19753,9 +19753,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {},
   computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useGameStore, ['currentGame', 'board'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useGuessStore, ['currentGuess', 'guesses'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useAttemptStore, ['currentAttempt'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.usePlayerStore, ['currentPlayer'])),
-  methods: _objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapActions)(_store__WEBPACK_IMPORTED_MODULE_0__.useGuessStore, ['addNumberToGuess', 'removeNumberFromGuess'])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapActions)(_store__WEBPACK_IMPORTED_MODULE_0__.useGuessStore, ['addNumberToGuess', 'removeNumberFromGuess', 'submitGuess'])), {}, {
     isRowSubmitted: function isRowSubmitted(index) {
-      return this.board[index].length === 3 && this.board[index][2] !== null;
+      return (0,lodash__WEBPACK_IMPORTED_MODULE_3__.filter)(this.guesses, function (guess) {
+        return guess.row === index + 1;
+      }).length > 0;
     },
     onNumberSelected: function onNumberSelected(number) {
       this.addNumberToGuess(number);
@@ -19763,10 +19765,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     onNumberDeleted: function onNumberDeleted() {
       this.removeNumberFromGuess();
     },
-    handleKey: function handleKey(event) {
-      console.log({
-        event: event
-      });
+    onSubmitGuess: function onSubmitGuess() {
+      this.submitGuess();
     }
   })
 });
@@ -19786,18 +19786,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
-/* harmony import */ var pinia__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! pinia */ "./node_modules/pinia/dist/pinia.esm-browser.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
+/* harmony import */ var _mixins_NumberUsageMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../mixins/NumberUsageMixin */ "./resources/js/mixins/NumberUsageMixin.vue");
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mixins: [_mixins_NumberUsageMixin__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -19824,56 +19817,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     });
   },
-  computed: _objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_2__.mapState)(_store__WEBPACK_IMPORTED_MODULE_1__.useGameStore, ['board', 'correctNumbers'])), (0,pinia__WEBPACK_IMPORTED_MODULE_2__.mapState)(_store__WEBPACK_IMPORTED_MODULE_1__.useGuessStore, ['existingGuessNumbers', 'guess'])),
   methods: {
-    isNumberOnBoard: function isNumberOnBoard(number) {
-      var flatBoard = (0,lodash__WEBPACK_IMPORTED_MODULE_0__.flatten)(this.board);
-      return (0,lodash__WEBPACK_IMPORTED_MODULE_0__.includes)(flatBoard, number);
-    },
-    isNumberCorrect: function isNumberCorrect(number) {
-      return (0,lodash__WEBPACK_IMPORTED_MODULE_0__.includes)(this.correctNumbers, number);
-    },
-    isNumberInCorrectSpot: function isNumberInCorrectSpot(number) {
-      var correctIndex = (0,lodash__WEBPACK_IMPORTED_MODULE_0__.indexOf)(this.correctNumbers, number);
-      var inCorrectSpot = false;
-      (0,lodash__WEBPACK_IMPORTED_MODULE_0__.forEach)(this.existingGuessNumbers, function (existingNumbers) {
-        if (existingNumbers[correctIndex] === number) {
-          inCorrectSpot = true;
-        }
-      });
-      return inCorrectSpot;
-    },
-    isNumberUsedMultipleTimes: function isNumberUsedMultipleTimes(number) {
-      return (0,lodash__WEBPACK_IMPORTED_MODULE_0__.filter)(this.correctNumbers, number).length > 1;
-    },
-    hasNumberBeenSubmitted: function hasNumberBeenSubmitted(number) {
-      var submitted = false;
-      (0,lodash__WEBPACK_IMPORTED_MODULE_0__.forEach)(this.existingGuessNumbers, function (existingNumbers) {
-        if ((0,lodash__WEBPACK_IMPORTED_MODULE_0__.includes)(existingNumbers, number)) {
-          submitted = true;
-        }
-      });
-      return submitted;
-    },
-    getNumberStyle: function getNumberStyle(number) {
-      if (!this.isNumberOnBoard(number)) {
-        return;
-      }
-
-      if (!this.hasNumberBeenSubmitted(number)) {
-        return 'bg-gray-500 text-white';
-      }
-
-      if (this.isNumberCorrect(number) && this.isNumberInCorrectSpot(number)) {
-        return 'bg-green-500 text-white';
-      }
-
-      if (this.isNumberCorrect(number) && !this.isNumberInCorrectSpot(number)) {
-        return 'bg-yellow-500 text-white';
-      }
-
-      return 'bg-gray-500 text-white';
-    },
     handleNumberClick: function handleNumberClick(number) {
       this.$emit('number-selected', number);
     },
@@ -19882,11 +19826,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     handleSubmit: function handleSubmit() {
       this.$emit('submit');
-    },
-    handleKey: function handleKey(event) {
-      console.log({
-        event: event
-      });
     }
   }
 });
@@ -19897,6 +19836,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /*!***************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/NumberSquareComponent.vue?vue&type=script&lang=js ***!
   \***************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _mixins_NumberUsageMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../mixins/NumberUsageMixin */ "./resources/js/mixins/NumberUsageMixin.vue");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mixins: [_mixins_NumberUsageMixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  props: {
+    correctNumber: {
+      type: Number,
+      required: true
+    },
+    guessedNumber: {
+      type: Number,
+      "default": null
+    },
+    submitted: {
+      type: Boolean,
+      "default": false
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/mixins/NumberUsageMixin.vue?vue&type=script&lang=js":
+/*!******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/mixins/NumberUsageMixin.vue?vue&type=script&lang=js ***!
+  \******************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -19918,35 +19890,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: {
-    correctNumber: {
-      type: Number,
-      required: true
-    },
-    guessedNumber: {
-      type: Number,
-      "default": null
-    },
-    submitted: {
-      type: Boolean,
-      "default": false
-    }
-  },
-  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,pinia_dist_pinia_esm_browser__WEBPACK_IMPORTED_MODULE_2__.mapState)(_store__WEBPACK_IMPORTED_MODULE_1__.useGameStore, ['board', 'correctNumbers'])), (0,pinia_dist_pinia_esm_browser__WEBPACK_IMPORTED_MODULE_2__.mapState)(_store__WEBPACK_IMPORTED_MODULE_1__.useGuessStore, ['existingGuessNumbers', 'guess'])), {}, {
-    style: function style() {
-      if (this.submitted && this.guessedNumber === this.correctNumber) {
-        return 'bg-green-500';
-      } else if (this.submitted && this.isNumberCorrect(this.guessedNumber)) {
-        return 'bg-yellow-500';
-      } else if (this.submitted && this.guessedNumber !== this.correctNumber) {
-        return 'bg-gray-500';
-      }
-
-      if (this.guessedNumber !== null && this.guessedNumber !== undefined) {
-        return 'bg-gray-500';
-      }
-    }
-  }),
+  computed: _objectSpread(_objectSpread({}, (0,pinia_dist_pinia_esm_browser__WEBPACK_IMPORTED_MODULE_2__.mapState)(_store__WEBPACK_IMPORTED_MODULE_1__.useGameStore, ['board', 'correctNumbers'])), (0,pinia_dist_pinia_esm_browser__WEBPACK_IMPORTED_MODULE_2__.mapState)(_store__WEBPACK_IMPORTED_MODULE_1__.useGuessStore, ['existingGuessNumbers', 'guess'])),
   methods: {
     isNumberOnBoard: function isNumberOnBoard(number) {
       var flatBoard = (0,lodash__WEBPACK_IMPORTED_MODULE_0__.flatten)(this.board);
@@ -19956,6 +19900,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return (0,lodash__WEBPACK_IMPORTED_MODULE_0__.includes)(this.correctNumbers, number);
     },
     isNumberInCorrectSpot: function isNumberInCorrectSpot(number) {
+      var correctNumber = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+      if (correctNumber !== null) {
+        return number === correctNumber;
+      }
+
       var correctIndex = (0,lodash__WEBPACK_IMPORTED_MODULE_0__.indexOf)(this.correctNumbers, number);
       var inCorrectSpot = false;
       (0,lodash__WEBPACK_IMPORTED_MODULE_0__.forEach)(this.existingGuessNumbers, function (existingNumbers) {
@@ -19978,19 +19928,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return submitted;
     },
     getNumberStyle: function getNumberStyle(number) {
+      var isCurrentGuess = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var correctNumber = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
       if (!this.isNumberOnBoard(number)) {
         return;
       }
 
-      if (!this.hasNumberBeenSubmitted(number)) {
+      if (!this.hasNumberBeenSubmitted(number) || isCurrentGuess) {
         return 'bg-gray-500 text-white';
       }
 
-      if (this.isNumberCorrect(number) && this.isNumberInCorrectSpot(number)) {
+      if (this.isNumberCorrect(number) && this.isNumberInCorrectSpot(number, correctNumber)) {
         return 'bg-green-500 text-white';
       }
 
-      if (this.isNumberCorrect(number) && !this.isNumberInCorrectSpot(number)) {
+      if (this.isNumberCorrect(number) && !this.isNumberInCorrectSpot(number, correctNumber)) {
         return 'bg-yellow-500 text-white';
       }
 
@@ -20163,10 +20116,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* UNKEYED_FRAGMENT */
   )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumbersComponent, {
     onNumberSelected: $options.onNumberSelected,
-    onNumberDeleted: $options.onNumberDeleted
+    onNumberDeleted: $options.onNumberDeleted,
+    onSubmit: $options.onSubmitGuess
   }, null, 8
   /* PROPS */
-  , ["onNumberSelected", "onNumberDeleted"])])])]);
+  , ["onNumberSelected", "onNumberDeleted", "onSubmit"])])])]);
 }
 
 /***/ }),
@@ -20199,7 +20153,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.rowOne, function (number) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: number,
-      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 bg-gray-200 hover:bg-gray-500 hover:text-white", $options.getNumberStyle(number)]),
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 bg-gray-200 hover:bg-gray-500 hover:text-white", _ctx.getNumberStyle(number)]),
       onClick: function onClick($event) {
         return $options.handleNumberClick(number);
       }
@@ -20216,7 +20170,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, "Delete ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.rowTwo, function (number) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: number,
-      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 bg-gray-200 hover:bg-gray-500 hover:text-white", $options.getNumberStyle(number)]),
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 bg-gray-200 hover:bg-gray-500 hover:text-white", _ctx.getNumberStyle(number)]),
       onClick: function onClick($event) {
         return $options.handleNumberClick(number);
       }
@@ -20250,10 +20204,27 @@ __webpack_require__.r(__webpack_exports__);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["w-20 h-20 m-1 bg-gray-200 text-3xl font-bold text-white flex justify-center items-center", $options.style])
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["w-20 h-20 m-1 bg-gray-200 text-3xl font-bold text-white flex justify-center items-center", _ctx.getNumberStyle($props.guessedNumber, !$props.submitted, $props.correctNumber)])
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.guessedNumber), 3
   /* TEXT, CLASS */
   );
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/mixins/NumberUsageMixin.vue?vue&type=template&id=ad18fa10":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/mixins/NumberUsageMixin.vue?vue&type=template&id=ad18fa10 ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return null;
 }
 
 /***/ }),
@@ -20954,15 +20925,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   actions: {
     addNumberToGuess: function addNumberToGuess(number) {
+      if (this.guess.length >= 3) {
+        return;
+      }
+
+      if (this.guesses.length >= 3) {
+        return;
+      }
+
+      this.guess.push(number);
+      var gameStore = (0,_index__WEBPACK_IMPORTED_MODULE_2__.useGameStore)();
+      gameStore.addNumberToGameState(this.currentGuess.row - 1, this.guess.length - 1, number);
+    },
+    submitGuess: function submitGuess() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var gameStore, playerStore, attemptStore;
+        var playerStore, attemptStore;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!(_this.guess.length >= 3)) {
+                if (!(_this.guess.length < 3)) {
                   _context.next = 2;
                   break;
                 }
@@ -20978,22 +20962,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return");
 
               case 4:
-                _this.guess.push(number);
-
-                gameStore = (0,_index__WEBPACK_IMPORTED_MODULE_2__.useGameStore)();
-                gameStore.addNumberToGameState(_this.currentGuess.row - 1, _this.guess.length - 1, number);
-
-                if (!(_this.guess.length === 3)) {
-                  _context.next = 12;
-                  break;
-                }
-
                 playerStore = (0,_index__WEBPACK_IMPORTED_MODULE_2__.usePlayerStore)();
                 attemptStore = (0,_index__WEBPACK_IMPORTED_MODULE_2__.useAttemptStore)();
-                _context.next = 12;
+                _context.next = 8;
                 return _this.saveGuess(playerStore.currentPlayer.id, attemptStore.currentAttempt.id, _this.currentGuess);
 
-              case 12:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -41320,13 +41294,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _GameComponent_vue_vue_type_template_id_5cec6160__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GameComponent.vue?vue&type=template&id=5cec6160 */ "./resources/js/components/GameComponent.vue?vue&type=template&id=5cec6160");
 /* harmony import */ var _GameComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GameComponent.vue?vue&type=script&lang=js */ "./resources/js/components/GameComponent.vue?vue&type=script&lang=js");
-/* harmony import */ var _Users_tylerpendleton_Code_guess_my_numbers_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var _var_www_html_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,_Users_tylerpendleton_Code_guess_my_numbers_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_GameComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_GameComponent_vue_vue_type_template_id_5cec6160__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/GameComponent.vue"]])
+const __exports__ = /*#__PURE__*/(0,_var_www_html_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_GameComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_GameComponent_vue_vue_type_template_id_5cec6160__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/GameComponent.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -41348,13 +41322,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _InputNumbersComponent_vue_vue_type_template_id_0e5cfc3c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InputNumbersComponent.vue?vue&type=template&id=0e5cfc3c */ "./resources/js/components/InputNumbersComponent.vue?vue&type=template&id=0e5cfc3c");
 /* harmony import */ var _InputNumbersComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./InputNumbersComponent.vue?vue&type=script&lang=js */ "./resources/js/components/InputNumbersComponent.vue?vue&type=script&lang=js");
-/* harmony import */ var _Users_tylerpendleton_Code_guess_my_numbers_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var _var_www_html_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,_Users_tylerpendleton_Code_guess_my_numbers_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_InputNumbersComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_InputNumbersComponent_vue_vue_type_template_id_0e5cfc3c__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/InputNumbersComponent.vue"]])
+const __exports__ = /*#__PURE__*/(0,_var_www_html_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_InputNumbersComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_InputNumbersComponent_vue_vue_type_template_id_0e5cfc3c__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/InputNumbersComponent.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -41376,13 +41350,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _NumberSquareComponent_vue_vue_type_template_id_4af190fc__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NumberSquareComponent.vue?vue&type=template&id=4af190fc */ "./resources/js/components/NumberSquareComponent.vue?vue&type=template&id=4af190fc");
 /* harmony import */ var _NumberSquareComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NumberSquareComponent.vue?vue&type=script&lang=js */ "./resources/js/components/NumberSquareComponent.vue?vue&type=script&lang=js");
-/* harmony import */ var _Users_tylerpendleton_Code_guess_my_numbers_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var _var_www_html_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,_Users_tylerpendleton_Code_guess_my_numbers_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_NumberSquareComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_NumberSquareComponent_vue_vue_type_template_id_4af190fc__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/NumberSquareComponent.vue"]])
+const __exports__ = /*#__PURE__*/(0,_var_www_html_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_NumberSquareComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_NumberSquareComponent_vue_vue_type_template_id_4af190fc__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/NumberSquareComponent.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
+/***/ "./resources/js/mixins/NumberUsageMixin.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/mixins/NumberUsageMixin.vue ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _NumberUsageMixin_vue_vue_type_template_id_ad18fa10__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NumberUsageMixin.vue?vue&type=template&id=ad18fa10 */ "./resources/js/mixins/NumberUsageMixin.vue?vue&type=template&id=ad18fa10");
+/* harmony import */ var _NumberUsageMixin_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NumberUsageMixin.vue?vue&type=script&lang=js */ "./resources/js/mixins/NumberUsageMixin.vue?vue&type=script&lang=js");
+/* harmony import */ var _var_www_html_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,_var_www_html_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_NumberUsageMixin_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_NumberUsageMixin_vue_vue_type_template_id_ad18fa10__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/mixins/NumberUsageMixin.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -41404,13 +41406,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Home_vue_vue_type_template_id_b3c5cf30__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Home.vue?vue&type=template&id=b3c5cf30 */ "./resources/js/pages/Home.vue?vue&type=template&id=b3c5cf30");
 /* harmony import */ var _Home_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Home.vue?vue&type=script&lang=js */ "./resources/js/pages/Home.vue?vue&type=script&lang=js");
-/* harmony import */ var _Users_tylerpendleton_Code_guess_my_numbers_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var _var_www_html_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,_Users_tylerpendleton_Code_guess_my_numbers_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Home_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Home_vue_vue_type_template_id_b3c5cf30__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/pages/Home.vue"]])
+const __exports__ = /*#__PURE__*/(0,_var_www_html_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Home_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Home_vue_vue_type_template_id_b3c5cf30__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/pages/Home.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -41463,6 +41465,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NumberSquareComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NumberSquareComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NumberSquareComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/NumberSquareComponent.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/mixins/NumberUsageMixin.vue?vue&type=script&lang=js":
+/*!**************************************************************************!*\
+  !*** ./resources/js/mixins/NumberUsageMixin.vue?vue&type=script&lang=js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NumberUsageMixin_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NumberUsageMixin_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NumberUsageMixin.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/mixins/NumberUsageMixin.vue?vue&type=script&lang=js");
  
 
 /***/ }),
@@ -41527,6 +41545,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NumberSquareComponent_vue_vue_type_template_id_4af190fc__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NumberSquareComponent_vue_vue_type_template_id_4af190fc__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NumberSquareComponent.vue?vue&type=template&id=4af190fc */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/NumberSquareComponent.vue?vue&type=template&id=4af190fc");
+
+
+/***/ }),
+
+/***/ "./resources/js/mixins/NumberUsageMixin.vue?vue&type=template&id=ad18fa10":
+/*!********************************************************************************!*\
+  !*** ./resources/js/mixins/NumberUsageMixin.vue?vue&type=template&id=ad18fa10 ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NumberUsageMixin_vue_vue_type_template_id_ad18fa10__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NumberUsageMixin_vue_vue_type_template_id_ad18fa10__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NumberUsageMixin.vue?vue&type=template&id=ad18fa10 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/mixins/NumberUsageMixin.vue?vue&type=template&id=ad18fa10");
 
 
 /***/ }),
