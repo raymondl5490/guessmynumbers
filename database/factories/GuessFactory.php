@@ -18,6 +18,7 @@ class GuessFactory extends Factory
     public function definition(): array
     {
         return [
+            'row' => $this->faker->numberBetween(1, 3),
             'attempt_id' => Attempt::factory()->create()->id,
             'number_one' => $this->faker->numberBetween(0, 9),
             'number_two' => $this->faker->numberBetween(0, 9),
