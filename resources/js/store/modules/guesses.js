@@ -32,7 +32,7 @@ export default defineStore('guesses', {
         }
     },
     actions: {
-        async addNumberToGuess(number) {
+        addNumberToGuess(number) {
             if (this.guess.length >= 3) {
                 return;
             }
@@ -45,12 +45,19 @@ export default defineStore('guesses', {
 
             const gameStore = useGameStore();
             gameStore.addNumberToGameState(this.currentGuess.row - 1, this.guess.length - 1, number);
-
-            if (this.guess.length === 3) {
-                const playerStore = usePlayerStore();
-                const attemptStore = useAttemptStore();
-                await this.saveGuess(playerStore.currentPlayer.id, attemptStore.currentAttempt.id, this.currentGuess);
+        },
+        async submitGuess() {
+            if (this.guess.length < 3) {
+                return;
             }
+
+            if (this.guesses.length >= 3) {
+                return;
+            }
+
+            const playerStore = usePlayerStore();
+            const attemptStore = useAttemptStore();
+            await this.saveGuess(playerStore.currentPlayer.id, attemptStore.currentAttempt.id, this.currentGuess);
         },
         removeNumberFromGuess() {
             this.guess.pop();

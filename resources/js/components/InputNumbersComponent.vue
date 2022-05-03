@@ -35,11 +35,11 @@
     </div>
 </template>
 <script>
-import {filter, includes, flatten, indexOf, forEach} from "lodash";
-import {useGameStore, useGuessStore} from "../store";
-import {mapState} from "pinia";
+import {includes} from "lodash";
+import NumberUsageMixin from "../mixins/NumberUsageMixin";
 
 export default {
+    mixins: [NumberUsageMixin],
     data() {
         return {
             numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -63,61 +63,7 @@ export default {
             }
         });
     },
-    computed: {
-        ...mapState(useGameStore, ['board', 'correctNumbers']),
-        ...mapState(useGuessStore, ['existingGuessNumbers', 'guess']),
-    },
     methods: {
-        isNumberOnBoard(number) {
-            const flatBoard = flatten(this.board);
-            return includes(flatBoard, number);
-        },
-        isNumberCorrect(number) {
-            return includes(this.correctNumbers, number);
-        },
-        isNumberInCorrectSpot(number) {
-            const correctIndex = indexOf(this.correctNumbers, number);
-            let inCorrectSpot = false;
-            forEach(this.existingGuessNumbers, existingNumbers => {
-                if (existingNumbers[correctIndex] === number) {
-                    inCorrectSpot = true;
-                }
-            });
-
-            return inCorrectSpot;
-        },
-        isNumberUsedMultipleTimes(number) {
-            return filter(this.correctNumbers, number).length > 1;
-        },
-        hasNumberBeenSubmitted(number) {
-            let submitted = false;
-            forEach(this.existingGuessNumbers, existingNumbers => {
-                if (includes(existingNumbers, number)) {
-                    submitted = true;
-                }
-            });
-
-            return submitted;
-        },
-        getNumberStyle(number) {
-            if (!this.isNumberOnBoard(number)) {
-                return;
-            }
-
-            if (!this.hasNumberBeenSubmitted(number)) {
-                return 'bg-gray-500 text-white';
-            }
-
-            if (this.isNumberCorrect(number) && this.isNumberInCorrectSpot(number)) {
-                return 'bg-green-500 text-white';
-            }
-
-            if (this.isNumberCorrect(number) && !this.isNumberInCorrectSpot(number)) {
-                return 'bg-yellow-500 text-white';
-            }
-
-            return 'bg-gray-500 text-white';
-        },
         handleNumberClick(number) {
             this.$emit('number-selected', number);
         },
@@ -126,9 +72,6 @@ export default {
         },
         handleSubmit() {
             this.$emit('submit');
-        },
-        handleKey(event) {
-            console.log({event})
         }
     }
 }

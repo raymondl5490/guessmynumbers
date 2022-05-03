@@ -26,6 +26,7 @@
                 <InputNumbersComponent
                     @number-selected="onNumberSelected"
                     @number-deleted="onNumberDeleted"
+                    @submit="onSubmitGuess"
                 />
             </div>
         </div>
@@ -36,7 +37,7 @@ import {mapActions, mapState} from "pinia";
 import {useAttemptStore, useGameStore, useGuessStore, usePlayerStore} from "../store";
 import NumberSquareComponent from "./NumberSquareComponent";
 import InputNumbersComponent from "./InputNumbersComponent";
-import {forEach} from "lodash";
+import {filter} from "lodash";
 
 export default {
     components: {
@@ -51,9 +52,9 @@ export default {
         ...mapState(usePlayerStore, ['currentPlayer']),
     },
     methods: {
-        ...mapActions(useGuessStore, ['addNumberToGuess', 'removeNumberFromGuess']),
+        ...mapActions(useGuessStore, ['addNumberToGuess', 'removeNumberFromGuess', 'submitGuess']),
         isRowSubmitted(index) {
-            return this.board[index].length === 3 && this.board[index][2] !== null;
+            return filter(this.guesses, guess => guess.row === index + 1).length > 0;
         },
         onNumberSelected(number) {
             this.addNumberToGuess(number);
@@ -61,8 +62,8 @@ export default {
         onNumberDeleted() {
             this.removeNumberFromGuess();
         },
-        handleKey(event) {
-            console.log({ event })
+        onSubmitGuess() {
+            this.submitGuess()
         }
     }
 }
