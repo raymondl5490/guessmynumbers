@@ -1,20 +1,21 @@
 <template>
     <div>
+        <HeaderComponent />
         <GameComponent />
     </div>
 </template>
 <script>
 
 import GameComponent from "../components/GameComponent";
+import HeaderComponent from "../components/HeaderComponent";
 import {isEmpty} from 'lodash';
 import {useGameStore, useAttemptStore, usePlayerStore, useGuessStore} from '../store';
 import {mapActions, mapState, mapGetters} from 'pinia';
 
 export default {
     components: {
+        HeaderComponent,
         GameComponent,
-    },
-    data() {
     },
     async created() {
         if (isEmpty(this.currentPlayer)) {
