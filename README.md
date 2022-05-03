@@ -4,7 +4,7 @@
 Guess My Numbers is a game designed by Josh  Gottsegen and developed by Tyler Pendleton. It involves a 3 x 3 grid 
 of squares where each row represents a guess attempt and each column represents a number.
 
-Every 24 hours, the numbers will change. If a user successfully guesses the numbers, they will have the opportunity 
+Every 12 hours, the numbers will change. If a user successfully guesses the numbers, they will have the opportunity 
 to put in their own numbers as well as a link to their personal website / twitter / etc. that will then be available
 on the application once the 24 hours of the existing numbers is up.
 
