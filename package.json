@@ -27,6 +27,8 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@headlessui/vue": "^1.6.1",
+        "@heroicons/vue": "^1.0.6",
         "pinia": "^2.0.13",
         "pinia-plugin-persistedstate-2": "^1.0.0",
         "postcss-scss": "^4.0.4"

@@ -1,7 +1,24 @@
 <template>
     <div>
-        <HeaderComponent />
+        <HeaderComponent
+            @open-help="onOpenHelp"
+            @open-statistics="onOpenStatistics"
+            @open-settings="onOpenSettings"
+        />
         <GameComponent />
+
+        <HelpModalComponent
+            :show="showHelpModal"
+            @close="onCloseHelp"
+        />
+        <StatisticsModalComponent
+            :show="showStatisticsModal"
+            @close="onCloseStatistics"
+        />
+        <SettingsModalComponent
+            :show="showSettingsModal"
+            @close="onCloseSettings"
+        />
     </div>
 </template>
 <script>
@@ -11,11 +28,25 @@ import HeaderComponent from "../components/HeaderComponent";
 import {isEmpty} from 'lodash';
 import {useGameStore, useAttemptStore, usePlayerStore, useGuessStore} from '../store';
 import {mapActions, mapState, mapGetters} from 'pinia';
+import ModalComponent from "../components/ui/ModalComponent";
+import HelpModalComponent from "../components/modals/HelpModalComponent";
+import StatisticsModalComponent from "../components/modals/StatisticsModalComponent";
+import SettingsModalComponent from "../components/modals/SettingsModalComponent";
 
 export default {
     components: {
+        SettingsModalComponent,
+        StatisticsModalComponent,
+        HelpModalComponent,
         HeaderComponent,
         GameComponent,
+    },
+    data() {
+        return {
+            showHelpModal: false,
+            showStatisticsModal: false,
+            showSettingsModal: false,
+        }
     },
     async created() {
         if (isEmpty(this.currentPlayer)) {
@@ -50,6 +81,24 @@ export default {
         ...mapActions(useGameStore, ['getCurrentGame', 'initializeBoard']),
         ...mapActions(useGuessStore, ['getGuesses']),
         ...mapActions(useAttemptStore, ['createAttempt', 'getCurrentAttempt']),
+        onOpenHelp() {
+            this.showHelpModal = true;
+        },
+        onCloseHelp() {
+            this.showHelpModal = false;
+        },
+        onOpenStatistics() {
+            this.showStatisticsModal = true;
+        },
+        onCloseStatistics() {
+            this.showStatisticsModal = false;
+        },
+        onOpenSettings() {
+            this.showSettingsModal = true;
+        },
+        onCloseSettings() {
+            this.showSettingsModal = false;
+        }
     }
 }
 </script>

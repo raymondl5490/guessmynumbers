@@ -1,5 +1,5 @@
 <template>
-    <div class="w-screen h-screen">
+    <div class="w-screen h-auto mt-6 sm:mt-10 md:mt-20 lg:mt-40">
         <div class="w-full h-full flex flex-col justify-center items-center">
             <div
                 v-for="(row, index) in board"
