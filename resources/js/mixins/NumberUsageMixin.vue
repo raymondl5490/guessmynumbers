@@ -57,7 +57,7 @@ export default {
             }
 
             if (this.isNumberCorrect(number) && this.isNumberInCorrectSpot(number, correctNumber)) {
-                return 'bg-green-500 text-white';
+                return 'bg-green-600 text-white';
             }
 
             if (this.isNumberCorrect(number) && !this.isNumberInCorrectSpot(number, correctNumber)) {

@@ -19751,7 +19751,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     InputNumbersComponent: _InputNumbersComponent__WEBPACK_IMPORTED_MODULE_2__["default"],
     NumberSquareComponent: _NumberSquareComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  data: function data() {},
+  props: {
+    hideNumbers: {
+      type: Boolean,
+      "default": false
+    }
+  },
   computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useGameStore, ['currentGame', 'board'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useGuessStore, ['currentGuess', 'guesses'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useAttemptStore, ['currentAttempt'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.usePlayerStore, ['currentPlayer'])),
   methods: _objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapActions)(_store__WEBPACK_IMPORTED_MODULE_0__.useGuessStore, ['addNumberToGuess', 'removeNumberFromGuess', 'submitGuess'])), {}, {
     isRowSubmitted: function isRowSubmitted(index) {
@@ -19891,6 +19896,10 @@ __webpack_require__.r(__webpack_exports__);
     submitted: {
       type: Boolean,
       "default": false
+    },
+    hideNumbers: {
+      type: Boolean,
+      "default": false
     }
   }
 });
@@ -19980,10 +19989,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _ui_ModalComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ui/ModalComponent */ "./resources/js/components/ui/ModalComponent.vue");
 /* harmony import */ var _ui_IconComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ui/IconComponent */ "./resources/js/components/ui/IconComponent.vue");
+/* harmony import */ var _GameComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../GameComponent */ "./resources/js/components/GameComponent.vue");
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
+    GameComponent: _GameComponent__WEBPACK_IMPORTED_MODULE_2__["default"],
     IconComponent: _ui_IconComponent__WEBPACK_IMPORTED_MODULE_1__["default"],
     ModalComponent: _ui_ModalComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -19992,6 +20004,12 @@ __webpack_require__.r(__webpack_exports__);
       type: Boolean,
       "default": false
     }
+  },
+  data: function data() {
+    return {
+      gamesPlayed: 3,
+      currentRoundWinPercentage: '42%'
+    };
   },
   methods: {
     onClose: function onClose() {
@@ -20159,7 +20177,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (this.isNumberCorrect(number) && this.isNumberInCorrectSpot(number, correctNumber)) {
-        return 'bg-green-500 text-white';
+        return 'bg-green-600 text-white';
       }
 
       if (this.isNumberCorrect(number) && !this.isNumberInCorrectSpot(number, correctNumber)) {
@@ -20332,7 +20350,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "w-screen h-auto mt-6 sm:mt-10 md:mt-20 lg:mt-40"
+  "class": "w-full h-auto mx-auto"
 };
 var _hoisted_2 = {
   "class": "w-full h-full flex flex-col justify-center items-center"
@@ -20341,6 +20359,7 @@ var _hoisted_3 = {
   "class": "flex flex-row"
 };
 var _hoisted_4 = {
+  key: 0,
   "class": "flex flex-row"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -20354,31 +20373,34 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent, {
       "guessed-number": (_row$ = row[0]) !== null && _row$ !== void 0 ? _row$ : null,
       "correct-number": _ctx.currentGame.number_one,
-      submitted: $options.isRowSubmitted(index)
+      submitted: $options.isRowSubmitted(index),
+      "hide-numbers": $props.hideNumbers
     }, null, 8
     /* PROPS */
-    , ["guessed-number", "correct-number", "submitted"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent, {
+    , ["guessed-number", "correct-number", "submitted", "hide-numbers"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent, {
       "guessed-number": (_row$2 = row[1]) !== null && _row$2 !== void 0 ? _row$2 : null,
       "correct-number": _ctx.currentGame.number_two,
-      submitted: $options.isRowSubmitted(index)
+      submitted: $options.isRowSubmitted(index),
+      "hide-numbers": $props.hideNumbers
     }, null, 8
     /* PROPS */
-    , ["guessed-number", "correct-number", "submitted"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent, {
+    , ["guessed-number", "correct-number", "submitted", "hide-numbers"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NumberSquareComponent, {
       "guessed-number": (_row$3 = row[2]) !== null && _row$3 !== void 0 ? _row$3 : null,
       "correct-number": _ctx.currentGame.number_three,
-      submitted: $options.isRowSubmitted(index)
+      submitted: $options.isRowSubmitted(index),
+      "hide-numbers": $props.hideNumbers
     }, null, 8
     /* PROPS */
-    , ["guessed-number", "correct-number", "submitted"])]);
+    , ["guessed-number", "correct-number", "submitted", "hide-numbers"])]);
   }), 256
   /* UNKEYED_FRAGMENT */
-  )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumbersComponent, {
+  )), !$props.hideNumbers ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumbersComponent, {
     onNumberSelected: $options.onNumberSelected,
     onNumberDeleted: $options.onNumberDeleted,
     onSubmit: $options.onSubmitGuess
   }, null, 8
   /* PROPS */
-  , ["onNumberSelected", "onNumberDeleted", "onSubmit"])])])]);
+  , ["onNumberSelected", "onNumberDeleted", "onSubmit"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
 }
 
 /***/ }),
@@ -20471,7 +20493,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.rowOne, function (number) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: number,
-      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 bg-gray-200 hover:bg-gray-500 hover:text-white", _ctx.getNumberStyle(number)]),
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 md:w-12 md:h-12 md:text-lg bg-gray-200 hover:bg-gray-500 hover:text-white", _ctx.getNumberStyle(number)]),
       onClick: function onClick($event) {
         return $options.handleNumberClick(number);
       }
@@ -20481,14 +20503,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), 128
   /* KEYED_FRAGMENT */
   )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "flex justify-center items-center mx-1 px-3 cursor-pointer rounded-full w-auto h-8 bg-gray-200 text-red-600 hover:bg-gray-500 hover:text-red-400",
+    "class": "flex justify-center items-center mx-1 px-3 cursor-pointer rounded-full w-auto h-8 md:h-12 md:text-lg bg-gray-200 text-red-600 hover:bg-gray-500 hover:text-red-400",
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.handleNumberDeleted && $options.handleNumberDeleted.apply($options, arguments);
     })
   }, "Delete ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.rowTwo, function (number) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: number,
-      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 bg-gray-200 hover:bg-gray-500 hover:text-white", _ctx.getNumberStyle(number)]),
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 md:w-12 md:h-12 md:text-lg bg-gray-200 hover:bg-gray-500 hover:text-white", _ctx.getNumberStyle(number)]),
       onClick: function onClick($event) {
         return $options.handleNumberClick(number);
       }
@@ -20498,7 +20520,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), 128
   /* KEYED_FRAGMENT */
   )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "flex justify-center items-center mx-1 px-3 cursor-pointer rounded-full w-auto h-8 bg-gray-200 text-green-600 hover:bg-gray-400 hover:text-green-400",
+    "class": "flex justify-center items-center mx-1 px-3 cursor-pointer rounded-full w-auto h-8 md:h-12 md:text-lg bg-gray-200 text-green-600 hover:bg-gray-400 hover:text-green-400",
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.handleSubmit && $options.handleSubmit.apply($options, arguments);
     })
@@ -20522,8 +20544,8 @@ __webpack_require__.r(__webpack_exports__);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["w-20 h-20 m-1 bg-gray-200 text-3xl font-bold text-white flex justify-center items-center", _ctx.getNumberStyle($props.guessedNumber, !$props.submitted, $props.correctNumber)])
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.guessedNumber), 3
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["w-20 h-20 md:w-28 md:h-28 m-1 bg-gray-200 text-3xl md:text-5xl font-bold text-white flex justify-center items-center", _ctx.getNumberStyle($props.guessedNumber, !$props.submitted, $props.correctNumber)])
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.hideNumbers ? '' : $props.guessedNumber), 3
   /* TEXT, CLASS */
   );
 }
@@ -20564,19 +20586,19 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" How to Play ");
 
 var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "text-lg my-8"
+  "class": "text-md my-8"
 }, " You have three tries to guess the featured number. Press the check mark to submit. ", -1
 /* HOISTED */
 );
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "text-lg my-8"
+  "class": "text-md my-8"
 }, " After each guess, the colors will change to show how close you got! ", -1
 /* HOISTED */
 );
 
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "text-lg my-8"
+  "class": "text-md my-8"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" If you guess correctly, "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "font-bold"
 }, "you have a chance to submit your own numbers to be featured!")], -1
@@ -20584,7 +20606,7 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "text-lg my-8"
+  "class": "text-md my-8"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: _assets_images_help_green_png__WEBPACK_IMPORTED_MODULE_2__["default"],
   "class": "w-2/3 mx-auto"
@@ -20595,7 +20617,7 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "text-lg my-8"
+  "class": "text-md my-8"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: _assets_images_help_yellow_png__WEBPACK_IMPORTED_MODULE_3__["default"],
   "class": "w-2/3 mx-auto"
@@ -20606,7 +20628,7 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "text-lg my-8"
+  "class": "text-md my-8"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: _assets_images_help_double_png__WEBPACK_IMPORTED_MODULE_4__["default"],
   "class": "w-2/3 mx-auto"
@@ -20621,7 +20643,7 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "text-lg font-light text-center"
+  "class": "text-md font-light text-center"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "font-bold"
 }, "New Numbers updated every 12 hours!"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 12:00am PST / 12:00pm PST "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" www.guessmynumbers.com ")], -1
@@ -20629,20 +20651,12 @@ var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_IconComponent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("IconComponent");
-
   var _component_ModalComponent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalComponent");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ModalComponent, {
     show: $props.show,
     onClose: $options.onClose
   }, {
-    icon: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_IconComponent, {
-        icon: "circle-question",
-        "icon-style": "regular"
-      })];
-    }),
     title: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_1, _hoisted_2];
     }),
@@ -20673,24 +20687,59 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("This is my modal");
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-center"
+}, " Settings ", -1
+/* HOISTED */
+);
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("This is the body content");
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex flex-col my-8"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex flex-row justify-between content-center w-full my-5"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+  "class": "text-2xl font-bold"
+}, "Practice Mode"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "self-center"
+}, "Coming Soon")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex flex-row justify-between content-center w-full my-5"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+  "class": "text-2xl font-bold"
+}, " Feedback "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "mailto:josh@guessmynumbers.com",
+  "class": "focus:outline-none text-2xl underline text-gray-600 hover:text-gray-900 text-right"
+}, " Email ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex flex-row justify-between content-center w-full my-5"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+  "class": "text-2xl font-bold"
+}, " Community "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "https://twitter.com/guessmynumbers",
+  "class": "focus:outline-none text-2xl underline text-gray-600 hover:text-gray-900 text-right"
+}, " Twitter ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex flex-row justify-between content-center w-full my-5"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+  "class": "text-xl font-medium"
+}, " Looking for a great book? "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "https://amzn.to/3GP2yt4",
+  "class": "focus:outline-none underline text-blue-600 hover:text-blue-900 text-right"
+}, " The Adventures of Rockford T. Honeypot ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+  "class": "my-3"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-center mt-5"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Created by "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  "class": "focus:outline-none underline text-blue-600 hover:text-blue-900",
+  href: "https://twitter.com/joshgottsegen"
+}, "@JoshGottsegen")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "www.guessmynumbers.com")])], -1
+/* HOISTED */
+);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_IconComponent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("IconComponent");
-
   var _component_ModalComponent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalComponent");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ModalComponent, {
     show: $props.show,
     onClose: $options.onClose
   }, {
-    icon: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_IconComponent, {
-        icon: "circle-question"
-      })];
-    }),
     title: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_1];
     }),
@@ -20721,12 +20770,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("This is my modal");
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-center"
+}, " Statistics ", -1
+/* HOISTED */
+);
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("This is the body content");
+var _hoisted_2 = {
+  "class": "w-full grid grid-cols-2 gap-8 my-5"
+};
+var _hoisted_3 = {
+  "class": "col-span-1 text-center"
+};
+var _hoisted_4 = {
+  "class": "text-center text-3xl font-bold"
+};
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Rounds Played ");
+
+var _hoisted_6 = {
+  "class": "col-span-1 text-center"
+};
+var _hoisted_7 = {
+  "class": "text-center text-3xl font-bold"
+};
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Current Round Global Win % ");
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+  "class": "my-3"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+  "class": "text-xl font-medium text-center mb-8"
+}, " YOUR GUESSES ", -1
+/* HOISTED */
+);
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "w-full grid grid-cols-2 gap-8 my-5"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-center"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+  "class": "text-lg font-light"
+}, " NEW NUMBER IN "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+  "class": "text-2xl font-bold"
+}, " 20 MINUTES ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex flex-col justify-center"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "bg-green-600 hover:bg-green-900 rounded-md px-5 py-3 w-full border-0 focus:outline-none text-md text-white"
+}, " SHARE ")])], -1
+/* HOISTED */
+);
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+  "class": "my-5"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-center"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "www.guessmynumbers.com")], -1
+/* HOISTED */
+);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_IconComponent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("IconComponent");
+  var _component_GameComponent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("GameComponent");
 
   var _component_ModalComponent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalComponent");
 
@@ -20734,16 +20846,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     show: $props.show,
     onClose: $options.onClose
   }, {
-    icon: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_IconComponent, {
-        icon: "circle-question"
-      })];
-    }),
     title: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_1];
     }),
     content: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_2];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.gamesPlayed), 1
+      /* TEXT */
+      ), _hoisted_5]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentRoundWinPercentage), 1
+      /* TEXT */
+      ), _hoisted_8])]), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_GameComponent, {
+        "hide-numbers": true
+      })]), _hoisted_11, _hoisted_12, _hoisted_13];
     }),
     _: 1
     /* STABLE */
@@ -20820,12 +20933,9 @@ var _hoisted_5 = {
   "class": "bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
 };
 var _hoisted_6 = {
-  "class": "sm:flex sm:items-start"
+  "class": "mt-3 sm:mt-0 sm:ml-4"
 };
 var _hoisted_7 = {
-  "class": "mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left"
-};
-var _hoisted_8 = {
   "class": "mt-2"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -20879,12 +20989,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 "class": "relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
               }, {
                 "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [$props.showIcon ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-                    key: 0,
-                    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10", $props.iconBackground])
-                  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "icon")], 2
-                  /* CLASS */
-                  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DialogTitle, {
+                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DialogTitle, {
                     as: "h1",
                     "class": "text-2xl leading-6 font-bold text-gray-900"
                   }, {
@@ -20894,7 +20999,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     _: 3
                     /* FORWARDED */
 
-                  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "content")])])])])];
+                  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "content")])])])];
                 }),
                 _: 3
                 /* FORWARDED */
@@ -20965,6 +21070,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_SettingsModalComponent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SettingsModalComponent");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HeaderComponent, {
+    "class": "mb-6 sm:mb-10 md:mb-20 lg:mb-40",
     onOpenHelp: $options.onOpenHelp,
     onOpenStatistics: $options.onOpenStatistics,
     onOpenSettings: $options.onOpenSettings

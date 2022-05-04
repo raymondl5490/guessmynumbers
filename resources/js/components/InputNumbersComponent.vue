@@ -4,14 +4,14 @@
             <div
                 v-for="number in rowOne"
                 :key="number"
-                class="flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 bg-gray-200 hover:bg-gray-500 hover:text-white"
+                class="flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 md:w-12 md:h-12 md:text-lg bg-gray-200 hover:bg-gray-500 hover:text-white"
                 :class="getNumberStyle(number)"
                 @click="handleNumberClick(number)"
             >
                 {{ number }}
             </div>
             <div
-                class="flex justify-center items-center mx-1 px-3 cursor-pointer rounded-full w-auto h-8 bg-gray-200 text-red-600 hover:bg-gray-500 hover:text-red-400"
+                class="flex justify-center items-center mx-1 px-3 cursor-pointer rounded-full w-auto h-8 md:h-12 md:text-lg bg-gray-200 text-red-600 hover:bg-gray-500 hover:text-red-400"
                 @click="handleNumberDeleted"
             >Delete
             </div>
@@ -20,14 +20,14 @@
             <div
                 v-for="number in rowTwo"
                 :key="number"
-                class="flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 bg-gray-200 hover:bg-gray-500 hover:text-white"
+                class="flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 md:w-12 md:h-12 md:text-lg bg-gray-200 hover:bg-gray-500 hover:text-white"
                 :class="getNumberStyle(number)"
                 @click="handleNumberClick(number)"
             >
                 {{ number }}
             </div>
             <div
-                class="flex justify-center items-center mx-1 px-3 cursor-pointer rounded-full w-auto h-8 bg-gray-200 text-green-600 hover:bg-gray-400 hover:text-green-400"
+                class="flex justify-center items-center mx-1 px-3 cursor-pointer rounded-full w-auto h-8 md:h-12 md:text-lg bg-gray-200 text-green-600 hover:bg-gray-400 hover:text-green-400"
                 @click="handleSubmit"
             >Submit
             </div>
