@@ -19729,12 +19729,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var pinia__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! pinia */ "./node_modules/pinia/dist/pinia.esm-browser.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
-/* harmony import */ var _NumberSquareComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NumberSquareComponent */ "./resources/js/components/NumberSquareComponent.vue");
-/* harmony import */ var _InputNumbersComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./InputNumbersComponent */ "./resources/js/components/InputNumbersComponent.vue");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var pinia__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! pinia */ "./node_modules/pinia/dist/pinia.esm-browser.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
+/* harmony import */ var _NumberSquareComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NumberSquareComponent */ "./resources/js/components/NumberSquareComponent.vue");
+/* harmony import */ var _InputNumbersComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InputNumbersComponent */ "./resources/js/components/InputNumbersComponent.vue");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_4__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -19748,8 +19756,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    InputNumbersComponent: _InputNumbersComponent__WEBPACK_IMPORTED_MODULE_2__["default"],
-    NumberSquareComponent: _NumberSquareComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
+    InputNumbersComponent: _InputNumbersComponent__WEBPACK_IMPORTED_MODULE_3__["default"],
+    NumberSquareComponent: _NumberSquareComponent__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: {
     hideNumbers: {
@@ -19757,10 +19765,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "default": false
     }
   },
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useGameStore, ['currentGame', 'board'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useGuessStore, ['currentGuess', 'guesses'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.useAttemptStore, ['currentAttempt'])), (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapState)(_store__WEBPACK_IMPORTED_MODULE_0__.usePlayerStore, ['currentPlayer'])),
-  methods: _objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_4__.mapActions)(_store__WEBPACK_IMPORTED_MODULE_0__.useGuessStore, ['addNumberToGuess', 'removeNumberFromGuess', 'submitGuess'])), {}, {
+  data: function data() {
+    return {
+      squareOneClasses: '',
+      squareTwoClasses: '',
+      squareThreeClasses: ''
+    };
+  },
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_5__.mapState)(_store__WEBPACK_IMPORTED_MODULE_1__.useGameStore, ['currentGame', 'board'])), (0,pinia__WEBPACK_IMPORTED_MODULE_5__.mapState)(_store__WEBPACK_IMPORTED_MODULE_1__.useGuessStore, ['currentGuess', 'guesses'])), (0,pinia__WEBPACK_IMPORTED_MODULE_5__.mapState)(_store__WEBPACK_IMPORTED_MODULE_1__.useAttemptStore, ['currentAttempt'])), (0,pinia__WEBPACK_IMPORTED_MODULE_5__.mapState)(_store__WEBPACK_IMPORTED_MODULE_1__.usePlayerStore, ['currentPlayer'])),
+  methods: _objectSpread(_objectSpread({}, (0,pinia__WEBPACK_IMPORTED_MODULE_5__.mapActions)(_store__WEBPACK_IMPORTED_MODULE_1__.useGuessStore, ['addNumberToGuess', 'removeNumberFromGuess', 'submitGuess'])), {}, {
     isRowSubmitted: function isRowSubmitted(index) {
-      return (0,lodash__WEBPACK_IMPORTED_MODULE_3__.filter)(this.guesses, function (guess) {
+      return (0,lodash__WEBPACK_IMPORTED_MODULE_4__.filter)(this.guesses, function (guess) {
         return guess.row === index + 1;
       }).length > 0;
     },
@@ -19771,7 +19786,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.removeNumberFromGuess();
     },
     onSubmitGuess: function onSubmitGuess() {
-      this.submitGuess();
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _this.submitGuess();
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   })
 });
@@ -19900,6 +19931,39 @@ __webpack_require__.r(__webpack_exports__);
     hideNumbers: {
       type: Boolean,
       "default": false
+    }
+  },
+  data: function data() {
+    return {
+      animationClasses: ''
+    };
+  },
+  computed: {
+    classes: function classes() {
+      return this.getClasses();
+    }
+  },
+  watch: {
+    guessedNumber: {
+      handler: function handler(newValue, oldValue) {
+        if (newValue === null) {
+          this.animationClasses = '';
+        }
+
+        this.animationClasses = 'animate-scale-up';
+      }
+    }
+  },
+  methods: {
+    getClasses: function getClasses() {
+      return "".concat(this.getNumberStyle(this.guessedNumber, !this.submitted, this.correctNumber), " ").concat(this.getAnimationClasses());
+    },
+    getAnimationClasses: function getAnimationClasses() {
+      if (this.guessedNumber == null) {
+        return '';
+      }
+
+      return this.animationClasses;
     }
   }
 });
@@ -20172,7 +20236,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var correctNumber = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
       if (!this.isNumberOnBoard(number)) {
-        return;
+        return '';
       }
 
       if (!this.hasNumberBeenSubmitted(number) || isCurrentGuess) {
@@ -20547,7 +20611,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["w-20 h-20 md:w-28 md:h-28 m-1 bg-gray-200 text-3xl md:text-5xl font-bold text-white flex justify-center items-center", _ctx.getNumberStyle($props.guessedNumber, !$props.submitted, $props.correctNumber)])
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["w-20 h-20 md:w-28 md:h-28 m-1 bg-gray-200 text-3xl md:text-5xl font-bold text-white flex justify-center items-center", $options.classes])
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.hideNumbers ? '' : $props.guessedNumber), 3
   /* TEXT, CLASS */
   );
