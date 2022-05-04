@@ -49,7 +49,7 @@ export default {
         },
         getNumberStyle(number, isCurrentGuess = false, correctNumber = null) {
             if (!this.isNumberOnBoard(number)) {
-                return;
+                return '';
             }
 
             if (!this.hasNumberBeenSubmitted(number) || isCurrentGuess) {

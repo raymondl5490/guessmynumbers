@@ -56,6 +56,13 @@ export default {
             default: false,
         }
     },
+    data() {
+        return {
+            squareOneClasses: '',
+            squareTwoClasses: '',
+            squareThreeClasses: '',
+        }
+    },
     computed: {
         ...mapState(useGameStore, ['currentGame', 'board']),
         ...mapState(useGuessStore, ['currentGuess', 'guesses']),
@@ -73,9 +80,9 @@ export default {
         onNumberDeleted() {
             this.removeNumberFromGuess();
         },
-        onSubmitGuess() {
-            this.submitGuess()
-        }
+        async onSubmitGuess() {
+            await this.submitGuess()
+        },
     }
 }
 </script>
