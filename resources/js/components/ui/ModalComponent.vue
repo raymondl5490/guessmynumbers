@@ -17,8 +17,15 @@
                                      leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
                         <DialogPanel
                             class="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                <div class="mt-3 sm:mt-0 sm:ml-4">
+                            <div class="bg-white px-5 pt-0 pb-4 sm:p-6 sm:pb-4">
+                                <div class="mt-0 sm:mt-0 sm:ml-4">
+                                    <div class="text-right">
+                                        <IconComponent
+                                            class="text-gray-600 hover:text-gray-900"
+                                            icon="times"
+                                            @click="onClose"
+                                        />
+                                    </div>
                                     <DialogTitle as="h1" class="text-2xl leading-6 font-bold text-gray-900">
                                         <slot name="title"></slot>
                                     </DialogTitle>
@@ -38,9 +45,11 @@
 <script>
 import {Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot} from '@headlessui/vue'
 import {ExclamationIcon} from '@heroicons/vue/outline'
+import IconComponent from "./IconComponent";
 
 export default {
     components: {
+        IconComponent,
         Dialog,
         DialogPanel,
         DialogTitle,
