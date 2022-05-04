@@ -540,6 +540,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mt-5 {
   margin-top: 1.25rem;
 }
+.mt-0 {
+  margin-top: 0px;
+}
 .inline-block {
   display: inline-block;
 }
@@ -752,6 +755,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .pb-4 {
   padding-bottom: 1rem;
+}
+.pt-1 {
+  padding-top: 0.25rem;
+}
+.pt-0 {
+  padding-top: 0px;
 }
 .text-left {
   text-align: left;
