@@ -1,6 +1,7 @@
 <template>
     <div>
         <HeaderComponent
+            class="mb-6 sm:mb-10 md:mb-20 lg:mb-40"
             @open-help="onOpenHelp"
             @open-statistics="onOpenStatistics"
             @open-settings="onOpenSettings"

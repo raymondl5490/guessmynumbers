@@ -1,5 +1,5 @@
 <template>
-    <div class="w-screen h-auto mt-6 sm:mt-10 md:mt-20 lg:mt-40">
+    <div class="w-full h-auto mx-auto">
         <div class="w-full h-full flex flex-col justify-center items-center">
             <div
                 v-for="(row, index) in board"
@@ -9,20 +9,26 @@
                     :guessed-number="row[0] ?? null"
                     :correct-number="currentGame.number_one"
                     :submitted="isRowSubmitted(index)"
+                    :hide-numbers="hideNumbers"
                 />
                 <NumberSquareComponent
                     :guessed-number="row[1] ?? null"
                     :correct-number="currentGame.number_two"
                     :submitted="isRowSubmitted(index)"
+                    :hide-numbers="hideNumbers"
                 />
                 <NumberSquareComponent
                     :guessed-number="row[2] ?? null"
                     :correct-number="currentGame.number_three"
                     :submitted="isRowSubmitted(index)"
+                    :hide-numbers="hideNumbers"
                 />
             </div>
 
-            <div class="flex flex-row">
+            <div
+                v-if="!hideNumbers"
+                class="flex flex-row"
+            >
                 <InputNumbersComponent
                     @number-selected="onNumberSelected"
                     @number-deleted="onNumberDeleted"
@@ -44,7 +50,12 @@ export default {
         InputNumbersComponent,
         NumberSquareComponent,
     },
-    data() {},
+    props: {
+        hideNumbers: {
+            type: Boolean,
+            default: false,
+        }
+    },
     computed: {
         ...mapState(useGameStore, ['currentGame', 'board']),
         ...mapState(useGuessStore, ['currentGuess', 'guesses']),

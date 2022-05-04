@@ -3,9 +3,6 @@
         :show="show"
         @close="onClose"
     >
-        <template #icon>
-            <IconComponent icon="circle-question" icon-style="regular"/>
-        </template>
         <template #title>
             <div class="text-center">
                 <img src="../../../assets/images/logo.jpeg" class="w-20 h-auto mx-auto"/>
@@ -14,36 +11,36 @@
             How to Play
         </template>
         <template #content>
-            <p class="text-lg my-8">
+            <p class="text-md my-8">
                 You have three tries to guess the featured number.
                 Press the check mark to submit.
             </p>
 
-            <p class="text-lg my-8">
+            <p class="text-md my-8">
                 After each guess, the colors will change to show how close you got!
             </p>
 
-            <p class="text-lg my-8">
+            <p class="text-md my-8">
                 If you guess correctly, <span class="font-bold">you have a chance to submit your own numbers to be featured!</span>
             </p>
 
-            <p class="text-lg my-8">
+            <p class="text-md my-8">
                 <img src="../../../assets/images/help_green.png" class="w-2/3 mx-auto" />
                 <span class="font-bold">Green</span> indicates the number is in the proper spot.
             </p>
 
-            <p class="text-lg my-8">
+            <p class="text-md my-8">
                 <img src="../../../assets/images/help_yellow.png" class="w-2/3 mx-auto" />
                 <span class="font-bold">Yellow</span> indicates the number is correct, but in the wrong spot.
             </p>
 
-            <p class="text-lg my-8">
+            <p class="text-md my-8">
                 <img src="../../../assets/images/help_double.png" class="w-2/3 mx-auto" />
                 A <span class="font-bold">Purple</span> line indicates the number is used multiple times.
             </p>
 
             <hr/>
-            <p class="text-lg font-light text-center">
+            <p class="text-md font-light text-center">
                 <span class="font-bold">New Numbers updated every 12 hours!</span>
                 <br/>
                 12:00am PST / 12:00pm PST
