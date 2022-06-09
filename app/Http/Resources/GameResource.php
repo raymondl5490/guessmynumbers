@@ -30,6 +30,7 @@ class GameResource extends JsonResource
             'link_title' => $this->link_title,
             'game_start' => $this->game_start,
             'game_end' => $this->game_end,
+            'created_at' => $this->created_at,
         ];
     }
 }

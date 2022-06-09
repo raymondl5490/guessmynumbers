@@ -1,10 +1,11 @@
-import {currentGameApi} from '../../api'
+import {currentGameApi, gameApi} from '../../api'
 import {defineStore} from "pinia";
 import {useGuessStore} from "../index";
 import {forEach, isEmpty} from "lodash";
 
 export default defineStore('games', {
     state: () => ({
+        games: [],
         currentGame: {},
         board: [
             [],
@@ -21,6 +22,9 @@ export default defineStore('games', {
         }
     },
     actions: {
+        async getAllGames() {
+            this.games = await gameApi.index();
+        },
         addNumberToGameState(row, column, number) {
             this.board[row][column] = number;
         },
@@ -41,6 +45,14 @@ export default defineStore('games', {
                 this.board[guess.row - 1][1] = guess.number_two;
                 this.board[guess.row - 1][2] = guess.number_three;
             });
+        },
+        async createGame(payload) {
+            console.log({payload})
+            return await gameApi.store(payload);
+        },
+        async updateGame(gameId, payload) {
+            console.log({gameId, payload})
+            return await gameApi.update(gameId, payload);
         }
     },
     persistedState: {

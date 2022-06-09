@@ -18,9 +18,9 @@ class CreateGameRequest extends FormRequest
             'number_two' => ['required', 'integer', 'min:0', 'max:9'],
             'number_three' => ['required', 'integer', 'min:0', 'max:9'],
             'author_name' => ['required', 'string', 'min:2', 'max:60'],
-            'author_location' => ['required', 'string', 'min:2', 'max:255'],
-            'author_email' => ['required', 'email'],
-            'link' => ['required', 'url'],
+            'author_location' => ['string', 'min:2', 'max:255'],
+            'author_email' => ['email'],
+            'link' => ['url'],
             'link_title' => ['sometimes', 'string'],
         ];
     }
