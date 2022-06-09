@@ -1,3 +1,59 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.card {
+    @apply w-72 h-auto rounded shadow;
+}
+
+.card .card-header {
+    @apply border-b-2 border-gray-50 py-3 px-5 w-full;
+}
+
+.card .card-body {
+    @apply py-3 px-5 w-full;
+}
+
+.col-form-label {
+    @apply text-sm;
+}
+
+.button, .btn {
+    @apply px-3 py-2 rounded shadow-sm bg-gray-500 hover:bg-gray-700 text-white w-full;
+}
+
+.button.button-primary, .btn.btn-primary {
+    @apply bg-green-600 hover:bg-green-800;
+}
+
+.button.button-sm, .btn.btn-sm {
+    @apply px-2 py-1 text-xs;
+}
+
+.input, .form-control {
+    @apply mt-1 focus:ring-green-500 focus:border-green-500 block w-full shadow-sm sm:text-sm border-gray-300 border-1 rounded p-1;
+}
+
+.invalid-feedback {
+    @apply text-xs text-red-700;
+}
+
+.border-1 {
+    border-width: 1px;
+}
+
+.alert {
+    @apply w-full bg-blue-300 border-2 border-blue-500 text-gray-800 text-sm rounded px-3 py-2 shadow-sm;
+}
+
+.alert.alert-success {
+    @apply bg-green-300 border-green-500;
+}
+
+.alert.alert-warning {
+    @apply bg-yellow-300 border-yellow-500;
+}
+
+.alert.alert-danger {
+    @apply bg-red-300 border-red-500;
+}
