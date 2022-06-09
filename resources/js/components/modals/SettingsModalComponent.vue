@@ -31,6 +31,7 @@
                     </h1>
                     <a
                         href="https://twitter.com/guessmynumbers"
+                        target="_blank"
                         class="focus:outline-none text-2xl underline text-gray-600 hover:text-gray-900 text-right"
                     >
                         Twitter
@@ -42,6 +43,7 @@
                     </h1>
                     <a
                         href="https://amzn.to/3GP2yt4"
+                        target="_blank"
                         class="focus:outline-none underline text-blue-600 hover:text-blue-900 text-right"
                     >
                         The Adventures of Rockford T. Honeypot
@@ -55,6 +57,7 @@
                         Created by
                         <a
                             class="focus:outline-none underline text-blue-600 hover:text-blue-900"
+                            target="_blank"
                             href="https://twitter.com/joshgottsegen"
                         >@JoshGottsegen</a>
                     </p>

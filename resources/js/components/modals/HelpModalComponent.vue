@@ -5,7 +5,7 @@
     >
         <template #title>
             <div class="text-center">
-                <img src="../../../assets/images/logo.jpeg" class="w-20 h-auto mx-auto"/>
+                <img :src="asset('images/logo.jpeg')" class="w-20 h-auto mx-auto"/>
 
             </div>
             How to Play
@@ -25,17 +25,17 @@
             </p>
 
             <p class="text-md my-8">
-                <img src="../../../assets/images/help_green.png" class="w-2/3 mx-auto" />
+                <img :src="asset('images/help_green.png')" class="w-2/3 mx-auto" />
                 <span class="font-bold">Green</span> indicates the number is in the proper spot.
             </p>
 
             <p class="text-md my-8">
-                <img src="../../../assets/images/help_yellow.png" class="w-2/3 mx-auto" />
+                <img :src="asset('images/help_yellow.png')" class="w-2/3 mx-auto" />
                 <span class="font-bold">Yellow</span> indicates the number is correct, but in the wrong spot.
             </p>
 
             <p class="text-md my-8">
-                <img src="../../../assets/images/help_double.png" class="w-2/3 mx-auto" />
+                <img :src="asset('images/help_double.png')" class="w-2/3 mx-auto" />
                 A <span class="font-bold">Purple</span> line indicates the number is used multiple times.
             </p>
 
