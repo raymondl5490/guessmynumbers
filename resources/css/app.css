@@ -19,7 +19,11 @@
 }
 
 .button, .btn {
-    @apply px-3 py-2 rounded shadow-sm bg-gray-500 hover:bg-gray-700 text-white w-full;
+    @apply px-3 py-2 rounded shadow-sm bg-gray-500 hover:bg-gray-700 text-white w-auto cursor-pointer;
+}
+
+.card .button {
+    @apply w-full;
 }
 
 .button.button-primary, .btn.btn-primary {
@@ -57,3 +61,8 @@
 .alert.alert-danger {
     @apply bg-red-300 border-red-500;
 }
+
+.label {
+    @apply block text-sm font-medium text-gray-700;
+}
+
