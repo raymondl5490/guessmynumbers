@@ -1,7 +1,7 @@
 # Guess My Numbers
 
 ## Introduction
-Guess My Numbers is a game designed by Josh  Gottsegen and developed by Tyler Pendleton. It involves a 3 x 3 grid 
+Guess My Numbers is a game designed by Josh  Gottsegen. It involves a 3 x 3 grid 
 of squares where each row represents a guess attempt and each column represents a number.
 
 Every 12 hours, the numbers will change. If a user successfully guesses the numbers, they will have the opportunity 
