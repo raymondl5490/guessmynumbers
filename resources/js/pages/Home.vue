@@ -6,7 +6,7 @@
             @open-statistics="onOpenStatistics"
             @open-settings="onOpenSettings"
         />
-        <GameComponent />
+        <GameComponent v-if="!loading" />
 
         <HelpModalComponent
             :show="showHelpModal"
@@ -44,12 +44,17 @@ export default {
     },
     data() {
         return {
+            loading: false,
+
             showHelpModal: false,
             showStatisticsModal: false,
             showSettingsModal: false,
         }
     },
     async created() {
+
+        this.loading = true;
+
         if (isEmpty(this.currentPlayer)) {
             await this.createPlayer();
             this.showHelpModal = true;
@@ -72,11 +77,21 @@ export default {
         await this.getPlayer(this.currentPlayer.id);
 
         await this.initializeBoard();
+
+        this.loading = false;
     },
     computed: {
         ...mapState(usePlayerStore, ['currentPlayer']),
         ...mapState(useAttemptStore, ['currentAttempt']),
         ...mapState(useGameStore, ['currentGame']),
+        ...mapState(useGuessStore, ['guesses']),
+    },
+    watch: {
+        guesses() {
+            if (this.guesses.length >= 3) {
+                this.showStatisticsModal = true;
+            }
+        },
     },
     methods: {
         ...mapActions(usePlayerStore, ['createPlayer', 'getPlayer']),
