@@ -1,6 +1,5 @@
 <template>
     <div>
-        <div>THE APP IS UPDATED!</div>
         <HeaderComponent
             class="mb-6 sm:mb-10 md:mb-20 lg:mb-40"
             @open-help="onOpenHelp"
@@ -53,6 +52,7 @@ export default {
     async created() {
         if (isEmpty(this.currentPlayer)) {
             await this.createPlayer();
+            this.showHelpModal = true;
         }
         if (isEmpty(this.currentGame)) {
             await this.getCurrentGame();

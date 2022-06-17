@@ -4,6 +4,7 @@
             <div
                 v-for="(row, index) in board"
                 class="flex flex-row"
+                :key="'board_row_' + index"
             >
                 <NumberSquareComponent
                     :guessed-number="row[0] ?? null"
