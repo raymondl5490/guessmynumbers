@@ -10,6 +10,7 @@
 import NumberUsageMixin from "../mixins/NumberUsageMixin";
 
 export default {
+    name: 'NumberSquareComponent',
     mixins: [NumberUsageMixin],
     props: {
         correctNumber: {

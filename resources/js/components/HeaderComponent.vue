@@ -9,7 +9,17 @@
             />
         </div>
         <div class="w-screen sm:w-full text-center">
-            <h1 class="text-gray-900 text-2xl sm:text-xl  md:text-2xl font-bold">GUESS <span class="text-green-600">MY</span> NUMBERS</h1>
+            <h1 class="mb-4 text-gray-900 text-3xl sm:text-xl  md:text-2xl font-bold">GUESS <span class="text-green-600">MY</span> NUMBERS</h1>
+            <p class="text-gray-500 text-sm">
+                SUBMMITED BY 
+                <span class="text-blue-900 font-bold">
+                    {{currentGame.author_name}}, {{currentGame.author_location}}
+                </span>
+                AT
+                <span class="text-blue-900 font-bold">
+                    {{(new Date(currentGame.created_at).toDateString())}}
+                </span>
+            </p>
         </div>
         <div class="text-right w-40">
             <IconComponent
@@ -27,8 +37,14 @@
 </template>
 <script>
 import {IconComponent} from "./ui";
+import {mapState} from 'pinia';
+import {useGameStore}from '../store'
+
 export default {
     components: {IconComponent},
+    computed: {
+        ...mapState(useGameStore, ['currentGame']),
+    },
     methods: {
         onHelpOpen() {
             this.$emit('open-help');

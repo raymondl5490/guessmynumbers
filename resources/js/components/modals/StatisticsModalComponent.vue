@@ -44,7 +44,7 @@
                 </div>
                 <div class="flex flex-col justify-center">
                     <button
-                        class="bg-green-600 hover:bg-green-900 rounded-md px-5 py-3 w-full border-0 focus:outline-none text-md text-white"
+                        class="bg-green-600 hover:bg-green-900 rounded-md px-5 py-3 w-full border-0 text-md text-white"
                     >
                        SHARE
                     </button>

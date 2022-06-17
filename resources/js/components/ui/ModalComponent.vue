@@ -19,7 +19,7 @@
                             class="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                             <div class="bg-white px-5 pt-0 pb-4 sm:p-6 sm:pb-4">
                                 <div class="mt-0 sm:mt-0 sm:ml-4">
-                                    <div class="text-right">
+                                    <div class="p-5 text-right">
                                         <IconComponent
                                             class="text-gray-600 hover:text-gray-900"
                                             icon="times"

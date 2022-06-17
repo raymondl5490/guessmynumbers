@@ -60,6 +60,7 @@ export default defineStore('guesses', {
             await this.saveGuess(playerStore.currentPlayer.id, attemptStore.currentAttempt.id, this.currentGuess);
         },
         removeNumberFromGuess() {
+            if (!this.guess.length) return;
             this.guess.pop();
             const gameStore = useGameStore();
             gameStore.removeNumberFromGameState(this.currentGuess.row - 1);

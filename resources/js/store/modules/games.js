@@ -29,7 +29,7 @@ export default defineStore('games', {
             this.board[row][column] = number;
         },
         removeNumberFromGameState(row) {
-            if (!isEmpty(this.finalNumber) || this.finalNumber === 0) {
+            if (!isEmpty(this.finalNumber)) { // Why checking this.finalNumber === 0
                 return;
             }
             this.board[row].pop();
