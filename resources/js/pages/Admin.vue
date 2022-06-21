@@ -82,7 +82,7 @@ export default {
         },
     },
     methods: {
-        ...mapActions(useGameStore, ['getAllGames']),
+        ...mapActions(useGameStore, ['getAllGames', 'removeGame']),
         formatDate(date) {
             if (!date) {
                 return;
@@ -99,9 +99,9 @@ export default {
             this.editingGameId = row.id;
             this.isVisibleGameDialogEdit = true;
         },
-        onRemoveClicked(index, row) {
-            console.log('remove');
-            console.log(index, row)
+        async onRemoveClicked(index, row) {
+            await this.removeGame(row.id);
+            await this.getAllGames();
         },
     }
 }
