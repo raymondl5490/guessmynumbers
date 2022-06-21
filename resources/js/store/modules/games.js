@@ -50,13 +50,14 @@ export default defineStore('games', {
             });
         },
         async createGame(payload) {
-            console.log({payload})
             return await gameApi.store(payload);
         },
         async updateGame(gameId, payload) {
-            console.log({gameId, payload})
             return await gameApi.update(gameId, payload);
-        }
+        },
+        async removeGame(gameId) {
+            await gameApi.remove(gameId);
+        },
     },
     persistedState: {
         persist: false,
