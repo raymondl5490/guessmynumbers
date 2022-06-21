@@ -7,11 +7,16 @@ import {createApp} from 'vue';
 import Home from "./pages/Home.vue";
 import Admin from "./pages/Admin.vue";
 
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+
 window.Vapor = require('laravel-vapor');
 const app = createApp({});
 const pinia = createPinia();
 pinia.use(createPersistedStatePlugin());
 app.use(pinia);
+
+app.use(ElementPlus)
 
 app.mixin({
     methods: {
