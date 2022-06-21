@@ -19,7 +19,10 @@ export default defineStore('games', {
         },
         finalNumber() {
             return this.board[2][2];
-        }
+        },
+        getGameById(store) {
+            return (gameId) => _.find(store.games, {'id': gameId})
+        },
     },
     actions: {
         async getAllGames() {

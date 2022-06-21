@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="Create Game">
+    <el-dialog :title="dialogType === 'create' ? 'Create Game' : 'Edit Game'">
         <el-form ref="formEl" :model="form" :rules="rules" label-width="140px" status-icon>
             <el-form-item label="Numbers">
                 <el-input-number v-model="form.number_one" :min="0" :max="9" controls-position="right" />
@@ -24,13 +24,15 @@
         </el-form>
         <template #footer>
             <span class="dialog-footer">
-                <el-button type="primary" @click="onSubmitClicked">Create</el-button>
+                <el-button type="primary" @click="onSubmitClicked">
+                    {{dialogType === 'create' ? 'Create' : 'Edit'}}
+                </el-button>
             </span>
         </template>
     </el-dialog>
 </template>
 <script>
-import { mapActions } from 'pinia';
+import { mapActions, mapState } from 'pinia';
 import { useGameStore } from '../../store';
 export default {
     name: 'GameDialog',
@@ -87,8 +89,16 @@ export default {
             },
         };
     },
+    computed: {
+        ...mapState(useGameStore, ['getGameById']),
+    },
+    watch: {
+        gameId() {
+            this.form = this.getGameById(this.gameId);
+        }
+    },
     methods: {
-        ...mapActions(useGameStore, ['getAllGames', 'createGame']),
+        ...mapActions(useGameStore, ['getAllGames', 'createGame', 'updateGame']),
 
         async onSubmitClicked() {
             const valid = await this.$refs.formEl.validate();
@@ -97,8 +107,12 @@ export default {
                 return;
             }
             console.log('submit', this.$refs.formEl)
-            await this.createGame(this.form);
-            this.isVisible = false;
+
+            if (this.dialogType === 'create') {
+                await this.createGame(this.form);
+            } else if (this.dialogType === 'edit') {
+                await this.updateGame(this.gameId, this.form);
+            }
             this.$emit('submitted');
             await this.getAllGames();
         },
