@@ -1,60 +1,70 @@
 <template>
     <div>
-        <div class="button max-w-fit ml-auto mr-8" @click="onCreateGame">Create Game</div>
-        <table-component
-            :data="games"
-            :fields="fields"
-            @row-clicked="onRowClicked"
-        >
-            <template #numbers="{ row: { number_one, number_two, number_three } }">
-                {{ number_one }} - {{ number_two }} - {{ number_three }}
-            </template>
-            <template #game_start="{ row: { game_start }}">
-                {{ formatDate(game_start) }}
-            </template>
-            <template #created_at="{ row: { created_at }}">
-                {{ formatDate(created_at) }}
-            </template>
-        </table-component>
-        <create-game-modal-component :show="showCreateGameModal" :game="selectedGame" @close="onClose"/>
+        <el-table :data="filteredDataOfTableSubmitted" style="width: 100%">
+            <el-table-column label="ID" prop="id" width="50px"/>
+            <el-table-column label="Numbers" width="100px">
+                <template #default="scope">
+                    {{scope.row.number_one}} - {{scope.row.number_two}} - {{scope.row.number_three}}
+                </template>
+            </el-table-column>
+            <el-table-column label="Author">
+                <template #default="scope">
+                    {{scope.row.author_name}}
+                    {{scope.row.author_location}}
+                    {{scope.row.author_email}}
+                </template>
+            </el-table-column>
+            <el-table-column label="Link">
+                <template #default="scope">
+                    {{scope.row.link_title}}
+                    {{scope.row.link}}
+                </template>
+            </el-table-column>
+            <el-table-column align="right">
+                <template #header>
+                    <el-row>
+                        <el-col :span="20">
+                            <el-input v-model="search" size="small" placeholder="Type to search" />
+                        </el-col>
+                        <el-col :span="4">
+                            <el-button size="small" type="primary" @click="isVisibleGameDialogCreate = true">Create</el-button>
+                        </el-col>
+                    </el-row>
+                </template>
+                <template #default="scope">
+                    <el-button size="small" type="primary" @click="onApproveClicked(scope.$index, scope.row)">Approve</el-button>
+                    <el-button size="small" type="success" @click="onEditClicked(scope.$index, scope.row)">Edit</el-button>
+                    <el-button size="small" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">Remove</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+
+        <game-dialog-create v-model="isVisibleGameDialogCreate" @submitted="isVisibleGameDialogCreate = false;"></game-dialog-create>
+
+        <game-dialog-edit v-model="isVisibleGameDialogEdit" :game-id="editingGameId" @submitted="isVisibleGameDialogEdit = false;"></game-dialog-edit>
+
     </div>
 </template>
 <script>
 import {mapActions, mapState} from "pinia";
 import {useGameStore} from "../store";
-import TableComponent from "../components/ui/TableComponent";
 import { parseISO, format } from 'date-fns'
-import ModalComponent from "../components/ui/ModalComponent";
-import CreateGameModalComponent from "../components/modals/CreateGameModalComponent";
+import GameDialogCreate from "../components/modals/GameDialogCreate.vue";
+import GameDialogEdit from "../components/modals/GameDialogEdit.vue";
 
 export default {
-    components: {ModalComponent, TableComponent, CreateGameModalComponent},
+    components: {
+        GameDialogCreate,
+        GameDialogEdit,
+    },
     data() {
         return {
-            fields: [{
-                name: 'numbers',
-                title: 'Numbers',
-            }, {
-                name: 'author_name',
-                title: 'Name',
-            }, {
-                name: 'author_location',
-                title: 'Location',
-            }, {
-                name: 'author_email',
-                title: 'Email',
-            }, {
-                name: "link",
-                title: 'Link',
-            }, {
-                name: 'game_start',
-                title: 'Game Start',
-            }, {
-                name: 'created_at',
-                title: 'Date Submitted',
-            }],
-            showCreateGameModal: false,
+            isVisibleGameDialogCreate: false,
+            isVisibleGameDialogEdit: false,
+            editingGameId: 0,
+
             selectedGame: null,
+            search: '',
         };
     },
     created() {
@@ -62,6 +72,14 @@ export default {
     },
     computed: {
         ...mapState(useGameStore, ['games']),
+        filteredDataOfTableSubmitted() {
+            return this.games.filter(
+                (data) =>
+                !this.search ||
+                (data.author_name + data.author_email + data.author_location + data.link_title + data.link)
+                .toLowerCase().includes(this.search.toLowerCase())
+            )
+        },
     },
     methods: {
         ...mapActions(useGameStore, ['getAllGames']),
@@ -73,17 +91,18 @@ export default {
             let parsedDate = parseISO(date);
             return format(parsedDate, 'MMM do, yyyy h:mm aaa');
         },
-        onCreateGame() {
-            this.showCreateGameModal = true
+        onApproveClicked(index, row) {
+            console.log('approve');
+            console.log(index, row)
         },
-        onClose() {
-            this.showCreateGameModal = false
-            this.selectedGame = null;
+        onEditClicked(index, row) {
+            this.editingGameId = row.id;
+            this.isVisibleGameDialogEdit = true;
         },
-        onRowClicked(data) {
-            this.selectedGame = data;
-            this.showCreateGameModal = true;
-        }
+        onRemoveClicked(index, row) {
+            console.log('remove');
+            console.log(index, row)
+        },
     }
 }
 </script>
