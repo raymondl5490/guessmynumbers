@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('games', function (Blueprint $table) {
             //
-            $table->string('live_on')->after('number_three');
+            $table->string('live_on')->after('number_three')->nullable();
         });
     }
 
