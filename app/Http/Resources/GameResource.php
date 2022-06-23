@@ -23,13 +23,12 @@ class GameResource extends JsonResource
             'number_one' => $this->number_one,
             'number_two' => $this->number_two,
             'number_three' => $this->number_three,
+            'live_on' => $this->live_on,
             'author_name' => $this->author_name,
             'author_location' => $this->author_location,
             'author_email' => $this->author_email,
             'link' => $this->link,
             'link_title' => $this->link_title,
-            'game_start' => $this->game_start,
-            'game_end' => $this->game_end,
             'created_at' => $this->created_at,
         ];
     }
