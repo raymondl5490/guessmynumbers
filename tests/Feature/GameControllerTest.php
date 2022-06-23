@@ -45,13 +45,12 @@ class GameControllerTest extends TestCase
                 'number_one',
                 'number_two',
                 'number_three',
+                'live_on',
                 'author_name',
                 'author_location',
                 'author_email',
                 'link',
                 'link_title',
-                'game_start',
-                'game_end',
             ],
         ]);
     }
@@ -64,13 +63,12 @@ class GameControllerTest extends TestCase
             'number_one' => 5,
             'number_two' => 4,
             'number_three' => 3,
+            'live_on' => '2022-6-23 pm',
             'author_name' => 'Test User',
             'author_location' => 'USA',
             'author_email' => 'text@xyz.com',
             'link' => 'https://google.com',
             'link_title' => 'Google',
-            'game_start' => null,
-            'game_end' => null,
         ];
 
         $user = User::factory()->create();
@@ -85,13 +83,12 @@ class GameControllerTest extends TestCase
             'number_one',
             'number_two',
             'number_three',
+            'live_on',
             'author_name',
             'author_location',
             'author_email',
             'link',
             'link_title',
-            'game_start',
-            'game_end',
         ]), $updatedAttributes);
     }
 
@@ -115,13 +112,12 @@ class GameControllerTest extends TestCase
                 'number_one',
                 'number_two',
                 'number_three',
+                'live_on',
                 'author_name',
                 'author_location',
                 'author_email',
                 'link',
                 'link_title',
-                'game_start',
-                'game_end',
             ],
         ]);
     }

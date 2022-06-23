@@ -15,13 +15,12 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  * @property int $number_one
  * @property int $number_two
  * @property int $number_three
+ * @property string $live_on
  * @property string $author_name
  * @property string|null $author_location
  * @property string|null $author_email
  * @property string|null $link
  * @property string|null $link_title
- * @property Carbon|null $game_start
- * @property Carbon|null $game_end
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
@@ -36,13 +35,12 @@ class Game extends Model
         'number_one',
         'number_two',
         'number_three',
+        'live_on',
         'author_name',
         'author_location',
         'author_email',
         'link',
         'link_title',
-        'game_start',
-        'game_end',
     ];
 
     /**
@@ -67,9 +65,7 @@ class Game extends Model
      */
     public function scopeCurrentlyActive(Builder $query): Builder
     {
-        $now = now();
         return $query
-            ->where('game_start', '<=', $now)
-            ->where('game_end', '>', $now);
+            ->where('live_on', '=', Carbon::now('America/Los_Angeles')->format('Y-m-d a'));
     }
 }

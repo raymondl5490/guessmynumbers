@@ -21,13 +21,12 @@ class GameFactory extends Factory
             'number_one' => $this->faker->numberBetween(0, 9),
             'number_two' => $this->faker->numberBetween(0, 9),
             'number_three' => $this->faker->numberBetween(0, 9),
+            'live_on' => null,
             'author_name' => $this->faker->name(),
             'author_location' => $this->faker->country(),
             'author_email' => $this->faker->email(),
             'link' => $this->faker->url(),
             'link_title' => $this->faker->sentence(3),
-            'game_start' => null,
-            'game_end' => null,
         ];
     }
 
@@ -37,16 +36,8 @@ class GameFactory extends Factory
     public function active(): GameFactory
     {
         return $this->state(function ($attributes) {
-            $now = Carbon::now();
-            if ($now->hour > 12) {
-                $now->hour(12);
-            } else {
-                $now->hour(0);
-            }
-
             return [
-                'game_start' => $now,
-                'game_end' => $now->copy()->addHours(12),
+                'live_on' => Carbon::now('America/Los_Angeles'),
             ];
         });
     }

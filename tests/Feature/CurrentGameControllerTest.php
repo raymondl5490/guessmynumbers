@@ -26,13 +26,12 @@ class CurrentGameControllerTest extends TestCase
                 'number_one',
                 'number_two',
                 'number_three',
+                'live_on',
                 'author_name',
                 'author_location',
                 'author_email',
                 'link',
                 'link_title',
-                'game_start',
-                'game_end',
             ]
         ]);
     }
