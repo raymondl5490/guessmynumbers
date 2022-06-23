@@ -35,6 +35,16 @@ Please install Docker Desktop to get started.
 9. Run frontend `sail yarn watch`
 10. Navigate to the application at: http://localhost/
 
+## Local Development without docker
+
+1. Install node 14.17.3, yarn 1.22.18, npm 6.14.13, PHP 8.1.7, Composer 2.3.7
+2. composer install
+3. yarn install
+4. Install Xampp(or Mamp for Max) and run MySQL server.
+5. config .env from .env.example (remember to use 127.0.0.1 instead of localhost)
+4. php artisan serve
+5. yarn hot
+
 ## Technologies Used
 
 -   Laravel 9.x
