@@ -41,11 +41,13 @@ Route::prefix('players/{player}')->group(function() {
     });
 });
 
-Route::prefix('games')->group(function() {
-    Route::get('/current', CurrentGameController::class)->name('games.current');
-});
-
+Route::get('/games/current', CurrentGameController::class)->name('games.current');
 
 Route::middleware('auth')->group(function() {
+    Route::prefix('games')->group(function() {
+        Route::get('/submitted', [GameController::class, 'submitted'])->name('games.submitted');
+        Route::get('/queued', [GameController::class, 'queued'])->name('games.queued');
+        Route::get('/finished', [GameController::class, 'finished'])->name('games.finished');
+    });
     Route::apiResource('games', GameController::class);
 });
