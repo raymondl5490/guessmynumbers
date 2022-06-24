@@ -32,8 +32,10 @@
     </el-dialog>
 </template>
 <script>
-import { mapActions, mapState } from 'pinia';
+import { mapActions } from 'pinia';
 import { useGameStore } from '../../store';
+import { gameApi } from '../../api';
+
 export default {
     name: 'GameDialog',
     emits: ['submitted'],
@@ -41,6 +43,9 @@ export default {
         dialogType: {
             type: String,
             required: true,
+            validator: function (value) {
+                return _.includes(['create', 'edit'], value);
+            },
         },
         gameId: {
             type: Number,
@@ -89,16 +94,15 @@ export default {
             },
         };
     },
-    computed: {
-        ...mapState(useGameStore, ['getGameById']),
-    },
     watch: {
-        gameId() {
-            this.form = this.getGameById(this.gameId);
+        async gameId() {
+            if (this.dialogType === 'edit') {
+                this.form = await gameApi.getGameById(this.gameId);
+            }
         }
     },
     methods: {
-        ...mapActions(useGameStore, ['getAllGames', 'createGame', 'updateGame']),
+        ...mapActions(useGameStore, ['createGame', 'updateGame']),
 
         async onSubmitClicked() {
             const valid = await this.$refs.formEl.validate();
@@ -114,7 +118,6 @@ export default {
                 await this.updateGame(this.gameId, this.form);
             }
             this.$emit('submitted');
-            await this.getAllGames();
         },
     },
 }

@@ -6,6 +6,9 @@ import {forEach, isEmpty} from "lodash";
 export default defineStore('games', {
     state: () => ({
         games: [],
+        submittedGames: [],
+        queuedGames: [],
+        finishedGames: [],
         currentGame: {},
         board: [
             [],
@@ -27,6 +30,22 @@ export default defineStore('games', {
     actions: {
         async getAllGames() {
             this.games = await gameApi.index();
+        },
+        async refreshGames() {
+            await Promise.all([
+                this.getSubmittedGames(),
+                this.getQueuedGames(),
+                this.getFinishedGames(),
+            ]);
+        },
+        async getSubmittedGames() {
+            this.submittedGames = await gameApi.submitted();
+        },
+        async getQueuedGames() {
+            this.queuedGames = await gameApi.queued();
+        },
+        async getFinishedGames() {
+            this.finishedGames = await gameApi.finished();
         },
         addNumberToGameState(row, column, number) {
             this.board[row][column] = number;
@@ -50,13 +69,16 @@ export default defineStore('games', {
             });
         },
         async createGame(payload) {
-            return await gameApi.store(payload);
+            await gameApi.store(payload);
+            await this.getSubmittedGames();
         },
         async updateGame(gameId, payload) {
-            return await gameApi.update(gameId, payload);
+            await gameApi.update(gameId, payload);
+            await this.refreshGames();
         },
         async removeGame(gameId) {
             await gameApi.remove(gameId);
+            await this.refreshGames();
         },
     },
     persistedState: {
