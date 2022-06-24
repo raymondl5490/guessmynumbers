@@ -30,19 +30,19 @@ Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->na
 
 Route::post('players', [PlayerController::class, 'store'])->name('players.store');
 
-Route::prefix('players/{player}/')->group(function() {
-    Route::get('', [PlayerController::class, 'show'])->name('players.show');
-    Route::post('attempts', [AttemptController::class, 'store'])->name('attempts.store');
-    Route::get('attempts/current', PlayerCurrentAttemptController::class)->name('attempts.current');
+Route::prefix('players/{player}')->group(function() {
+    Route::get('/', [PlayerController::class, 'show'])->name('players.show');
+    Route::post('/attempts', [AttemptController::class, 'store'])->name('attempts.store');
+    Route::get('/attempts/current', PlayerCurrentAttemptController::class)->name('attempts.current');
 
-    Route::prefix('attempts/{attempt}')->group(function() {
-        Route::get('guesses', [AttemptGuessController::class, 'index'])->name('attempts.guesses.index');
-        Route::post('guesses', [GuessController::class, 'store'])->name('guesses.store');
+    Route::prefix('/attempts/{attempt}')->group(function() {
+        Route::get('/guesses', [AttemptGuessController::class, 'index'])->name('attempts.guesses.index');
+        Route::post('/guesses', [GuessController::class, 'store'])->name('guesses.store');
     });
 });
 
 Route::prefix('games')->group(function() {
-    Route::get('current', CurrentGameController::class)->name('games.current');
+    Route::get('/current', CurrentGameController::class)->name('games.current');
 });
 
 
