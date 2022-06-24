@@ -43,7 +43,7 @@ Please install Docker Desktop to get started.
 4. Install Xampp(or Mamp for Max) and run MySQL server.
 5. config .env from .env.example (remember to use 127.0.0.1 instead of localhost)
 4. php artisan serve
-5. yarn hot
+5. yarn watch
 
 ## Technologies Used
 
