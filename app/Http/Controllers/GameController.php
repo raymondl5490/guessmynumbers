@@ -6,6 +6,7 @@ use App\Http\Requests\CreateGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Http\Resources\GameResource;
 use App\Models\Game;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
@@ -17,6 +18,41 @@ class GameController extends Controller
     public function index(): AnonymousResourceCollection
     {
         return GameResource::collection(Game::all());
+    }
+
+    /**
+     * @return AnonymousResourceCollection
+     */
+    public function submitted(): AnonymousResourceCollection
+    {
+        $submittedGames = Game::whereNull('live_on')
+                ->orderBy('created_at', 'desc')
+                ->get();
+        return GameResource::collection($submittedGames);
+    }
+
+    /**
+     * @return AnonymousResourceCollection
+     */
+    public function queued(): AnonymousResourceCollection
+    {
+        $now = Carbon::now('America/Los_Angeles')->format('Y-m-d a');
+        $queuedGames = Game::where('live_on', '>', $now)
+                ->orderBy('live_on', 'desc')
+                ->get();
+        return GameResource::collection($queuedGames);
+    }
+
+    /**
+     * @return AnonymousResourceCollection
+     */
+    public function finished(): AnonymousResourceCollection
+    {
+        $now = Carbon::now('America/Los_Angeles')->format('Y-m-d a');
+        $finishedGames = Game::where('live_on', '<', $now)
+                ->orderBy('live_on', 'desc')
+                ->get();
+        return GameResource::collection($finishedGames);
     }
 
     /**
