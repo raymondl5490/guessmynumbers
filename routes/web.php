@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function() {
         Route::get('/submitted', [GameController::class, 'submitted'])->name('games.submitted');
         Route::get('/queued', [GameController::class, 'queued'])->name('games.queued');
         Route::get('/finished', [GameController::class, 'finished'])->name('games.finished');
+        Route::patch('/{id}/approve', [GameController::class, 'approve'])->name('games.approve');
     });
     Route::apiResource('games', GameController::class);
 });

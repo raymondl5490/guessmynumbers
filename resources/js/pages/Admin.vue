@@ -163,10 +163,10 @@ export default {
         },
     },
     methods: {
-        ...mapActions(useGameStore, ['getCurrentGame', 'refreshGames', 'removeGame']),
-        onApproveClicked(index, row) {
-            console.log('approve');
-            console.log(index, row)
+        ...mapActions(useGameStore, ['getCurrentGame', 'refreshGames', 'approveGame', 'removeGame']),
+        async onApproveClicked(index, row) {
+            await this.approveGame(row.id);
+
         },
         onEditClicked(index, row) {
             this.editingGameId = row.id;

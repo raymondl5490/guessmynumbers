@@ -48,6 +48,13 @@ export default {
             console.error({error});
         })
     },
+    async approve(gameId) {
+        return await axios.patch(`games/${gameId}/approve`).then(response => {
+            return response.data.data;
+        }).catch(error => {
+            console.error({error});
+        })
+    },
     async remove(gameId) {
         await axios.delete(`games/${gameId}`).then(response => {
             return response.data.data;
