@@ -10,6 +10,16 @@ use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
+function nextLiveOn($current) {
+    if (substr($current, 11) == 'am') {
+        return substr($current, 0, -2) . 'pm';
+    } else {
+        $str = substr($current, 0, -3);
+        $dt = Carbon::createFromFormat('Y-m-d', $str);
+        return $dt->addDay()->format('Y-m-d') . ' am';
+    }
+}
+
 class GameController extends Controller
 {
     /**
@@ -71,6 +81,33 @@ class GameController extends Controller
     public function store(CreateGameRequest $gameRequest): GameResource
     {
         $game = new Game($gameRequest->validated());
+        $game->save();
+
+        return new GameResource($game);
+    }
+
+    /**
+     * @param $id
+     * @return GameResource
+     */
+    public function approve($id): GameResource
+    {
+        $now = Carbon::now('America/Los_Angeles')->format('Y-m-d a');
+
+        $queuedGames = Game::where('live_on', '>=', $now)->get();
+        $queuedLiveOns = [];
+        foreach ($queuedGames as $queuedGame) {
+            array_push($queuedLiveOns, $queuedGame->live_on);
+        }
+
+        $availableLiveOn = $now;
+        while (in_array($availableLiveOn, $queuedLiveOns)) {
+            $availableLiveOn = nextLiveOn($availableLiveOn);
+        }
+
+        $game = Game::find($id);
+        $game->live_on = $availableLiveOn;
+
         $game->save();
 
         return new GameResource($game);
