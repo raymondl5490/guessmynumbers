@@ -1,43 +1,121 @@
 <template>
-    <div>
-        <el-table :data="filteredDataOfTableSubmitted" style="width: 100%">
-            <el-table-column label="ID" prop="id" width="50px"/>
-            <el-table-column label="Numbers" width="100px">
-                <template #default="scope">
-                    {{scope.row.number_one}} - {{scope.row.number_two}} - {{scope.row.number_three}}
-                </template>
-            </el-table-column>
-            <el-table-column label="Author">
-                <template #default="scope">
-                    {{scope.row.author_name}}
-                    {{scope.row.author_location}}
-                    {{scope.row.author_email}}
-                </template>
-            </el-table-column>
-            <el-table-column label="Link">
-                <template #default="scope">
-                    {{scope.row.link_title}}
-                    {{scope.row.link}}
-                </template>
-            </el-table-column>
-            <el-table-column align="right">
-                <template #header>
-                    <el-row>
-                        <el-col :span="20">
-                            <el-input v-model="search" size="small" placeholder="Type to search" />
-                        </el-col>
-                        <el-col :span="4">
-                            <el-button size="small" type="primary" @click="isVisibleGameDialogCreate = true">Create</el-button>
-                        </el-col>
-                    </el-row>
-                </template>
-                <template #default="scope">
-                    <el-button size="small" type="primary" @click="onApproveClicked(scope.$index, scope.row)">Approve</el-button>
-                    <el-button size="small" type="success" @click="onEditClicked(scope.$index, scope.row)">Edit</el-button>
-                    <el-button size="small" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">Remove</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
+    <div class="container mx-auto">
+        <div>{{currentGame.author_name}}</div>
+
+        <el-collapse :model-value="['submitted', 'queued']">
+            <el-collapse-item title="Submitted Games" name="submitted">
+                <el-table :data="filteredSubmittedGames">
+                    <el-table-column label="ID" prop="id" width="50px"/>
+                    <el-table-column label="Numbers" width="100px">
+                        <template #default="scope">
+                            {{scope.row.number_one}} - {{scope.row.number_two}} - {{scope.row.number_three}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="Author">
+                        <template #default="scope">
+                            <p>{{scope.row.author_name}}</p>
+                            <p>{{scope.row.author_location}}</p>
+                            <el-link :href="'mailto:'+ scope.row.author_email" target="_blank" type="primary">
+                                {{scope.row.author_email}}
+                            </el-link>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="Link">
+                        <template #default="scope">
+                            <el-link :href="scope.row.link" target="_blank" type="primary">{{scope.row.link_title}}</el-link>
+                        </template>
+                    </el-table-column>
+                    <el-table-column align="right">
+                        <template #header>
+                            <el-row>
+                                <el-col :span="20">
+                                    <el-input v-model="search" size="small" placeholder="Type to search" />
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-button size="small" type="primary" @click="isVisibleGameDialogCreate = true">Create</el-button>
+                                </el-col>
+                            </el-row>
+                        </template>
+                        <template #default="scope">
+                            <el-button size="small" type="primary" @click="onApproveClicked(scope.$index, scope.row)">Approve</el-button>
+                            <el-button size="small" type="success" @click="onEditClicked(scope.$index, scope.row)">Edit</el-button>
+                            <el-button size="small" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">Remove</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-collapse-item>
+
+            <el-collapse-item title="Queued Games" name="queued">
+                <el-table :data="queuedGames">
+                    <el-table-column label="ID" prop="id" width="50px"/>
+                    <el-table-column label="Numbers" width="100px">
+                        <template #default="scope">
+                            {{scope.row.number_one}} - {{scope.row.number_two}} - {{scope.row.number_three}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="Author">
+                        <template #default="scope">
+                            <p>{{scope.row.author_name}}</p>
+                            <p>{{scope.row.author_location}}</p>
+                            <el-link :href="'mailto:'+ scope.row.author_email" target="_blank" type="primary">
+                                {{scope.row.author_email}}
+                            </el-link>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="Link">
+                        <template #default="scope">
+                            <el-link :href="scope.row.link" target="_blank" type="primary">{{scope.row.link_title}}</el-link>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="Live on">
+                        <template #default="scope">
+                            {{scope.row.live_on}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column align="right">
+                        <template #default="scope">
+                            <el-button size="small" type="success" @click="onEditClicked(scope.$index, scope.row)">Edit</el-button>
+                            <el-button size="small" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">Remove</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-collapse-item>
+
+            <el-collapse-item title="Finished Games" name="finished">
+                <el-table :data="finishedGames">
+                    <el-table-column label="ID" prop="id" width="50px"/>
+                    <el-table-column label="Numbers" width="100px">
+                        <template #default="scope">
+                            {{scope.row.number_one}} - {{scope.row.number_two}} - {{scope.row.number_three}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="Author">
+                        <template #default="scope">
+                            <p>{{scope.row.author_name}}</p>
+                            <p>{{scope.row.author_location}}</p>
+                            <el-link :href="'mailto:'+ scope.row.author_email" target="_blank" type="primary">
+                                {{scope.row.author_email}}
+                            </el-link>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="Link">
+                        <template #default="scope">
+                            <el-link :href="scope.row.link" target="_blank" type="primary">{{scope.row.link_title}}</el-link>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="Live on">
+                        <template #default="scope">
+                            {{scope.row.live_on}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column align="right">
+                        <template #default="scope">
+                            <el-button size="small" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">Remove</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-collapse-item>
+        </el-collapse>
 
         <game-dialog-create v-model="isVisibleGameDialogCreate" @submitted="isVisibleGameDialogCreate = false;"></game-dialog-create>
 
@@ -67,13 +145,17 @@ export default {
             search: '',
         };
     },
-    created() {
-        this.getAllGames();
+    async created() {
+        await Promise.all([
+            this.getCurrentGame(),
+            this.refreshGames(),
+        ]);
     },
+
     computed: {
-        ...mapState(useGameStore, ['games']),
-        filteredDataOfTableSubmitted() {
-            return this.games.filter(
+        ...mapState(useGameStore, ['currentGame', 'submittedGames', 'queuedGames', 'finishedGames']),
+        filteredSubmittedGames() {
+            return this.submittedGames.filter(
                 (data) =>
                 !this.search ||
                 (data.author_name + data.author_email + data.author_location + data.link_title + data.link)
@@ -82,7 +164,7 @@ export default {
         },
     },
     methods: {
-        ...mapActions(useGameStore, ['getAllGames', 'removeGame']),
+        ...mapActions(useGameStore, ['getCurrentGame', 'refreshGames', 'removeGame']),
         formatDate(date) {
             if (!date) {
                 return;
@@ -101,7 +183,6 @@ export default {
         },
         async onRemoveClicked(index, row) {
             await this.removeGame(row.id);
-            await this.getAllGames();
         },
     }
 }
