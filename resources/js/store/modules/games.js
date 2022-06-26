@@ -2,6 +2,7 @@ import {currentGameApi, gameApi} from '../../api'
 import {defineStore} from "pinia";
 import {useGuessStore} from "../index";
 import {forEach, isEmpty} from "lodash";
+import {nextLiveOn} from '../../utils';
 
 export default defineStore('games', {
     state: () => ({
@@ -83,6 +84,29 @@ export default defineStore('games', {
         async removeGame(gameId) {
             await gameApi.remove(gameId);
             await this.refreshGames();
+        },
+        async reorderGames(oldIndex, newIndex) {
+            const queuedGames = this.queuedGames;
+            const oldItem = queuedGames[oldIndex];
+            queuedGames.splice(oldIndex, 1);
+            queuedGames.splice(newIndex, 0, oldItem);
+
+            let now = this.currentGame.live_on;
+
+            for (let i = queuedGames.length - 1; i >= 0; i--) {
+                now = nextLiveOn(now);
+                queuedGames[i].new_live_on = now;
+            }
+
+            await Promise.all(
+                _.map(queuedGames, async (game) =>
+                    gameApi.updateLiveOn(game.id, {
+                        live_on: game.new_live_on,
+                    })
+                )
+            );
+
+            await this.getQueuedGames();
         },
     },
     persistedState: {

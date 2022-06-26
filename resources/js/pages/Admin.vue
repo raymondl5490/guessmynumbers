@@ -45,7 +45,7 @@
             </el-collapse-item>
 
             <el-collapse-item title="Queued Games" name="queued">
-                <el-table :data="queuedGames">
+                <el-table v-loading="queuedLoading" id="queued-games-table" :data="queuedGames" :key="queuedTableKey">
                     <el-table-column label="ID" fixed prop="id" width="50px"/>
                     <el-table-column label="Numbers" fixed width="100px">
                         <template #default="scope">
@@ -128,6 +128,9 @@ import {useGameStore} from "../store";
 import { parseISO, format } from 'date-fns'
 import GameDialogCreate from "../components/modals/GameDialogCreate.vue";
 import GameDialogEdit from "../components/modals/GameDialogEdit.vue";
+import Sortable from 'sortablejs';
+import { v4 as uuidv4 } from 'uuid';
+import { nextTick } from "vue";
 
 export default {
     components: {
@@ -140,8 +143,12 @@ export default {
             isVisibleGameDialogEdit: false,
             editingGameId: 0,
 
+            queuedLoading: false,
+
             selectedGame: null,
             search: '',
+            sortable: null,
+            queuedTableKey: 'queued_games_table_',
         };
     },
     async created() {
@@ -150,7 +157,9 @@ export default {
             this.refreshGames(),
         ]);
     },
-
+    mounted() {
+        this.initSortable();
+    },
     computed: {
         ...mapState(useGameStore, ['currentGame', 'submittedGames', 'queuedGames', 'finishedGames']),
         filteredSubmittedGames() {
@@ -163,7 +172,24 @@ export default {
         },
     },
     methods: {
-        ...mapActions(useGameStore, ['getCurrentGame', 'refreshGames', 'approveGame', 'removeGame']),
+        ...mapActions(useGameStore, ['getCurrentGame', 'refreshGames', 'approveGame', 'removeGame', 'reorderGames']),
+        initSortable() {
+            const el = document.querySelector('#queued-games-table tbody');
+            this.sortable = Sortable.create(el, {
+                animation: 180,
+                delay: 0,
+                onEnd: async evt => {
+                    if (evt.oldIndex === evt.newIndex) return;
+                    this.queuedLoading = true;
+                    await this.reorderGames(evt.oldIndex, evt.newIndex);
+                    this.queuedLoading = false;
+                    this.queuedTableKey = 'queued_games_table_' + uuidv4();
+                    // location.reload();
+                    await nextTick();
+                    this.initSortable();
+                }
+            });
+        },
         async onApproveClicked(index, row) {
             await this.approveGame(row.id);
 

@@ -9,6 +9,7 @@ use App\Models\Game;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 
 function nextLiveOn($current) {
     if (substr($current, 11) == 'am') {
@@ -121,6 +122,21 @@ class GameController extends Controller
     public function update(UpdateGameRequest $request, Game $game): Response
     {
         $game->fill($request->validated());
+        $game->save();
+
+        return response()->noContent();
+    }
+
+    /**
+     * @param Request $request
+     * @param string $id
+     * @return Response
+     */
+    public function updateLiveOn(Request $request, $id): Response
+    {
+        $liveOn = $request->input('live_on');
+        $game = Game::find($id);
+        $game->live_on = $liveOn;
         $game->save();
 
         return response()->noContent();
