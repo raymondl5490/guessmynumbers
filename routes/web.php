@@ -49,6 +49,7 @@ Route::middleware('auth')->group(function() {
         Route::get('/queued', [GameController::class, 'queued'])->name('games.queued');
         Route::get('/finished', [GameController::class, 'finished'])->name('games.finished');
         Route::patch('/{id}/approve', [GameController::class, 'approve'])->name('games.approve');
+        Route::patch('/{id}/live-on', [GameController::class, 'updateLiveOn'])->name('games.update_live_on');
     });
     Route::apiResource('games', GameController::class);
 });
