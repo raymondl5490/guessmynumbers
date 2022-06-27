@@ -1,8 +1,28 @@
 <template>
     <div class="container mx-auto">
-        <div>{{currentGame.author_name}}</div>
+        <div class="flex items-center justify-center">
+            <p class="m-4 text-4xl md:text-8xl">
+                {{currentGame.number_one}} - {{currentGame.number_two}} - {{currentGame.number_three}}
+            </p>
+        </div>
 
-        <el-collapse :model-value="['submitted', 'queued']">
+        <div class="grid grid-cols-1 gap-2 p-4 m-8 border-2 rounded-md shadow-sm md:grid-cols-2 md:gap-4">
+            <div class="text-center">Players This Round: #5555</div>
+            <div class="text-center">Winners This Round: #1124</div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-2 p-4 m-8 border-2 rounded-md shadow-sm md:grid-cols-2 md:gap-4">
+            <div class="text-center">Author Name: <span class="font-bold text-blue-900">{{currentGame.author_name}}</span></div>
+            <div class="text-center">Author Location: <span class="font-bold text-blue-900">{{currentGame.author_location}}</span></div>
+            <div class="text-center">Author Email: <span class="font-bold text-blue-900">{{currentGame.author_email}}</span></div>
+            <div class="text-center">Author Link: 
+                <el-link :href="currentGame.link" target="_blank" type="primary">
+                    {{currentGame.link_title}}
+                </el-link>
+            </div>
+        </div>
+
+        <el-collapse :model-value="['submitted', 'queued']" class="p-4 m-8 text-center border-2 rounded-md shadow-sm">
             <el-collapse-item title="Submitted Games" name="submitted">
                 <template #title>
                     <div class="flex items-center content-center justify-between w-full">
@@ -31,14 +51,22 @@
                             <el-link :href="scope.row.link" target="_blank" type="primary">{{scope.row.link_title}}</el-link>
                         </template>
                     </el-table-column>
-                    <el-table-column fixed="right">
+                    <el-table-column fixed="right" width="100">
                         <template #header>
                             <el-input v-model="search" size="small" placeholder="Type to search" />
                         </template>
                         <template #default="scope">
-                            <el-button size="small" type="primary" @click="onApproveClicked(scope.$index, scope.row)">Approve</el-button>
-                            <el-button size="small" type="success" @click="onEditClicked(scope.$index, scope.row)">Edit</el-button>
-                            <el-button size="small" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">Remove</el-button>
+                            <div class="grid grid-cols-1 gap-0">
+                                <div>
+                                    <el-button size="small" class="w-full" type="primary" @click="onApproveClicked(scope.$index, scope.row)">Approve</el-button>
+                                </div>
+                                <div>
+                                    <el-button size="small" class="w-full" type="success" @click="onEditClicked(scope.$index, scope.row)">Edit</el-button>
+                                </div>
+                                <div>
+                                    <el-button size="small" class="w-full" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">Remove</el-button>
+                                </div>
+                            </div>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -71,10 +99,16 @@
                             {{scope.row.live_on}}
                         </template>
                     </el-table-column>
-                    <el-table-column fixed="right">
+                    <el-table-column fixed="right" width="100">
                         <template #default="scope">
-                            <el-button size="small" type="success" @click="onEditClicked(scope.$index, scope.row)">Edit</el-button>
-                            <el-button size="small" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">Remove</el-button>
+                            <div class="grid grid-cols-1 gap-0">
+                                <div>
+                                    <el-button size="small" class="w-full" type="success" @click="onEditClicked(scope.$index, scope.row)">Edit</el-button>
+                                </div>
+                                <div>
+                                    <el-button size="small" class="w-full" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">Remove</el-button>
+                                </div>
+                            </div>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -107,9 +141,13 @@
                             {{scope.row.live_on}}
                         </template>
                     </el-table-column>
-                    <el-table-column fixed="right">
+                    <el-table-column fixed="right" width="100">
                         <template #default="scope">
-                            <el-button size="small" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">Remove</el-button>
+                            <div class="grid grid-cols-1 gap-0">
+                                <div>
+                                    <el-button size="small" class="w-full" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">Remove</el-button>
+                                </div>
+                            </div>
                         </template>
                     </el-table-column>
                 </el-table>
