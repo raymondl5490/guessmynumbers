@@ -1,6 +1,6 @@
 <template>
     <el-dialog :title="dialogType === 'create' ? 'Create Game' : 'Edit Game'">
-        <el-form ref="formEl" :model="form" :rules="rules" label-width="140px" status-icon>
+        <el-form ref="formEl" :model="form" :rules="rules" label-width="140px" status-icon label-position="top">
             <el-form-item label="Numbers">
                 <el-input-number v-model="form.number_one" :min="0" :max="9" controls-position="right" />
                 <el-input-number v-model="form.number_two" :min="0" :max="9" controls-position="right" />

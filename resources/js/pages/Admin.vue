@@ -1,7 +1,7 @@
 <template>
     <div class="container mx-auto">
         <div class="flex items-center justify-center">
-            <p class="m-4 text-4xl md:text-8xl">
+            <p class="m-4 text-6xl md:text-8xl">
                 {{currentGame.number_one}} - {{currentGame.number_two}} - {{currentGame.number_three}}
             </p>
         </div>
