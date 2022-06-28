@@ -7,8 +7,8 @@
         </div>
 
         <div class="grid grid-cols-1 gap-2 p-4 m-8 border-2 rounded-md shadow-sm md:grid-cols-2 md:gap-4">
-            <div class="text-center">Players This Round: #5555</div>
-            <div class="text-center">Winners This Round: #1124</div>
+            <div class="text-center">Players This Round: #<span class="font-bold text-blue-900">{{currentGame.number_of_attempts}}</span></div>
+            <div class="text-center">Winners This Round: #<span class="font-bold text-blue-900">{{currentGame.number_of_wons}} - {{currentRoundWinPercentage}}%</span></div>
         </div>
 
         <div class="grid grid-cols-1 gap-2 p-4 m-8 border-2 rounded-md shadow-sm md:grid-cols-2 md:gap-4">
@@ -207,6 +207,12 @@ export default {
                 (data.author_name + data.author_email + data.author_location + data.link_title + data.link)
                 .toLowerCase().includes(this.search.toLowerCase())
             )
+        },
+        currentRoundWinPercentage() {
+            const number_of_attempts = this.currentGame.number_of_attempts;
+            const number_of_wons = this.currentGame.number_of_wons;
+            if (!number_of_attempts) return 0;
+            return _.max(_.round(number_of_wons / number_of_attempts * 100, 0), 100);
         },
     },
     methods: {
