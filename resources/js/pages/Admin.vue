@@ -1,24 +1,36 @@
 <template>
     <div class="container mx-auto">
-        <div class="flex items-center justify-center">
-            <p class="m-4 text-6xl md:text-8xl">
+        <div class="flex flex-col items-center justify-center p-8">
+            <p class="m-4 text-6xl text-center md:text-8xl">
                 {{currentGame.number_one}} - {{currentGame.number_two}} - {{currentGame.number_three}}
+            </p>
+            <p class="text-sm text-center text-gray-500">
+                SUBMMITED BY 
+                <span class="font-bold text-blue-900">
+                    <a :href="currentGame.link" class="underline">
+                        {{currentGame.author_name}}
+                    </a>
+                    , {{currentGame.author_location}}
+                </span>
+                AT
+                <span class="font-bold text-blue-900">
+                    {{(new Date(currentGame.created_at).toDateString())}}
+                </span>
             </p>
         </div>
 
-        <div class="grid grid-cols-1 gap-2 p-4 m-8 border-2 rounded-md shadow-sm md:grid-cols-2 md:gap-4">
-            <div class="text-center">Players This Round: #<span class="font-bold text-blue-900">{{currentGame.number_of_attempts}}</span></div>
-            <div class="text-center">Winners This Round: #<span class="font-bold text-blue-900">{{currentGame.number_of_wons}} - {{currentRoundWinPercentage}}%</span></div>
-        </div>
-
-        <div class="grid grid-cols-1 gap-2 p-4 m-8 border-2 rounded-md shadow-sm md:grid-cols-2 md:gap-4">
-            <div class="text-center">Author Name: <span class="font-bold text-blue-900">{{currentGame.author_name}}</span></div>
-            <div class="text-center">Author Location: <span class="font-bold text-blue-900">{{currentGame.author_location}}</span></div>
-            <div class="text-center">Author Email: <span class="font-bold text-blue-900">{{currentGame.author_email}}</span></div>
-            <div class="text-center">Author Link: 
-                <el-link :href="currentGame.link" target="_blank" type="primary">
-                    {{currentGame.link_title}}
-                </el-link>
+        <div class="grid grid-cols-1 gap-2 py-4 m-8 sm:grid-cols-3 md:gap-4">
+            <div class="flex flex-col items-center justify-center p-2 border-2 rounded-md shadow-sm">
+                <div class="text-4xl font-bold text-blue-900">{{currentGame.number_of_attempts}}</div>
+                <div class="text-sm text-gray-500">Players</div>
+            </div>
+            <div class="flex flex-col items-center justify-center p-2 border-2 rounded-md shadow-sm">
+                <div class="text-4xl font-bold text-blue-900">{{currentGame.number_of_wons}}</div>
+                <div class="text-sm text-gray-500">Winners</div>
+            </div>
+            <div class="flex flex-col items-center justify-center p-2 border-2 rounded-md shadow-sm">
+                <div class="text-4xl font-bold text-blue-900">{{currentRoundWinPercentage}}%</div>
+                <div class="text-sm text-gray-500">Winners/Players</div>
             </div>
         </div>
 
@@ -32,12 +44,12 @@
                 </template>
                 <el-table :data="filteredSubmittedGames">
                     <el-table-column label="ID" fixed prop="id" width="50px"/>
-                    <el-table-column label="Numbers" fixed width="100px">
+                    <el-table-column label="NUMBERS" fixed width="100px">
                         <template #default="scope">
                             {{scope.row.number_one}} - {{scope.row.number_two}} - {{scope.row.number_three}}
                         </template>
                     </el-table-column>
-                    <el-table-column label="Author">
+                    <el-table-column label="SUBMITTED BY">
                         <template #default="scope">
                             <p>{{scope.row.author_name}}</p>
                             <p>{{scope.row.author_location}}</p>
@@ -46,7 +58,7 @@
                             </el-link>
                         </template>
                     </el-table-column>
-                    <el-table-column label="Link">
+                    <el-table-column label="LINK">
                         <template #default="scope">
                             <el-link :href="scope.row.link" target="_blank" type="primary">{{scope.row.link_title}}</el-link>
                         </template>
@@ -75,12 +87,12 @@
             <el-collapse-item title="Queued Games" name="queued">
                 <el-table v-loading="queuedLoading" id="queued-games-table" :data="queuedGames" :key="queuedTableKey">
                     <el-table-column label="ID" fixed prop="id" width="50px"/>
-                    <el-table-column label="Numbers" fixed width="100px">
+                    <el-table-column label="NUMBERS" fixed width="100px">
                         <template #default="scope">
                             {{scope.row.number_one}} - {{scope.row.number_two}} - {{scope.row.number_three}}
                         </template>
                     </el-table-column>
-                    <el-table-column label="Author">
+                    <el-table-column label="SUBMITTED BY">
                         <template #default="scope">
                             <p>{{scope.row.author_name}}</p>
                             <p>{{scope.row.author_location}}</p>
@@ -89,7 +101,7 @@
                             </el-link>
                         </template>
                     </el-table-column>
-                    <el-table-column label="Link">
+                    <el-table-column label="LINK">
                         <template #default="scope">
                             <el-link :href="scope.row.link" target="_blank" type="primary">{{scope.row.link_title}}</el-link>
                         </template>
@@ -117,12 +129,12 @@
             <el-collapse-item title="Finished Games" name="finished">
                 <el-table :data="finishedGames">
                     <el-table-column label="ID" fixed prop="id" width="50px"/>
-                    <el-table-column label="Numbers" fixed width="100px">
+                    <el-table-column label="NUMBERS" fixed width="100px">
                         <template #default="scope">
                             {{scope.row.number_one}} - {{scope.row.number_two}} - {{scope.row.number_three}}
                         </template>
                     </el-table-column>
-                    <el-table-column label="Author">
+                    <el-table-column label="SUBMITTED BY">
                         <template #default="scope">
                             <p>{{scope.row.author_name}}</p>
                             <p>{{scope.row.author_location}}</p>
@@ -131,7 +143,7 @@
                             </el-link>
                         </template>
                     </el-table-column>
-                    <el-table-column label="Link">
+                    <el-table-column label="LINK">
                         <template #default="scope">
                             <el-link :href="scope.row.link" target="_blank" type="primary">{{scope.row.link_title}}</el-link>
                         </template>
