@@ -1,5 +1,5 @@
 <template>
-    <div class="container mx-auto flex justify-between pt-2">
+    <div class="container flex justify-between pt-2 mx-auto">
         <div class="w-40">
             <IconComponent
                 class="text-gray-500 hover:text-gray-700"
@@ -8,20 +8,23 @@
                 @click="onHelpOpen"
             />
         </div>
-        <div class="w-screen sm:w-full text-center">
-            <h1 class="mb-4 text-gray-900 text-3xl sm:text-xl  md:text-2xl font-bold">GUESS <span class="text-green-600">MY</span> NUMBERS</h1>
-            <p class="text-gray-500 text-sm">
+        <div class="w-screen text-center sm:w-full">
+            <h1 class="mb-4 text-3xl font-bold text-gray-900 sm:text-xl md:text-2xl">GUESS <span class="text-green-600">MY</span> NUMBERS</h1>
+            <p class="text-sm text-center text-gray-500">
                 SUBMMITED BY 
-                <span class="text-blue-900 font-bold">
-                    {{currentGame.author_name}}, {{currentGame.author_location}}
+                <span class="font-bold text-blue-900">
+                    <a :href="currentGame.link" class="underline">
+                        {{currentGame.author_name}}
+                    </a>
+                    , {{currentGame.author_location}}
                 </span>
                 AT
-                <span class="text-blue-900 font-bold">
+                <span class="font-bold text-blue-900">
                     {{(new Date(currentGame.created_at).toDateString())}}
                 </span>
             </p>
         </div>
-        <div class="text-right w-40">
+        <div class="w-40 text-right">
             <IconComponent
                 class="text-gray-500 hover:text-gray-700"
                 icon="chart-column"
