@@ -8,7 +8,7 @@ export default defineStore('games', {
     state: () => ({
         games: [],
         submittedGames: [],
-        queuedGames: [],
+        queuedGames: [], // queued order by live_on asc
         finishedGames: [],
         currentGame: {},
         board: [
@@ -93,7 +93,7 @@ export default defineStore('games', {
 
             let now = this.currentGame.live_on;
 
-            for (let i = queuedGames.length - 1; i >= 0; i--) {
+            for (let i = 0; i < queuedGames.length; i++) {
                 now = nextLiveOn(now);
                 queuedGames[i].new_live_on = now;
             }

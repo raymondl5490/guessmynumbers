@@ -210,8 +210,7 @@ export default {
     computed: {
         ...mapState(useGameStore, ['currentGame', 'submittedGames', 'queuedGames', 'finishedGames']),
         filteredSubmittedGames() {
-            return this.submittedGames.filter(
-                (data) =>
+            return this.submittedGames.filter((data) =>
                 !this.search ||
                 (data.author_name + data.author_email + data.author_location + data.link)
                 .toLowerCase().includes(this.search.toLowerCase())

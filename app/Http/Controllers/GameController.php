@@ -49,7 +49,7 @@ class GameController extends Controller
     {
         $now = Carbon::now('America/Los_Angeles')->format('Y-m-d a');
         $queuedGames = Game::where('live_on', '>', $now)
-                ->orderBy('live_on', 'desc')
+                ->orderBy('live_on', 'asc')
                 ->get();
         return GameResource::collection($queuedGames);
     }
