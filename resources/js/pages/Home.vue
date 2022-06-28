@@ -44,14 +44,14 @@ export default {
     },
     data() {
         return {
-            loading: false,
+            loading: true,
 
             showHelpModal: false,
             showStatisticsModal: false,
             showSettingsModal: false,
         }
     },
-    async created() {
+    async mounted() {
 
         this.loading = true;
 
