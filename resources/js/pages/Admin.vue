@@ -221,7 +221,7 @@ export default {
             const number_of_attempts = this.currentGame.number_of_attempts;
             const number_of_wons = this.currentGame.number_of_wons;
             if (!number_of_attempts) return 0;
-            return _.max(_.round(number_of_wons / number_of_attempts * 100, 0), 100);
+            return _.min([_.round(number_of_wons / number_of_attempts * 100, 0), 100]);
         },
     },
     methods: {
