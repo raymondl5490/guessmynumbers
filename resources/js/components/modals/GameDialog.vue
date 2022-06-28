@@ -15,9 +15,6 @@
             <el-form-item label="Author Location">
                 <el-input v-model="form.author_location" />
             </el-form-item>
-            <el-form-item label="Link Title">
-                <el-input v-model="form.link_title" />
-            </el-form-item>
             <el-form-item label="Link">
                 <el-input v-model="form.link" />
             </el-form-item>
@@ -60,7 +57,6 @@ export default {
                 author_name: '',
                 author_email: '',
                 author_location: '',
-                link_title: '',
                 link: '',
             },
             rules: {
@@ -85,8 +81,6 @@ export default {
                 ],
                 author_location: [
                     { min: 2, max: 255, message: 'Length should be 2 to 255', trigger: 'blur' },
-                ],
-                link_title: [
                 ],
                 link: [
                     { type: 'url', message: 'The link must be a valid URL.', trigger: ['blur', 'change'] },

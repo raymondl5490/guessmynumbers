@@ -44,23 +44,22 @@
                 </template>
                 <el-table :data="filteredSubmittedGames">
                     <el-table-column label="ID" fixed prop="id" width="50px"/>
-                    <el-table-column label="NUMBERS" fixed width="100px">
+                    <el-table-column label="NUMBERS" width="100px">
                         <template #default="scope">
                             {{scope.row.number_one}} - {{scope.row.number_two}} - {{scope.row.number_three}}
                         </template>
                     </el-table-column>
                     <el-table-column label="SUBMITTED BY">
                         <template #default="scope">
-                            <p>{{scope.row.author_name}}</p>
-                            <p>{{scope.row.author_location}}</p>
+                            <p class="font-bold text-blue-900">
+                                <a :href="scope.row.link" class="underline">
+                                    {{scope.row.author_name}}
+                                </a>
+                                , {{scope.row.author_location}}
+                            </p>
                             <el-link :href="'mailto:'+ scope.row.author_email" target="_blank" type="primary">
                                 {{scope.row.author_email}}
                             </el-link>
-                        </template>
-                    </el-table-column>
-                    <el-table-column label="LINK">
-                        <template #default="scope">
-                            <el-link :href="scope.row.link" target="_blank" type="primary">{{scope.row.link_title}}</el-link>
                         </template>
                     </el-table-column>
                     <el-table-column fixed="right" width="100">
@@ -87,26 +86,25 @@
             <el-collapse-item title="Queued Games" name="queued">
                 <el-table v-loading="queuedLoading" id="queued-games-table" :data="queuedGames" :key="queuedTableKey">
                     <el-table-column label="ID" fixed prop="id" width="50px"/>
-                    <el-table-column label="NUMBERS" fixed width="100px">
+                    <el-table-column label="NUMBERS" width="100px">
                         <template #default="scope">
                             {{scope.row.number_one}} - {{scope.row.number_two}} - {{scope.row.number_three}}
                         </template>
                     </el-table-column>
                     <el-table-column label="SUBMITTED BY">
                         <template #default="scope">
-                            <p>{{scope.row.author_name}}</p>
-                            <p>{{scope.row.author_location}}</p>
+                            <p class="font-bold text-blue-900">
+                                <a :href="scope.row.link" class="underline">
+                                    {{scope.row.author_name}}
+                                </a>
+                                , {{scope.row.author_location}}
+                            </p>
                             <el-link :href="'mailto:'+ scope.row.author_email" target="_blank" type="primary">
                                 {{scope.row.author_email}}
                             </el-link>
                         </template>
                     </el-table-column>
-                    <el-table-column label="LINK">
-                        <template #default="scope">
-                            <el-link :href="scope.row.link" target="_blank" type="primary">{{scope.row.link_title}}</el-link>
-                        </template>
-                    </el-table-column>
-                    <el-table-column label="Live on">
+                    <el-table-column label="Live on" width="150">
                         <template #default="scope">
                             {{scope.row.live_on}}
                         </template>
@@ -129,26 +127,25 @@
             <el-collapse-item title="Finished Games" name="finished">
                 <el-table :data="finishedGames">
                     <el-table-column label="ID" fixed prop="id" width="50px"/>
-                    <el-table-column label="NUMBERS" fixed width="100px">
+                    <el-table-column label="NUMBERS" width="100px">
                         <template #default="scope">
                             {{scope.row.number_one}} - {{scope.row.number_two}} - {{scope.row.number_three}}
                         </template>
                     </el-table-column>
                     <el-table-column label="SUBMITTED BY">
                         <template #default="scope">
-                            <p>{{scope.row.author_name}}</p>
-                            <p>{{scope.row.author_location}}</p>
+                            <p class="font-bold text-blue-900">
+                                <a :href="scope.row.link" class="underline">
+                                    {{scope.row.author_name}}
+                                </a>
+                                , {{scope.row.author_location}}
+                            </p>
                             <el-link :href="'mailto:'+ scope.row.author_email" target="_blank" type="primary">
                                 {{scope.row.author_email}}
                             </el-link>
                         </template>
                     </el-table-column>
-                    <el-table-column label="LINK">
-                        <template #default="scope">
-                            <el-link :href="scope.row.link" target="_blank" type="primary">{{scope.row.link_title}}</el-link>
-                        </template>
-                    </el-table-column>
-                    <el-table-column label="Live on">
+                    <el-table-column label="Live on" width="150">
                         <template #default="scope">
                             {{scope.row.live_on}}
                         </template>
@@ -216,7 +213,7 @@ export default {
             return this.submittedGames.filter(
                 (data) =>
                 !this.search ||
-                (data.author_name + data.author_email + data.author_location + data.link_title + data.link)
+                (data.author_name + data.author_email + data.author_location + data.link)
                 .toLowerCase().includes(this.search.toLowerCase())
             )
         },
