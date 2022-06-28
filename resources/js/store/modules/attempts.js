@@ -8,7 +8,7 @@ export default defineStore('attempts', {
     }),
     getters: {
         won() {
-            return this.currentAttempt.won;
+            return (this.currentAttempt && this.currentAttempt.won) ?? false;
         },
         finished() {
             const guesses = useGuessStore();
