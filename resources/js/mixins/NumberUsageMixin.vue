@@ -19,6 +19,7 @@ export default {
         isNumberCorrect(number) {
             return includes(this.correctNumbers, number);
         },
+        // correntNumber is not provided when this function called from InputNumbersComponent
         isNumberInCorrectSpot(number, correctNumber = null) {
             if (correctNumber !== null) {
                 return number === correctNumber
@@ -47,6 +48,7 @@ export default {
 
             return submitted;
         },
+        // correntNumber is not provided when this function called from InputNumbersComponent
         getNumberStyle(number, isCurrentGuess = false, correctNumber = null) {
             if (!this.isNumberOnBoard(number)) {
                 return '';

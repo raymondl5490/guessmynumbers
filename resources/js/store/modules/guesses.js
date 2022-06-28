@@ -18,6 +18,10 @@ export default defineStore('guesses', {
                 number_three: this.guess[2],
             }
         },
+        /**
+         * 
+         * @returns guesses in array of array : [ [],[],[] ]
+         */
         existingGuessNumbers() {
             const numbers = [];
             forEach(this.guesses, guess => {
@@ -79,5 +83,8 @@ export default defineStore('guesses', {
         async getGuesses(playerId, attemptId) {
             this.guesses = await guessApi.getGuesses(playerId, attemptId);
         }
-    }
+    },
+    persistedState: {
+        persist: false,
+    },
 });

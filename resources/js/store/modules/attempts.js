@@ -1,11 +1,20 @@
 import {attemptApi} from '../../api';
 import {defineStore} from 'pinia';
+import { useGuessStore } from '../index';
 
 export default defineStore('attempts', {
     state: () => ({
         currentAttempt: {},
     }),
-    getters: {},
+    getters: {
+        won() {
+            return this.currentAttempt.won;
+        },
+        finished() {
+            const guesses = useGuessStore();
+            return this.won || guesses.guesses.length >= 3
+        },
+    },
     actions: {
         async createAttempt(playerId, payload) {
             this.currentAttempt = await attemptApi.createAttempt(playerId, payload);
@@ -17,6 +26,7 @@ export default defineStore('attempts', {
             this.currentAttempt = await attemptApi.winAttempt(this.currentAttempt.id);
         },
     },
-}, {
-    persist: true,
+    persistedState: {
+        persist: false,
+    },
 });
