@@ -59,36 +59,31 @@ export default {
             await this.createPlayer();
             this.showHelpModal = true;
         }
-        if (isEmpty(this.currentGame)) {
-            await this.getCurrentGame();
-        }
 
+        // Refresh the player
+        await this.getPlayer(this.currentPlayer.id);
+        await this.getCurrentGame();
+        await this.getCurrentAttempt(this.currentPlayer.id)
         if (isEmpty(this.currentAttempt)) {
             await this.createAttempt(this.currentPlayer.id, {
                 game_id: this.currentGame.id
             });
         }
+        await this.getGuesses(this.currentPlayer.id, this.currentAttempt.id);
 
-        if (isEmpty(this.guesses)) {
-            await this.getGuesses(this.currentPlayer.id, this.currentAttempt.id);
-        }
-
-        // Refresh the player
-        await this.getPlayer(this.currentPlayer.id);
-
-        await this.initializeBoard();
+        this.initializeBoard();
 
         this.loading = false;
     },
     computed: {
         ...mapState(usePlayerStore, ['currentPlayer']),
-        ...mapState(useAttemptStore, ['currentAttempt']),
+        ...mapState(useAttemptStore, ['currentAttempt', 'finished']),
         ...mapState(useGameStore, ['currentGame']),
         ...mapState(useGuessStore, ['guesses']),
     },
     watch: {
-        guesses() {
-            if (this.guesses.length >= 3) {
+        finished() {
+            if (this.finished) {
                 this.showStatisticsModal = true;
             }
         },

@@ -63,6 +63,8 @@ export default defineStore('games', {
         initializeBoard() {
             const guessStore = useGuessStore();
 
+            this.board = [[], [], []];
+
             forEach(guessStore.guesses, guess => {
                 this.board[guess.row - 1][0] = guess.number_one;
                 this.board[guess.row - 1][1] = guess.number_two;
