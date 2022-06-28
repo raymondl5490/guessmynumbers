@@ -22,4 +22,17 @@ class AttemptController extends Controller
 
         return new AttemptResource($attempt);
     }
+
+    /**
+     * @param $id
+     * @return AttemptResource
+     */
+    public function win($id): AttemptResource
+    {
+        $attempt = Attempt::find($id);
+        $attempt->won = 1;
+        $attempt->save();
+        return new AttemptResource($attempt);
+    }
+
 }

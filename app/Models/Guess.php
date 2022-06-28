@@ -34,6 +34,7 @@ class Guess extends Model
         'number_one',
         'number_two',
         'number_three',
+        'won',
     ];
 
     /**
