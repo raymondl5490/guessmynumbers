@@ -12,5 +12,12 @@ export default {
         }).catch(error => {
             console.log({error});
         });
-    }
+    },
+    async winAttempt(attemptId) {
+        return await axios.patch(`attempts/${attemptId}/win`).then(response => {
+            return response.data.data;
+        }).catch(error => {
+            console.log({error});
+        });
+    },
 }

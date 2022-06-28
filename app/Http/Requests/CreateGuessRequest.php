@@ -18,6 +18,7 @@ class CreateGuessRequest extends FormRequest
             'number_one' => ['required', 'integer', 'min:0', 'max:9'],
             'number_two' => ['required', 'integer', 'min:0', 'max:9'],
             'number_three' => ['required', 'integer', 'min:0', 'max:9'],
+            'won' => ['required', 'boolean'],
         ];
     }
 }

@@ -43,6 +43,8 @@ Route::prefix('players/{player}')->group(function() {
 
 Route::get('/games/current', CurrentGameController::class)->name('games.current');
 
+Route::patch('/attempts/{id}/win', [AttemptController::class, 'win'])->name('attempts.win');
+
 Route::middleware('auth')->group(function() {
     Route::prefix('games')->group(function() {
         Route::get('/submitted', [GameController::class, 'submitted'])->name('games.submitted');

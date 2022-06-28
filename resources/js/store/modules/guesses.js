@@ -55,9 +55,12 @@ export default defineStore('guesses', {
                 return;
             }
 
+            const gameStore = useGameStore();
             const playerStore = usePlayerStore();
             const attemptStore = useAttemptStore();
-            await this.saveGuess(playerStore.currentPlayer.id, attemptStore.currentAttempt.id, this.currentGuess);
+            const won = _.isEqual(this.guess, gameStore.correctNumbers);
+            await this.saveGuess(playerStore.currentPlayer.id, attemptStore.currentAttempt.id, {...this.currentGuess, won});
+            if (won) await attemptStore.winAttempt();
         },
         removeNumberFromGuess() {
             if (!this.guess.length) return;

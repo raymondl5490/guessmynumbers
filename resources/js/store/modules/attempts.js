@@ -12,7 +12,10 @@ export default defineStore('attempts', {
         },
         async getCurrentAttempt(playerId) {
             this.currentAttempt = await attemptApi.getCurrentAttempt(playerId);
-        }
+        },
+        async winAttempt() {
+            this.currentAttempt = await attemptApi.winAttempt(this.currentAttempt.id);
+        },
     },
 }, {
     persist: true,
