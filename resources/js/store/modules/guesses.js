@@ -14,7 +14,7 @@ export default defineStore('guesses', {
          * 
          * @returns guesses in array of array : [ [],[],[] ]
          */
-        existingGuessNumbers() {
+        submittedGuessNumbers() {
             const numbers = [];
             forEach(this.guesses, guess => {
                 numbers.push([

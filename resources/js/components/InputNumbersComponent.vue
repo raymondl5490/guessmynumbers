@@ -6,7 +6,7 @@
                 :key="number"
                 :disabled="isAttemptEnded"
                 class="flex items-center justify-center w-8 h-8 mx-1 bg-gray-200 rounded-full cursor-pointer md:w-12 md:h-12 md:text-lg hover:bg-gray-500 hover:text-white"
-                :class="getNumberStyle(number)"
+                :class="inputNumberStyle(number)"
                 @click="handleNumberClick(number)"
             >
                 {{ number }}
@@ -25,7 +25,7 @@
                 :key="number"
                 :disabled="isAttemptEnded"
                 class="flex items-center justify-center w-8 h-8 mx-1 bg-gray-200 rounded-full cursor-pointer md:w-12 md:h-12 md:text-lg hover:bg-gray-500 hover:text-white"
-                :class="getNumberStyle(number)"
+                :class="inputNumberStyle(number)"
                 @click="handleNumberClick(number)"
             >
                 {{ number }}
@@ -85,6 +85,24 @@ export default {
         },
         handleSubmit() {
             this.$emit('submit');
+        },
+        inputNumberStyle(number) {
+            if (!this.isNumberOnBoard(number)) {
+                return '';
+            }
+            if (!this.hasNumberBeenSubmitted(number)) {
+                return 'bg-gray-500 text-white';
+            }
+            if (this.isNumberCorrect(number) && this.isNumberInCorrectSpot(number)) {
+                return 'bg-green-600 text-white';
+            }
+            // if (this.isNumberUsedMultipleTimes(this.guessedNumber)) {
+            //     return 'bg-purple-600 text-white';
+            // }
+            if (this.isNumberCorrect(number) && !this.isNumberInCorrectSpot(number)) {
+                return 'bg-yellow-500 text-white';
+            }
+            return 'bg-gray-500 text-white';
         },
     }
 }
