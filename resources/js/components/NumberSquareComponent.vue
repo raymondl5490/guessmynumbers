@@ -40,20 +40,18 @@ export default {
             if (_.isNil(this.guessedNumber)) {
                 return '';
             }
-
             if (!this.submitted) {
                 return 'bg-gray-500 text-white';
             }
-
             if (this.guessedNumber === this.correctNumber) {
                 return 'bg-green-600 text-white';
             }
-
+            // if (this.isNumberUsedMultipleTimes(this.guessedNumber)) {
+            //     return 'bg-purple-600 text-white';
+            // }
             if (this.isNumberCorrect(this.guessedNumber)) {
                 return 'bg-yellow-500 text-white';
             }
-
-            console.log('when you will get here');
             return 'bg-gray-500 text-white';
         },
         getAnimationClasses() {
