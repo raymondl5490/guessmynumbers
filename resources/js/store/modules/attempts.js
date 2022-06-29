@@ -5,6 +5,7 @@ import { useGuessStore } from '../index';
 export default defineStore('attempts', {
     state: () => ({
         currentAttempt: {},
+        isPracticeMode: false,
     }),
     getters: {
         won() {
@@ -28,5 +29,7 @@ export default defineStore('attempts', {
     },
     persistedState: {
         persist: false,
+        // persist: true,
+        // includePaths: 'isPracticeMode',
     },
 });

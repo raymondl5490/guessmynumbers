@@ -33,7 +33,21 @@ export default defineStore('guesses', {
             });
 
             return numbers;
-        }
+        },
+        board() {
+            const board = [[], [], []];
+
+            forEach(this.guesses, guess => {
+                board[guess.row - 1][0] = guess.number_one;
+                board[guess.row - 1][1] = guess.number_two;
+                board[guess.row - 1][2] = guess.number_three;
+            });
+            
+            if (this.guesses.length < 3) {
+                board[this.guesses.length] = this.guess;
+            }
+            return board;
+        },
     },
     actions: {
         addNumberToGuess(number) {
@@ -46,9 +60,6 @@ export default defineStore('guesses', {
             }
 
             this.guess.push(number);
-
-            const gameStore = useGameStore();
-            gameStore.addNumberToGameState(this.currentGuess.row - 1, this.guess.length - 1, number);
         },
         async submitGuess() {
             if (this.guess.length < 3) {
@@ -69,8 +80,6 @@ export default defineStore('guesses', {
         removeNumberFromGuess() {
             if (!this.guess.length) return;
             this.guess.pop();
-            const gameStore = useGameStore();
-            gameStore.removeNumberFromGameState(this.currentGuess.row - 1);
         },
         resetGuess() {
             this.guess = [];
