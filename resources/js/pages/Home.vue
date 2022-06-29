@@ -28,8 +28,7 @@ import GameComponent from "../components/GameComponent";
 import HeaderComponent from "../components/HeaderComponent";
 import {isEmpty} from 'lodash';
 import {useGameStore, useAttemptStore, usePlayerStore, useGuessStore} from '../store';
-import {mapActions, mapState, mapGetters} from 'pinia';
-import ModalComponent from "../components/ui/ModalComponent";
+import {mapActions, mapState} from 'pinia';
 import HelpModalComponent from "../components/modals/HelpModalComponent";
 import StatisticsModalComponent from "../components/modals/StatisticsModalComponent";
 import SettingsModalComponent from "../components/modals/SettingsModalComponent";
@@ -75,7 +74,7 @@ export default {
     },
     computed: {
         ...mapState(usePlayerStore, ['currentPlayer']),
-        ...mapState(useAttemptStore, ['currentAttempt', 'isAttemptEnded', 'isPracticeMode']),
+        ...mapState(useAttemptStore, ['currentAttempt', 'isAttemptEnded']),
         ...mapState(useGameStore, ['currentGame']),
         ...mapState(useGuessStore, ['guesses']),
     },
@@ -84,9 +83,6 @@ export default {
             if (this.isAttemptEnded) {
                 this.showStatisticsModal = true;
             }
-        },
-        isPracticeMode() {
-            // location.reload();
         },
     },
     methods: {

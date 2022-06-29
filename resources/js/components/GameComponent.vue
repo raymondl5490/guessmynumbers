@@ -2,26 +2,16 @@
     <div class="w-full h-auto mx-auto">
         <div class="flex flex-col items-center justify-center w-full h-full">
             <div
-                v-for="(row, index) in board"
+                v-for="(row, rowIndex) in board"
                 class="flex flex-row"
-                :key="'board_row_' + index"
+                :key="'board_row_' + rowIndex"
             >
                 <NumberSquareComponent
-                    :guessed-number="row[0] ?? null"
-                    :correct-number="currentGame.number_one"
-                    :submitted="isRowSubmitted(index)"
-                    :hide-numbers="hideNumbers"
-                />
-                <NumberSquareComponent
-                    :guessed-number="row[1] ?? null"
-                    :correct-number="currentGame.number_two"
-                    :submitted="isRowSubmitted(index)"
-                    :hide-numbers="hideNumbers"
-                />
-                <NumberSquareComponent
-                    :guessed-number="row[2] ?? null"
-                    :correct-number="currentGame.number_three"
-                    :submitted="isRowSubmitted(index)"
+                    v-for="colIndex in [0, 1, 2]"
+                    :key="`board_square_${rowIndex}_${colIndex}`"
+                    :guessed-number="row[colIndex] ?? null"
+                    :correct-number="correctNumbers[colIndex]"
+                    :submitted="isRowSubmitted(rowIndex)"
                     :hide-numbers="hideNumbers"
                 />
             </div>
@@ -41,10 +31,9 @@
 </template>
 <script>
 import {mapActions, mapState} from "pinia";
-import {useAttemptStore, useGameStore, useGuessStore, usePlayerStore} from "../store";
+import {useAttemptStore, useGuessStore, usePlayerStore} from "../store";
 import NumberSquareComponent from "./NumberSquareComponent";
 import InputNumbersComponent from "./InputNumbersComponent";
-import {filter} from "lodash";
 
 export default {
     components: {
@@ -65,15 +54,14 @@ export default {
         }
     },
     computed: {
-        ...mapState(useGameStore, ['currentGame']),
-        ...mapState(useGuessStore, ['currentGuess', 'guesses', 'board']),
-        ...mapState(useAttemptStore, ['currentAttempt']),
+        ...mapState(useAttemptStore, ['correctNumbers']),
+        ...mapState(useGuessStore, ['guesses', 'board']),
         ...mapState(usePlayerStore, ['currentPlayer']),
     },
     methods: {
         ...mapActions(useGuessStore, ['addNumberToGuess', 'removeNumberFromGuess', 'submitGuess']),
         isRowSubmitted(index) {
-            return filter(this.guesses, guess => guess.row === index + 1).length > 0;
+            return index < this.guesses.length;
         },
         onNumberSelected(number) {
             this.addNumberToGuess(number);

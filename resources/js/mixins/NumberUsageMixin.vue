@@ -4,11 +4,11 @@
 <script>
 import {filter, flatten, forEach, includes, indexOf} from "lodash";
 import {mapState} from "pinia/dist/pinia.esm-browser";
-import {useGameStore, useGuessStore} from "../store";
+import {useAttemptStore, useGuessStore} from "../store";
 
 export default {
     computed: {
-        ...mapState(useGameStore, ['correctNumbers']),
+        ...mapState(useAttemptStore, ['correctNumbers']),
         ...mapState(useGuessStore, ['existingGuessNumbers', 'guess', 'board']),
     },
     methods: {

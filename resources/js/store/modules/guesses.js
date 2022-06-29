@@ -1,23 +1,15 @@
 import {defineStore} from "pinia";
 
 import { guessApi } from '../../api';
-import {useAttemptStore, useGameStore, usePlayerStore} from "../index";
+import {useAttemptStore, usePlayerStore} from "../index";
 import {forEach} from "lodash";
 
 export default defineStore('guesses', {
     state: () => ({
         guess: [],
-        guesses: [],
+        guesses: [], // * {number_one, number_two, number_three}[]
     }),
     getters: {
-        currentGuess() {
-            return {
-                row: this.guesses.length + 1,
-                number_one: this.guess[0],
-                number_two: this.guess[1],
-                number_three: this.guess[2],
-            }
-        },
         /**
          * 
          * @returns guesses in array of array : [ [],[],[] ]
@@ -37,16 +29,31 @@ export default defineStore('guesses', {
         board() {
             const board = [[], [], []];
 
-            forEach(this.guesses, guess => {
-                board[guess.row - 1][0] = guess.number_one;
-                board[guess.row - 1][1] = guess.number_two;
-                board[guess.row - 1][2] = guess.number_three;
-            });
-            
+            for (let i = 0; i < this.guesses.length; i++) {
+                board[i] = [
+                    this.guesses[i].number_one,
+                    this.guesses[i].number_two,
+                    this.guesses[i].number_three,
+                ];
+            }
             if (this.guesses.length < 3) {
                 board[this.guesses.length] = this.guess;
             }
             return board;
+        },
+        /**
+         * 
+         * @return number 0: never won, 1: won on first guess row, ...
+         */
+        wonOnXthGuess() {
+            const attemptStore = useAttemptStore();
+            let xth = 0;
+            _.each(this.guesses, (guess, index) => {
+                if (_.isEqual([guess.number_one, guess.number_two, guess.number_three], attemptStore.correctNumbers)) {
+                    xth = index + 1;
+                }
+            });
+            return xth;
         },
     },
     actions: {
@@ -70,12 +77,40 @@ export default defineStore('guesses', {
                 return;
             }
 
-            const gameStore = useGameStore();
-            const playerStore = usePlayerStore();
             const attemptStore = useAttemptStore();
-            const won = _.isEqual(this.guess, gameStore.correctNumbers);
-            await this.saveGuess(playerStore.currentPlayer.id, attemptStore.currentAttempt.id, {...this.currentGuess, won});
-            if (won) await attemptStore.winAttempt();
+
+            const wonCurrentGuess = _.isEqual(this.guess, attemptStore.correctNumbers);
+            const currentGuess = {
+                row: this.guesses.length + 1,
+                number_one: this.guess[0],
+                number_two: this.guess[1],
+                number_three: this.guess[2],
+                won: wonCurrentGuess,
+            }
+
+            this.guesses.push({
+                number_one: this.guess[0],
+                number_two: this.guess[1],
+                number_three: this.guess[2],
+            });
+
+            this.resetGuess();
+
+            if (!attemptStore.isPracticeMode) {
+                const playerStore = usePlayerStore();
+                await guessApi.createGuess(
+                    playerStore.currentPlayer.id,
+                    attemptStore.currentAttempt.id,
+                    currentGuess,
+                );
+                await this.getGuesses(
+                    playerStore.currentPlayer.id,
+                    attemptStore.currentAttempt.id
+                );
+                if (wonCurrentGuess) {
+                    await attemptStore.winAttempt();
+                }
+            }
         },
         removeNumberFromGuess() {
             if (!this.guess.length) return;
@@ -84,14 +119,13 @@ export default defineStore('guesses', {
         resetGuess() {
             this.guess = [];
         },
-        async saveGuess(playerId, attemptId, payload) {
-            await guessApi.createGuess(playerId, attemptId, payload);
-            await this.getGuesses(playerId, attemptId);
-            this.resetGuess();
-        },
         async getGuesses(playerId, attemptId) {
             this.guesses = await guessApi.getGuesses(playerId, attemptId);
-        }
+        },
+        resetGuessStore() {
+            this.guesses = [];
+            this.guess = [];
+        },
     },
     persistedState: {
         persist: false,

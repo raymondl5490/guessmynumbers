@@ -9,7 +9,7 @@
             </div>
         </template>
         <template #content>
-            <div class="grid w-full grid-cols-2 gap-8 my-5">
+            <div v-if="!isPracticeMode" class="grid w-full grid-cols-2 gap-8 my-5">
                 <div class="col-span-1 text-center">
                     <div class="text-3xl font-bold text-center">
                         {{ currentGame.number_of_attempts }}
@@ -33,7 +33,7 @@
                 <GameComponent :hide-numbers="true" />
             </div>
 
-            <div class="grid w-full grid-cols-2 gap-8 my-5">
+            <div v-if="!isPracticeMode" class="grid w-full grid-cols-2 gap-8 my-5">
                 <div class="text-center">
                     <h3 class="text-lg font-light">
                         NEW NUMBER IN
@@ -43,12 +43,15 @@
                     </h1>
                 </div>
                 <div class="flex flex-col justify-center">
-                    <button
-                        class="w-full px-5 py-3 text-white bg-green-600 border-0 rounded-md hover:bg-green-900 text-md"
-                    >
-                       SHARE
-                    </button>
+                    <el-button type="success">SHARE</el-button>
                 </div>
+            </div>
+
+            <hr class="my-5"/>
+
+            <div v-if="isPracticeMode" class="flex items-center justify-center">
+                <el-button type="primary" @click="goToPracticeMode">TRY AGAIN</el-button>
+                <el-button type="success" @click="goToRegularMode">GO TO REAL MODE</el-button>
             </div>
 
             <hr class="my-5"/>
@@ -63,8 +66,8 @@
 import ModalComponent from "../ui/ModalComponent";
 import IconComponent from "../ui/IconComponent";
 import GameComponent from "../GameComponent";
-import { mapState } from "pinia";
-import { useGameStore } from "../../store";
+import { mapState, mapActions } from "pinia";
+import { useGameStore, useAttemptStore } from "../../store";
 export default {
     components: {GameComponent, IconComponent, ModalComponent},
     props: {
@@ -79,6 +82,7 @@ export default {
     },
     computed: {
         ...mapState(useGameStore, ['currentGame']),
+        ...mapState(useAttemptStore, ['isPracticeMode']),
         currentRoundWinPercentage() {
             const number_of_attempts = this.currentGame.number_of_attempts;
             const number_of_wons = this.currentGame.number_of_wons;
@@ -87,9 +91,10 @@ export default {
         },
     },
     methods: {
+        ...mapActions(useAttemptStore, ['goToPracticeMode', 'goToRegularMode']),
         onClose() {
             this.$emit('close')
-        }
+        },
     }
 }
 </script>

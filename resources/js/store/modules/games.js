@@ -9,11 +9,6 @@ export default defineStore('games', {
         finishedGames: [],
         currentGame: {},
     }),
-    getters: {
-        correctNumbers() {
-            return [this.currentGame.number_one, this.currentGame.number_two, this.currentGame.number_three];
-        },
-    },
     actions: {
         async refreshGames() {
             await Promise.all([
