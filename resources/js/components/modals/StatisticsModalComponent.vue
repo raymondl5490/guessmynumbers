@@ -4,7 +4,7 @@
         @close="onClose"
     >
         <template #title>
-            <div class="text-center">
+            <div class="p-4 text-center bg-stone-200">
                 Statistics
             </div>
         </template>

@@ -4,11 +4,10 @@
         @close="onClose"
     >
         <template #title>
-            <div class="text-center">
-                <img :src="asset('images/logo.jpeg')" class="w-20 h-auto mx-auto"/>
-
+            <img :src="asset('images/logo.jpeg')" class="w-40 h-auto mx-auto"/>
+            <div class="p-4 text-center bg-stone-200">
+                How to Play
             </div>
-            How to Play
         </template>
         <template #content>
             <p class="my-8 text-md">
@@ -39,12 +38,15 @@
                 A <span class="font-bold">Purple</span> line indicates the number is used multiple times.
             </p>
 
+            <div class="flex justify-center my-8">
+                <el-button type="success" @click="onClose">GOT IT, LET'S PLAY</el-button>
+            </div>
+
             <hr/>
             <p class="font-light text-center text-md">
                 <span class="font-bold">New Numbers updated every 12 hours!</span>
                 <br/>
                 12:00am PST / 12:00pm PST
-
                 <br/>
                 <br/>
                 www.guessmynumbers.com
