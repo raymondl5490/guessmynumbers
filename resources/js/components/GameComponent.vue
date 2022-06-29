@@ -1,6 +1,6 @@
 <template>
     <div class="w-full h-auto mx-auto">
-        <div class="w-full h-full flex flex-col justify-center items-center">
+        <div class="flex flex-col items-center justify-center w-full h-full">
             <div
                 v-for="(row, index) in board"
                 class="flex flex-row"

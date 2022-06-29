@@ -77,13 +77,13 @@ export default {
     },
     computed: {
         ...mapState(usePlayerStore, ['currentPlayer']),
-        ...mapState(useAttemptStore, ['currentAttempt', 'finished']),
+        ...mapState(useAttemptStore, ['currentAttempt', 'isAttemptEnded']),
         ...mapState(useGameStore, ['currentGame']),
         ...mapState(useGuessStore, ['guesses']),
     },
     watch: {
-        finished() {
-            if (this.finished) {
+        isAttemptEnded() {
+            if (this.isAttemptEnded) {
                 this.showStatisticsModal = true;
             }
         },

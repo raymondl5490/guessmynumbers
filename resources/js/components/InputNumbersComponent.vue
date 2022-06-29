@@ -1,42 +1,50 @@
 <template>
     <div class="flex flex-col font-bold">
         <div class="flex flex-row my-2">
-            <div
+            <button
                 v-for="number in rowOne"
                 :key="number"
-                class="flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 md:w-12 md:h-12 md:text-lg bg-gray-200 hover:bg-gray-500 hover:text-white"
+                :disabled="isAttemptEnded"
+                class="flex items-center justify-center w-8 h-8 mx-1 bg-gray-200 rounded-full cursor-pointer md:w-12 md:h-12 md:text-lg hover:bg-gray-500 hover:text-white"
                 :class="getNumberStyle(number)"
                 @click="handleNumberClick(number)"
             >
                 {{ number }}
-            </div>
-            <div
-                class="flex justify-center items-center mx-1 px-3 cursor-pointer rounded-full w-auto h-8 md:h-12 md:text-lg bg-gray-200 text-red-600 hover:bg-gray-500 hover:text-red-400"
+            </button>
+            <button
+                class="flex items-center justify-center w-auto h-8 px-3 mx-1 text-red-600 bg-gray-200 rounded-full cursor-pointer md:h-12 md:text-lg hover:bg-gray-500 hover:text-red-400"
+                :disabled="isAttemptEnded"
                 @click="handleNumberDeleted"
-            >Delete
-            </div>
+            >
+                Delete
+            </button>
         </div>
         <div class="flex flex-row">
-            <div
+            <button
                 v-for="number in rowTwo"
                 :key="number"
-                class="flex justify-center items-center mx-1 cursor-pointer rounded-full w-8 h-8 md:w-12 md:h-12 md:text-lg bg-gray-200 hover:bg-gray-500 hover:text-white"
+                :disabled="isAttemptEnded"
+                class="flex items-center justify-center w-8 h-8 mx-1 bg-gray-200 rounded-full cursor-pointer md:w-12 md:h-12 md:text-lg hover:bg-gray-500 hover:text-white"
                 :class="getNumberStyle(number)"
                 @click="handleNumberClick(number)"
             >
                 {{ number }}
-            </div>
-            <div
-                class="flex justify-center items-center mx-1 px-3 cursor-pointer rounded-full w-auto h-8 md:h-12 md:text-lg bg-gray-200 text-green-600 hover:bg-gray-400 hover:text-green-400"
+            </button>
+            <button
+                :disabled="isAttemptEnded"
+                class="flex items-center justify-center w-auto h-8 px-3 mx-1 text-green-600 bg-gray-200 rounded-full cursor-pointer md:h-12 md:text-lg hover:bg-gray-400 hover:text-green-400"
                 @click="handleSubmit"
-            >Submit
-            </div>
+            >
+                Submit
+            </button>
         </div>
     </div>
 </template>
 <script>
 import {includes} from "lodash";
+import { useAttemptStore } from "../store";
 import NumberUsageMixin from "../mixins/NumberUsageMixin";
+import { mapState } from "pinia";
 
 export default {
     mixins: [NumberUsageMixin],
@@ -47,8 +55,10 @@ export default {
             rowTwo: [5, 6, 7, 8, 9],
         }
     },
-    created() {
+    mounted() {
         window.addEventListener('keyup', event => {
+            if (this.isAttemptEnded) return;
+
             const {key} = event;
             if (includes(this.numbers, Number(key))) {
                 this.handleNumberClick(Number(key));
@@ -63,6 +73,9 @@ export default {
             }
         });
     },
+    computed: {
+        ...mapState(useAttemptStore, ['isAttemptEnded']),
+    },
     methods: {
         handleNumberClick(number) {
             this.$emit('number-selected', number);
@@ -72,7 +85,7 @@ export default {
         },
         handleSubmit() {
             this.$emit('submit');
-        }
+        },
     }
 }
 </script>
