@@ -10,7 +10,7 @@ export default defineStore('attempts', {
         won() {
             return (this.currentAttempt && this.currentAttempt.won) ?? false;
         },
-        finished() {
+        isAttemptEnded() {
             const guesses = useGuessStore();
             return this.won || guesses.guesses.length >= 3
         },
