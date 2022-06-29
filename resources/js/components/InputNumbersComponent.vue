@@ -16,7 +16,10 @@
                 :disabled="isAttemptEnded"
                 @click="handleNumberDeleted"
             >
-                Delete
+                <IconComponent
+                    class="text-gray-600 hover:text-gray-900"
+                    icon="arrow-left"
+                />
             </button>
         </div>
         <div class="flex flex-row">
@@ -35,7 +38,10 @@
                 class="flex items-center justify-center w-auto h-8 px-3 mx-1 text-green-600 bg-gray-200 rounded-full cursor-pointer md:h-12 md:text-lg hover:bg-gray-400 hover:text-green-400"
                 @click="handleSubmit"
             >
-                Submit
+                <IconComponent
+                    class="text-gray-600 hover:text-gray-900"
+                    icon="check"
+                />
             </button>
         </div>
     </div>
@@ -45,9 +51,13 @@ import {includes} from "lodash";
 import { useAttemptStore } from "../store";
 import NumberUsageMixin from "../mixins/NumberUsageMixin";
 import { mapState } from "pinia";
+import { IconComponent } from "./ui";
 
 export default {
     mixins: [NumberUsageMixin],
+    components: {
+        IconComponent,
+    },
     data() {
         return {
             numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
