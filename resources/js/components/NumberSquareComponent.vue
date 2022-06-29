@@ -1,7 +1,7 @@
 <template>
     <div
-        class="w-20 h-20 md:w-28 md:h-28 m-1 bg-gray-200 text-3xl md:text-5xl font-bold text-white flex justify-center items-center"
-        :class="classes"
+        class="flex items-center justify-center w-20 h-20 m-1 text-3xl font-bold text-white bg-gray-200 md:w-28 md:h-28 md:text-5xl"
+        :class="customClasses"
     >
         {{ hideNumbers ? '' : guessedNumber }}
     </div>
@@ -36,9 +36,36 @@ export default {
         }
     },
     computed: {
-        classes() {
-            return this.getClasses();
-        }
+        getBackgroundClasses() {
+            if (_.isNil(this.guessedNumber)) {
+                return '';
+            }
+
+            if (!this.submitted) {
+                return 'bg-gray-500 text-white';
+            }
+
+            if (this.guessedNumber === this.correctNumber) {
+                return 'bg-green-600 text-white';
+            }
+
+            if (this.isNumberCorrect(this.guessedNumber)) {
+                return 'bg-yellow-500 text-white';
+            }
+
+            console.log('when you will get here');
+            return 'bg-gray-500 text-white';
+        },
+        getAnimationClasses() {
+            if (this.guessedNumber == null) {
+                return '';
+            }
+
+            return this.animationClasses;
+        },
+        customClasses() {
+            return _.join([this.getBackgroundClasses, this.getAnimationClasses], ' ');
+        },
     },
     watch: {
         guessedNumber: {
@@ -51,17 +78,5 @@ export default {
             },
         }
     },
-    methods: {
-        getClasses() {
-            return `${this.getNumberStyle(this.guessedNumber, !this.submitted, this.correctNumber)} ${this.getAnimationClasses()}`
-        },
-        getAnimationClasses() {
-            if (this.guessedNumber == null) {
-                return '';
-            }
-
-            return this.animationClasses;
-        }
-    }
 }
 </script>

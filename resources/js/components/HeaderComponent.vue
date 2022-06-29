@@ -10,7 +10,10 @@
         </div>
         <div class="w-screen text-center sm:w-full">
             <h1 class="mb-4 text-3xl font-bold text-gray-900 sm:text-xl md:text-2xl">GUESS <span class="text-green-600">MY</span> NUMBERS</h1>
-            <p class="text-sm text-center text-gray-500">
+            <p v-if="isPracticeMode" class="text-sm text-center text-gray-500">
+                YOU ARE IN PRACTICE MODE
+            </p>
+            <p v-else class="text-sm text-center text-gray-500">
                 SUBMMITED BY 
                 <span class="font-bold text-blue-900">
                     <a :href="currentGame.link" class="underline">
@@ -41,12 +44,13 @@
 <script>
 import {IconComponent} from "./ui";
 import {mapState} from 'pinia';
-import {useGameStore}from '../store'
+import {useGameStore, useAttemptStore}from '../store'
 
 export default {
     components: {IconComponent},
     computed: {
         ...mapState(useGameStore, ['currentGame']),
+        ...mapState(useAttemptStore, ['isPracticeMode']),
     },
     methods: {
         onHelpOpen() {

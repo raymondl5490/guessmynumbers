@@ -12,7 +12,7 @@
             <div class="flex flex-col my-8">
                 <div class="flex flex-row content-center justify-between w-full my-5">
                     <h1 class="text-2xl font-bold">Practice Mode</h1>
-                    <el-switch v-model="isPracticeMode" />
+                    <el-switch :value="isPracticeMode" @input="isPracticeModeChanged"/>
                 </div>
                 <div class="flex flex-row content-center justify-between w-full my-5">
                     <h1 class="text-2xl font-bold">
@@ -70,7 +70,7 @@
 <script>
 import ModalComponent from "../ui/ModalComponent";
 import IconComponent from "../ui/IconComponent";
-import { mapWritableState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { useAttemptStore } from "../../store";
 
 export default {
@@ -82,11 +82,19 @@ export default {
         },
     },
     computed: {
-        ...mapWritableState(useAttemptStore, ['isPracticeMode']),
+        ...mapState(useAttemptStore, ['isPracticeMode']),
     },
     methods: {
+        ...mapActions(useAttemptStore, ['goToPracticeMode', 'goToRegularMode']),
         onClose() {
             this.$emit('close')
+        },
+        isPracticeModeChanged(value) {
+            if (value) {
+                this.goToPracticeMode();
+            } else {
+                this.goToRegularMode();
+            }
         },
     },
 }
