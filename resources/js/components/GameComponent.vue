@@ -65,8 +65,8 @@ export default {
         }
     },
     computed: {
-        ...mapState(useGameStore, ['currentGame', 'board']),
-        ...mapState(useGuessStore, ['currentGuess', 'guesses']),
+        ...mapState(useGameStore, ['currentGame']),
+        ...mapState(useGuessStore, ['currentGuess', 'guesses', 'board']),
         ...mapState(useAttemptStore, ['currentAttempt']),
         ...mapState(usePlayerStore, ['currentPlayer']),
     },

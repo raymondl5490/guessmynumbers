@@ -8,8 +8,8 @@ import {useGameStore, useGuessStore} from "../store";
 
 export default {
     computed: {
-        ...mapState(useGameStore, ['board', 'correctNumbers']),
-        ...mapState(useGuessStore, ['existingGuessNumbers', 'guess']),
+        ...mapState(useGameStore, ['correctNumbers']),
+        ...mapState(useGuessStore, ['existingGuessNumbers', 'guess', 'board']),
     },
     methods: {
         isNumberOnBoard(number) {

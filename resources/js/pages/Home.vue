@@ -71,13 +71,11 @@ export default {
         }
         await this.getGuesses(this.currentPlayer.id, this.currentAttempt.id);
 
-        this.initializeBoard();
-
         this.loading = false;
     },
     computed: {
         ...mapState(usePlayerStore, ['currentPlayer']),
-        ...mapState(useAttemptStore, ['currentAttempt', 'isAttemptEnded']),
+        ...mapState(useAttemptStore, ['currentAttempt', 'isAttemptEnded', 'isPracticeMode']),
         ...mapState(useGameStore, ['currentGame']),
         ...mapState(useGuessStore, ['guesses']),
     },
@@ -87,10 +85,13 @@ export default {
                 this.showStatisticsModal = true;
             }
         },
+        isPracticeMode() {
+            // location.reload();
+        },
     },
     methods: {
         ...mapActions(usePlayerStore, ['createPlayer', 'getPlayer']),
-        ...mapActions(useGameStore, ['getCurrentGame', 'initializeBoard']),
+        ...mapActions(useGameStore, ['getCurrentGame']),
         ...mapActions(useGuessStore, ['getGuesses']),
         ...mapActions(useAttemptStore, ['createAttempt', 'getCurrentAttempt']),
         onOpenHelp() {
