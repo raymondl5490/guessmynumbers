@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <div class="button button-primary text-center my-5" @click="onSave">{{ game ? 'Update Game' : 'Create Game'}}</div>
+        <div class="my-5 text-center button button-primary" @click="onSave">{{ game ? 'Update Game' : 'Create Game'}}</div>
     </div>
 </template>
 <script>
@@ -144,7 +144,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(useGameStore, ['createGame', 'updateGame', 'getAllGames']),
+        ...mapActions(useGameStore, ['createGame', 'updateGame']),
         async onSave() {
             console.log({game: this.editGame})
             const isFormCorrect = await this.v$.$validate()
@@ -157,7 +157,7 @@ export default {
                 await this.createGame(this.editGame);
             }
 
-            await this.getAllGames();
+            // await this.getAllGames();
             this.$emit('saved');
         }
     }

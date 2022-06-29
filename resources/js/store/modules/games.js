@@ -1,34 +1,20 @@
 import {currentGameApi, gameApi} from '../../api'
 import {defineStore} from "pinia";
-import {useGuessStore} from "../index";
-import {forEach, isEmpty} from "lodash";
 import {nextLiveOn} from '../../utils';
 
 export default defineStore('games', {
     state: () => ({
-        games: [],
         submittedGames: [],
         queuedGames: [], // queued order by live_on asc
         finishedGames: [],
         currentGame: {},
-        board: [
-            [],
-            [],
-            [],
-        ],
     }),
     getters: {
         correctNumbers() {
             return [this.currentGame.number_one, this.currentGame.number_two, this.currentGame.number_three];
         },
-        getGameById(store) {
-            return (gameId) => _.find(store.games, {'id': gameId})
-        },
     },
     actions: {
-        async getAllGames() {
-            this.games = await gameApi.index();
-        },
         async refreshGames() {
             await Promise.all([
                 this.getSubmittedGames(),
