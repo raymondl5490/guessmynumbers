@@ -32,7 +32,6 @@
         "@heroicons/vue": "^1.0.6",
         "@vuelidate/core": "^2.0.0-alpha.41",
         "@vuelidate/validators": "^2.0.0-alpha.29",
-        "date-fns": "^2.28.0",
         "dayjs": "^1.11.3",
         "element-plus": "^2.2.6",
         "pinia": "^2.0.13",
