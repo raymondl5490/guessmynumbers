@@ -42,7 +42,7 @@ Route::prefix('players/{player}')->group(function() {
 });
 
 Route::get('/games/current', CurrentGameController::class)->name('games.current');
-
+Route::apiResource('games', GameController::class)->only(['store']);
 Route::patch('/attempts/{id}/win', [AttemptController::class, 'win'])->name('attempts.win');
 
 Route::middleware('auth')->group(function() {
@@ -53,5 +53,5 @@ Route::middleware('auth')->group(function() {
         Route::patch('/{id}/approve', [GameController::class, 'approve'])->name('games.approve');
         Route::patch('/{id}/live-on', [GameController::class, 'updateLiveOn'])->name('games.update_live_on');
     });
-    Route::apiResource('games', GameController::class);
+    Route::apiResource('games', GameController::class)->except(['store']);
 });

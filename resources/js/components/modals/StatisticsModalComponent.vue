@@ -51,7 +51,13 @@
                         <el-button class="w-full" type="success">SHARE</el-button>
                     </div>
                     <div>
-                        <el-button class="w-full m-0 mt-1" type="primary">FEATURE YOUR NUMBERS</el-button>
+                        <el-button
+                            class="w-full m-0 mt-1"
+                            type="primary"
+                            @click="$emit('featureOwnNumbers')"
+                        >
+                            FEATURE YOUR NUMBERS
+                        </el-button>
                     </div>
                 </div>
             </div>

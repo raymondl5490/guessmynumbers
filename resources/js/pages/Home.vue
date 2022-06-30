@@ -14,11 +14,16 @@
         />
         <StatisticsModalComponent
             :show="showStatisticsModal"
+            @featureOwnNumbers="onFeatureOwnNumbers"
             @close="onCloseStatistics"
         />
         <SettingsModalComponent
             :show="showSettingsModal"
             @close="onCloseSettings"
+        />
+        <GameModalCreate
+            :show="showGameModalCreate"
+            @close="onCloseGameModalCreate"
         />
     </div>
 </template>
@@ -32,6 +37,7 @@ import {mapActions, mapState} from 'pinia';
 import HelpModalComponent from "../components/modals/HelpModalComponent";
 import StatisticsModalComponent from "../components/modals/StatisticsModalComponent";
 import SettingsModalComponent from "../components/modals/SettingsModalComponent";
+import GameModalCreate from "../components/modals/GameModalCreate";
 
 export default {
     components: {
@@ -40,6 +46,7 @@ export default {
         HelpModalComponent,
         HeaderComponent,
         GameComponent,
+        GameModalCreate,
     },
     data() {
         return {
@@ -48,7 +55,8 @@ export default {
             showHelpModal: false,
             showStatisticsModal: false,
             showSettingsModal: false,
-        }
+            showGameModalCreate: false,
+        };
     },
     async mounted() {
 
@@ -107,6 +115,13 @@ export default {
         },
         onCloseSettings() {
             this.showSettingsModal = false;
+        },
+        onFeatureOwnNumbers() {
+            this.showStatisticsModal = false;
+            this.showGameModalCreate = true;
+        },
+        onCloseGameModalCreate() {
+            this.showGameModalCreate = false;
         }
     }
 }
