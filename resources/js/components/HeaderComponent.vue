@@ -10,8 +10,16 @@
         </div>
         <div class="w-screen text-center sm:w-full">
             <h1 class="mb-4 text-3xl font-bold text-gray-900 sm:text-xl md:text-2xl">GUESS <span class="text-green-600">MY</span> NUMBERS</h1>
-            <p v-if="isPracticeMode" class="text-sm text-center text-gray-500">
+            <p v-if="isPracticeMode" class="text-sm text-center text-red-500">
                 YOU ARE IN PRACTICE MODE
+                <div class="grid grid-cols-1 gap-1 sm:grid-cols-2">
+                    <div class="flex justify-center sm:justify-end">
+                        <el-button type="primary" size="small" class="w-36" @click="goToPracticeMode">TRY AGAIN</el-button>
+                    </div>
+                    <div class="flex justify-center sm:justify-start">
+                        <el-button type="success" size="small" class="w-36" @click="goToRegularMode">GO TO REAL MODE</el-button>
+                    </div>
+                </div>
             </p>
             <p v-else class="text-sm text-center text-gray-500">
                 SUBMMITED BY 
@@ -43,7 +51,7 @@
 </template>
 <script>
 import {IconComponent} from "./ui";
-import {mapState} from 'pinia';
+import {mapState, mapActions} from 'pinia';
 import {useGameStore, useAttemptStore}from '../store'
 
 export default {
@@ -53,6 +61,7 @@ export default {
         ...mapState(useAttemptStore, ['isPracticeMode']),
     },
     methods: {
+        ...mapActions(useAttemptStore, ['goToPracticeMode', 'goToRegularMode']),
         onHelpOpen() {
             this.$emit('open-help');
         },

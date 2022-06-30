@@ -1,7 +1,7 @@
 <template>
     <ModalComponent
         :show="show"
-        @close="onClose"
+        @close="$emit('close')"
     >
         <template #title>
             <div class="p-4 text-center bg-stone-200">
@@ -53,6 +53,7 @@
                     <div>
                         <el-button
                             class="w-full m-0 mt-1"
+                            :disabled="isPracticeMode || !won"
                             type="primary"
                             @click="$emit('featureOwnNumbers')"
                         >
@@ -66,10 +67,10 @@
 
             <div v-if="isPracticeMode" class="grid grid-cols-1 gap-1 sm:grid-cols-2">
                 <div>
-                    <el-button type="primary" class="w-full" @click="goToPracticeMode">TRY AGAIN</el-button>
+                    <el-button type="primary" class="w-full" @click="$emit('close'); goToPracticeMode()">TRY AGAIN</el-button>
                 </div>
                 <div>
-                    <el-button type="success" class="w-full" @click="goToRegularMode">GO TO REAL MODE</el-button>
+                    <el-button type="success" class="w-full" @click="$emit('close'); goToRegularMode()">GO TO REAL MODE</el-button>
                 </div>
             </div>
 
@@ -109,7 +110,7 @@ export default {
     },
     computed: {
         ...mapState(useGameStore, ['currentGame']),
-        ...mapState(useAttemptStore, ['isPracticeMode']),
+        ...mapState(useAttemptStore, ['isPracticeMode', 'won']),
         currentRoundWinPercentage() {
             const number_of_attempts = this.currentGame.number_of_attempts;
             const number_of_wons = this.currentGame.number_of_wons;
@@ -119,9 +120,6 @@ export default {
     },
     methods: {
         ...mapActions(useAttemptStore, ['goToPracticeMode', 'goToRegularMode']),
-        onClose() {
-            this.$emit('close')
-        },
-    }
+    },
 }
 </script>
