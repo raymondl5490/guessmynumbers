@@ -47,10 +47,12 @@
                 <span class="font-bold">New Numbers updated every 12 hours!</span>
                 <br/>
                 12:00am PST / 12:00pm PST
-                <br/>
-                <br/>
-                www.guessmynumbers.com
             </p>
+            <div class="flex items-center justify-center">
+                <el-link href="https://www.guessmynumbers.com" target="_blank" type="primary">
+                    www.guessmynumbers.com
+                </el-link>
+            </div>
         </template>
     </ModalComponent>
 </template>

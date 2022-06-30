@@ -9,18 +9,24 @@
             </div>
         </template>
         <template #content>
-            <div v-if="!isPracticeMode" class="grid w-full grid-cols-2 gap-8 my-5">
-                <div class="col-span-1 text-center">
-                    <div class="text-3xl font-bold text-center">
+            <div v-if="!isPracticeMode" class="grid w-full grid-cols-3 gap-8 my-5">
+                <div class="p-2 text-center bg-gray-100 md:p-4 col">
+                    <div class="text-3xl font-bold">
+                        {{ currentGame.number_of_wons }}
+                    </div>
+                    <div class="text-xs text-gray-600">ROUNDS WINS</div>
+                </div>
+                <div class="p-2 text-center bg-gray-100 md:p-4 col">
+                    <div class="text-3xl font-bold">
                         {{ currentGame.number_of_attempts }}
                     </div>
-                    Rounds Played
+                    <div class="text-xs text-gray-600">ROUNDS PLAYED</div>
                 </div>
-                <div class="col-span-1 text-center">
-                    <div class="text-3xl font-bold text-center">
+                <div class="p-2 text-center bg-gray-100 md:p-4 col">
+                    <div class="text-3xl font-bold">
                         {{ currentRoundWinPercentage }}
                     </div>
-                    Current Round Global Win %
+                    <div class="text-xs text-gray-600">% OF WINS</div>
                 </div>
             </div>
 
@@ -33,31 +39,40 @@
                 <GameComponent :hide-numbers="true" />
             </div>
 
-            <div v-if="!isPracticeMode" class="grid w-full grid-cols-2 gap-8 my-5">
-                <div class="text-center">
-                    <h3 class="text-lg font-light">
-                        NEW NUMBER IN
-                    </h3>
-                    <h1 class="text-2xl font-bold">
-                        20 MINUTES
-                    </h1>
+            <div v-if="!isPracticeMode" class="grid w-full grid-cols-1 gap-8 my-5 md:grid-cols-2">
+                <div class="p-2 text-center bg-gray-100 md:p-4 col">
+                    <div class="text-xl font-bold sm:text-2xl">
+                        <CutdownTimer />
+                    </div>
+                    <div class="text-xs text-gray-600">NEW NUMBER IN</div>
                 </div>
                 <div class="flex flex-col justify-center">
-                    <el-button type="success">SHARE</el-button>
+                    <div>
+                        <el-button class="w-full" type="success">SHARE</el-button>
+                    </div>
+                    <div>
+                        <el-button class="w-full m-0 mt-1" type="primary">FEATURE YOUR NUMBERS</el-button>
+                    </div>
                 </div>
             </div>
 
             <hr class="my-5"/>
 
-            <div v-if="isPracticeMode" class="flex items-center justify-center">
-                <el-button type="primary" @click="goToPracticeMode">TRY AGAIN</el-button>
-                <el-button type="success" @click="goToRegularMode">GO TO REAL MODE</el-button>
+            <div v-if="isPracticeMode" class="grid grid-cols-1 gap-1 sm:grid-cols-2">
+                <div>
+                    <el-button type="primary" class="w-full" @click="goToPracticeMode">TRY AGAIN</el-button>
+                </div>
+                <div>
+                    <el-button type="success" class="w-full" @click="goToRegularMode">GO TO REAL MODE</el-button>
+                </div>
             </div>
 
             <hr class="my-5"/>
 
-            <div class="text-center">
-                <p>www.guessmynumbers.com</p>
+            <div class="flex items-center justify-center">
+                <el-link href="https://www.guessmynumbers.com" target="_blank" type="primary">
+                    www.guessmynumbers.com
+                </el-link>
             </div>
         </template>
     </ModalComponent>
@@ -66,10 +81,16 @@
 import ModalComponent from "../ui/ModalComponent";
 import IconComponent from "../ui/IconComponent";
 import GameComponent from "../GameComponent";
+import CutdownTimer from "../CutdownTimer";
 import { mapState, mapActions } from "pinia";
 import { useGameStore, useAttemptStore } from "../../store";
 export default {
-    components: {GameComponent, IconComponent, ModalComponent},
+    components: {
+        GameComponent,
+        IconComponent,
+        ModalComponent,
+        CutdownTimer,
+    },
     props: {
         show: {
             type: Boolean,
