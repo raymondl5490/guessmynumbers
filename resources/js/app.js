@@ -1,4 +1,4 @@
-import {createPinia} from "pinia/dist/pinia";
+import {createPinia} from "pinia";
 import {createPersistedStatePlugin} from 'pinia-plugin-persistedstate-2'
 
 require('./bootstrap');
