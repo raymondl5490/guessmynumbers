@@ -38,6 +38,25 @@ const ATTEMPT_STATUS_CODES = Object.freeze({
     STATUS_ENDED_LOSE_2: Symbol('STATUS_ENDED_LOSE_2'),
 });
 
+const SETTING_KEYS = [
+    'result_text_win_try_1',
+    'result_text_win_try_2',
+    'result_text_win_try_3',
+    'result_text_lose_correct_0',
+    'result_text_lose_correct_1',
+    'result_text_lose_correct_2',
+];
+
+const SETTING_DISPLAY_NAME_BY_KEY = {
+    'result_text_win_try_1': 'WIN IN FIRST TRY',
+    'result_text_win_try_2': 'WIN IN SECOND TRY',
+    'result_text_win_try_3': 'WIN IN THIRD TRY',
+    'result_text_lose_correct_0': 'LOSE CORRECT 0',
+    'result_text_lose_correct_1': 'LOSE CORRECT 1',
+    'result_text_lose_correct_2': 'LOSE CORRECT 2',
+};
+
 export {
     ATTEMPT_STATUS_CODES,
+    SETTING_DISPLAY_NAME_BY_KEY,
 }
