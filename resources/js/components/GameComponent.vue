@@ -16,16 +16,13 @@
                 />
             </div>
 
-            <div
+            <InputNumbersComponent
                 v-if="!hideNumbers"
-                class="flex flex-row"
-            >
-                <InputNumbersComponent
-                    @number-selected="onNumberSelected"
-                    @number-deleted="onNumberDeleted"
-                    @submit="onSubmitGuess"
-                />
-            </div>
+                class="mt-8"
+                @number-selected="onNumberSelected"
+                @number-deleted="onNumberDeleted"
+                @submit="onSubmitGuess"
+            />
         </div>
     </div>
 </template>
