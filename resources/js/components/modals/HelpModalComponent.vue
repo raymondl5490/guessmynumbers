@@ -39,7 +39,7 @@
             </p>
 
             <div class="flex justify-center my-8">
-                <el-button type="success" @click="onClose">GOT IT, LET'S PLAY</el-button>
+                <el-button type="success" size="large" @click="onClose">GOT IT, LET'S PLAY</el-button>
             </div>
 
             <hr/>
