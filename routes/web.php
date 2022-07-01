@@ -7,6 +7,7 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\GuessController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerCurrentAttemptController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +45,10 @@ Route::prefix('players/{player}')->group(function() {
 Route::get('/games/current', CurrentGameController::class)->name('games.current');
 Route::apiResource('games', GameController::class)->only(['store']);
 Route::patch('/attempts/{id}/win', [AttemptController::class, 'win'])->name('attempts.win');
+
+Route::get('/settings/result-texts', [SettingController::class, 'resultTexts'])->name('settings.result_texts');
+Route::get('/settings/{key}', [SettingController::class, 'value'])->name('settings.value');
+Route::put('/settings/{key}', [SettingController::class, 'update'])->name('settings.update');
 
 Route::middleware('auth')->group(function() {
     Route::prefix('games')->group(function() {
