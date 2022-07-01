@@ -85,7 +85,6 @@ export default {
         ...mapState(usePlayerStore, ['currentPlayer']),
         ...mapState(useAttemptStore, ['currentAttempt', 'isAttemptEnded']),
         ...mapState(useGameStore, ['currentGame']),
-        ...mapState(useGuessStore, ['guesses']),
     },
     watch: {
         isAttemptEnded() {

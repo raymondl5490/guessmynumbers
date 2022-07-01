@@ -12,7 +12,7 @@ export default defineStore('guesses', {
     getters: {
         /**
          * 
-         * @returns guesses in array of array : [ [],[],[] ]
+         * @returns guess numbers in array of array : [ [],[],[] ]
          */
         submittedGuessNumbers() {
             const numbers = [];
@@ -26,6 +26,26 @@ export default defineStore('guesses', {
 
             return numbers;
         },
+        /**
+         * 
+         * @return Last submitted guess numbers in array; ex: [ 4, 5, 6 ]
+         */
+        lastSubmittedGuessNumbers() {
+            return this.submittedGuessNumbers[this.submittedGuessNumbers.length - 1];
+        },
+        /**
+         * 
+         * @return Count correct spots of last submitted guess numbers; ex: 0 ~ 3
+         */
+        countCorrectSpotsOfLastSubmittedGuessNumbers() {
+            const attemptStore = useAttemptStore();
+            let count = 0;
+            for (let i = 0; i < 3; i++) {
+                if (this.lastSubmittedGuessNumbers[i] === attemptStore.correctNumbers[i]) count++;
+            }
+            return count;
+        },
+
         board() {
             const board = [[], [], []];
 

@@ -2,6 +2,8 @@ import {attemptApi} from '../../api';
 import {defineStore} from 'pinia';
 import { useGameStore, useGuessStore } from '../index';
 
+import { ATTEMPT_STATUS_CODES } from '../../utils/constants';
+
 export default defineStore('attempts', {
     state: () => ({
         currentAttempt: {},
@@ -29,6 +31,58 @@ export default defineStore('attempts', {
         isAttemptEnded() {
             const guessStore = useGuessStore();
             return this.won || guessStore.guesses.length >= 3;
+        },
+
+        attemptStatus() {
+            const guessStore = useGuessStore();
+
+            let status = [];
+
+            if (this.isPracticeMode) {
+                status.push(ATTEMPT_STATUS_CODES.MODE_PRACTICE);
+            } else {
+                status.push(ATTEMPT_STATUS_CODES.MODE_REGULAR);
+            }
+
+            if (guessStore.wonOnXthGuess || guessStore.guesses.length >= 3) {
+                status.push(ATTEMPT_STATUS_CODES.STATUS_ENDED);
+                if (guessStore.wonOnXthGuess) {
+                    status.push(ATTEMPT_STATUS_CODES.STATUS_ENDED_WIN);
+                    switch (guessStore.wonOnXthGuess) {
+                        case 1:
+                            status.push(ATTEMPT_STATUS_CODES.STATUS_ENDED_WIN_1);
+                            break;
+                        case 2:
+                            status.push(ATTEMPT_STATUS_CODES.STATUS_ENDED_WIN_2);
+                            break;
+                        case 3:
+                            status.push(ATTEMPT_STATUS_CODES.STATUS_ENDED_WIN_3);
+                            break;
+
+                        default:
+                            break;
+                    }
+                } else {
+                    status.push(ATTEMPT_STATUS_CODES.STATUS_ENDED_LOSE);
+                    switch (guessStore.countCorrectSpotsOfLastSubmittedGuessNumbers) {
+                        case 0:
+                            status.push(ATTEMPT_STATUS_CODES.STATUS_ENDED_LOSE_0);
+                            break;
+                        case 1:
+                            status.push(ATTEMPT_STATUS_CODES.STATUS_ENDED_LOSE_1);
+                            break;
+                        case 2:
+                            status.push(ATTEMPT_STATUS_CODES.STATUS_ENDED_LOSE_2);
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                }
+            } else {
+                status.push(ATTEMPT_STATUS_CODES.STATUS_RUNNING);
+            }
+            return status;
         },
     },
     actions: {
