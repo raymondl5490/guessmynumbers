@@ -32,7 +32,7 @@
 import GameComponent from "../components/GameComponent";
 import HeaderComponent from "../components/HeaderComponent";
 import {isEmpty} from 'lodash';
-import {useGameStore, useAttemptStore, usePlayerStore, useGuessStore} from '../store';
+import {useGameStore, useAttemptStore, usePlayerStore, useGuessStore, useSettingStore} from '../store';
 import {mapActions, mapState} from 'pinia';
 import HelpModalComponent from "../components/modals/HelpModalComponent";
 import StatisticsModalComponent from "../components/modals/StatisticsModalComponent";
@@ -77,6 +77,7 @@ export default {
             });
         }
         await this.getGuesses(this.currentPlayer.id, this.currentAttempt.id);
+        await this.getResultTexts();
 
         this.loading = false;
     },
@@ -98,6 +99,7 @@ export default {
         ...mapActions(useGameStore, ['getCurrentGame']),
         ...mapActions(useGuessStore, ['getGuesses']),
         ...mapActions(useAttemptStore, ['createAttempt', 'getCurrentAttempt']),
+        ...mapActions(useSettingStore, ['getResultTexts']),
         onOpenHelp() {
             this.showHelpModal = true;
         },
@@ -122,7 +124,7 @@ export default {
         },
         onCloseGameModalCreate() {
             this.showGameModalCreate = false;
-        }
+        },
     }
 }
 </script>

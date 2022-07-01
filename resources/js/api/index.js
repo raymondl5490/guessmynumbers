@@ -4,6 +4,7 @@ import currentGameApi from './CurrentGameApi'
 import guessApi from "./GuessApi";
 import playerApi from "./playerApi";
 import gameApi from "./gameApi";
+import settingApi from "./settingApi";
 
 export {
     attemptApi,
@@ -11,5 +12,6 @@ export {
     gameApi,
     currentGameApi,
     guessApi,
-    playerApi
+    playerApi,
+    settingApi,
 }
