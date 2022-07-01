@@ -34,7 +34,7 @@
 
             <div>
                 <h3 class="mb-8 text-xl font-medium text-center">
-                    YOUR GUESSES
+                    {{ resultText }}
                 </h3>
                 <GameComponent :hide-numbers="true" />
             </div>
@@ -90,7 +90,9 @@ import IconComponent from "../ui/IconComponent";
 import GameComponent from "../GameComponent";
 import CutdownTimer from "../CutdownTimer";
 import { mapState, mapActions } from "pinia";
-import { useGameStore, useAttemptStore } from "../../store";
+import { useGameStore, useAttemptStore, useSettingStore } from "../../store";
+import { ATTEMPT_STATUS_CODES } from "../../utils/constants";
+
 export default {
     components: {
         GameComponent,
@@ -110,12 +112,30 @@ export default {
     },
     computed: {
         ...mapState(useGameStore, ['currentGame']),
-        ...mapState(useAttemptStore, ['isPracticeMode', 'won']),
+        ...mapState(useAttemptStore, ['isPracticeMode', 'won', 'attemptStatus']),
+        ...mapState(useSettingStore, ['settingValueByKey']),
         currentRoundWinPercentage() {
             const number_of_attempts = this.currentGame.number_of_attempts;
             const number_of_wons = this.currentGame.number_of_wons;
             if (!number_of_attempts) return 0;
             return _.min([_.round(number_of_wons / number_of_attempts * 100, 0), 100]);
+        },
+        resultText() {
+            let texts = [];
+            if (_.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.STATUS_ENDED_WIN_1)) {
+                texts = this.settingValueByKey('result_text_win_try_1');
+            } else if (_.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.STATUS_ENDED_WIN_2)) {
+                texts = this.settingValueByKey('result_text_win_try_2')
+            } else if (_.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.STATUS_ENDED_WIN_3)) {
+                texts = this.settingValueByKey('result_text_win_try_3')
+            } else if (_.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.STATUS_ENDED_LOSE_0)) {
+                texts = this.settingValueByKey('result_text_lose_correct_0')
+            } else if (_.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.STATUS_ENDED_LOSE_1)) {
+                texts = this.settingValueByKey('result_text_lose_correct_1')
+            } else if (_.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.STATUS_ENDED_LOSE_2)) {
+                texts = this.settingValueByKey('result_text_lose_correct_2')
+            }
+            return texts[_.random(texts.length - 1)];
         },
     },
     methods: {
