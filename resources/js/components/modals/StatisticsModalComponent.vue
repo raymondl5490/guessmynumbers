@@ -135,7 +135,7 @@ export default {
             } else if (_.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.STATUS_ENDED_LOSE_2)) {
                 texts = this.settingValueByKey('result_text_lose_correct_2')
             }
-            return texts[_.random(texts.length - 1)];
+            return _.isArray(texts) ? texts[_.random(texts.length - 1)] : "";
         },
     },
     methods: {

@@ -29,15 +29,19 @@ export default defineStore('guesses', {
         /**
          * 
          * @return Last submitted guess numbers in array; ex: [ 4, 5, 6 ]
+         * or undefind if there is no submitted guess numbers
          */
         lastSubmittedGuessNumbers() {
-            return this.submittedGuessNumbers[this.submittedGuessNumbers.length - 1];
+            return this.submittedGuessNumbers.length > 0
+                ? this.submittedGuessNumbers[this.submittedGuessNumbers.length - 1]
+                : undefined;
         },
         /**
          * 
          * @return Count correct spots of last submitted guess numbers; ex: 0 ~ 3
          */
         countCorrectSpotsOfLastSubmittedGuessNumbers() {
+            if (!this.lastSubmittedGuessNumbers) return;
             const attemptStore = useAttemptStore();
             let count = 0;
             for (let i = 0; i < 3; i++) {
