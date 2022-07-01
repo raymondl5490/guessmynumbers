@@ -48,12 +48,13 @@
                 </div>
                 <div class="flex flex-col justify-center">
                     <div>
-                        <el-button class="w-full" type="success">SHARE</el-button>
+                        <el-button class="w-full" :tabindex="-1" type="success">SHARE</el-button>
                     </div>
                     <div>
                         <el-button
                             class="w-full m-0 mt-1"
                             :disabled="isPracticeMode || !won"
+                            :tabindex="-1"
                             type="primary"
                             @click="$emit('featureOwnNumbers')"
                         >
@@ -67,10 +68,10 @@
 
             <div v-if="isPracticeMode" class="grid grid-cols-1 gap-1 sm:grid-cols-2">
                 <div>
-                    <el-button type="primary" class="w-full" @click="$emit('close'); goToPracticeMode()">TRY AGAIN</el-button>
+                    <el-button type="primary" class="w-full" :tabindex="-1" @click="$emit('close'); goToPracticeMode()">TRY AGAIN</el-button>
                 </div>
                 <div>
-                    <el-button type="success" class="w-full" @click="$emit('close'); goToRegularMode()">GO TO REAL MODE</el-button>
+                    <el-button type="success" class="w-full" :tabindex="-1" @click="$emit('close'); goToRegularMode()">GO TO REAL MODE</el-button>
                 </div>
             </div>
 
