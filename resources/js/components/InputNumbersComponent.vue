@@ -26,7 +26,7 @@
         />
         <button
             :disabled="isAttemptEnded"
-            class="flex items-center justify-center w-24 h-10 text-green-600 bg-gray-200 rounded-full cursor-pointer md:w-28 md:h-12 md:text-lg hover:bg-gray-500 hover:text-white"
+            class="flex items-center justify-center w-24 h-10 text-red-600 bg-gray-200 rounded-full cursor-pointer md:w-28 md:h-12 md:text-lg hover:bg-gray-500 hover:text-white"
             @click="handleNumberDeleted"
         >
             <IconComponent icon="arrow-left" />
