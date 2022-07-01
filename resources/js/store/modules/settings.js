@@ -1,15 +1,6 @@
 import {settingApi} from '../../api'
 import {defineStore} from "pinia";
 
-const SETTING_KEYS = [
-    'result_text_win_try_1',
-    'result_text_win_try_2',
-    'result_text_win_try_3',
-    'result_text_lose_correct_0',
-    'result_text_lose_correct_1',
-    'result_text_lose_correct_2',
-];
-
 export default defineStore('settings', {
     state: () => ({
         allSettings: [],

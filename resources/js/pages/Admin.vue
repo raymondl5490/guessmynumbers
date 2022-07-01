@@ -163,6 +163,8 @@
             </el-collapse-item>
         </el-collapse>
 
+        <ResultTextForm class="p-4 m-8 border-2 rounded-md shadow-sm" />
+
         <GameModalCreate :show="showGameModalCreate" :is-admin="true" @close="showGameModalCreate = false" />
         <GameModalEdit :show="showGameModalEdit" :is-admin="true" :game-id="editingGameId" @close="showGameModalEdit = false" />
 
@@ -173,6 +175,7 @@ import {mapActions, mapState} from "pinia";
 import {useGameStore} from "../store";
 import GameModalCreate from "../components/modals/GameModalCreate.vue";
 import GameModalEdit from "../components/modals/GameModalEdit.vue";
+import ResultTextForm from "../components/forms/ResultTextForm.vue";
 import Sortable from 'sortablejs';
 import { v4 as uuidv4 } from 'uuid';
 import { nextTick } from "vue";
@@ -181,6 +184,7 @@ export default {
     components: {
         GameModalCreate,
         GameModalEdit,
+        ResultTextForm,
     },
     data() {
         return {
