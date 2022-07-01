@@ -39,7 +39,7 @@
                 <template #title>
                     <div class="flex items-center content-center justify-between w-full">
                         <p>Submitted Games</p>
-                        <el-button size="small" type="primary" @click.stop="isVisibleGameDialogCreate = true">Create</el-button>
+                        <el-button size="small" type="primary" @click.stop="showGameModalCreate = true">Create</el-button>
                     </div>
                 </template>
                 <el-table :data="filteredSubmittedGames">
@@ -163,30 +163,29 @@
             </el-collapse-item>
         </el-collapse>
 
-        <game-dialog-create v-model="isVisibleGameDialogCreate" @submitted="isVisibleGameDialogCreate = false;"></game-dialog-create>
-
-        <game-dialog-edit v-model="isVisibleGameDialogEdit" :game-id="editingGameId" @submitted="isVisibleGameDialogEdit = false;"></game-dialog-edit>
+        <GameModalCreate :show="showGameModalCreate" :is-admin="true" @close="showGameModalCreate = false" />
+        <GameModalEdit :show="showGameModalEdit" :is-admin="true" :game-id="editingGameId" @close="showGameModalEdit = false" />
 
     </div>
 </template>
 <script>
 import {mapActions, mapState} from "pinia";
 import {useGameStore} from "../store";
-import GameDialogCreate from "../components/modals/GameDialogCreate.vue";
-import GameDialogEdit from "../components/modals/GameDialogEdit.vue";
+import GameModalCreate from "../components/modals/GameModalCreate.vue";
+import GameModalEdit from "../components/modals/GameModalEdit.vue";
 import Sortable from 'sortablejs';
 import { v4 as uuidv4 } from 'uuid';
 import { nextTick } from "vue";
 
 export default {
     components: {
-        GameDialogCreate,
-        GameDialogEdit,
+        GameModalCreate,
+        GameModalEdit,
     },
     data() {
         return {
-            isVisibleGameDialogCreate: false,
-            isVisibleGameDialogEdit: false,
+            showGameModalCreate: false,
+            showGameModalEdit: false,
             editingGameId: 0,
 
             queuedLoading: false,
@@ -247,7 +246,7 @@ export default {
         },
         onEditClicked(index, row) {
             this.editingGameId = row.id;
-            this.isVisibleGameDialogEdit = true;
+            this.showGameModalEdit = true;
         },
         async onRemoveClicked(index, row) {
             await this.removeGame(row.id);
