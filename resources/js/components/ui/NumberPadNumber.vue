@@ -10,7 +10,8 @@ export default {
     name: 'NumberPadNumber',
     props: {
         number: {
-            require,
+            type: Number,
+            required: true,
         },
     },
 }

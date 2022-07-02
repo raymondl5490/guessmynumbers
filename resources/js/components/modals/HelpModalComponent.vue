@@ -1,8 +1,5 @@
 <template>
-    <ModalComponent
-        :show="show"
-        @close="onClose"
-    >
+    <ModalComponent v-model="value">
         <template #title>
             <img :src="asset('images/logo.jpeg')" class="w-40 h-auto mx-auto"/>
             <div class="p-4 text-center bg-stone-200">
@@ -39,7 +36,7 @@
             </p>
 
             <div class="flex justify-center my-8">
-                <el-button type="success" size="large" :tabindex="-1" @click="onClose">GOT IT, LET'S PLAY</el-button>
+                <el-button type="success" size="large" :tabindex="-1" @click="value = false">GOT IT, LET'S PLAY</el-button>
             </div>
 
             <hr/>
@@ -62,16 +59,17 @@ import IconComponent from "../ui/IconComponent";
 
 export default {
     components: {IconComponent, ModalComponent},
-    props: {
-        show: {
-            type: Boolean,
-            default: false,
-        }
-    },
-    methods: {
-        onClose() {
-            this.$emit('close')
+    props: ['modelValue'],
+    emits: ['update:modelValue'],
+    computed: {
+        value: {
+            get() {
+                return this.modelValue;
+            },
+            set(value) {
+                this.$emit('update:modelValue', value);
+            },
         },
-    }
+    },
 }
 </script>

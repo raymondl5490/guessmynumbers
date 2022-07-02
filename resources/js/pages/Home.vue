@@ -8,23 +8,13 @@
         />
         <GameComponent v-if="!loading" />
 
-        <HelpModalComponent
-            :show="showHelpModal"
-            @close="onCloseHelp"
-        />
+        <HelpModalComponent v-model="showHelpModal" />
         <StatisticsModalComponent
-            :show="showStatisticsModal"
+            v-model="showStatisticsModal"
             @featureOwnNumbers="onFeatureOwnNumbers"
-            @close="onCloseStatistics"
         />
-        <SettingsModalComponent
-            :show="showSettingsModal"
-            @close="onCloseSettings"
-        />
-        <GameModalCreate
-            :show="showGameModalCreate"
-            @close="onCloseGameModalCreate"
-        />
+        <SettingsModalComponent v-model="showSettingsModal" />
+        <GameModalCreate v-model="showGameModalCreate" />
     </div>
 </template>
 <script>
@@ -102,27 +92,15 @@ export default {
         onOpenHelp() {
             this.showHelpModal = true;
         },
-        onCloseHelp() {
-            this.showHelpModal = false;
-        },
         onOpenStatistics() {
             this.showStatisticsModal = true;
-        },
-        onCloseStatistics() {
-            this.showStatisticsModal = false;
         },
         onOpenSettings() {
             this.showSettingsModal = true;
         },
-        onCloseSettings() {
-            this.showSettingsModal = false;
-        },
         onFeatureOwnNumbers() {
             this.showStatisticsModal = false;
             this.showGameModalCreate = true;
-        },
-        onCloseGameModalCreate() {
-            this.showGameModalCreate = false;
         },
     }
 }

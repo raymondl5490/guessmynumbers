@@ -1,8 +1,5 @@
 <template>
-    <modal-component
-        :show="show"
-        @close="$emit('close')"
-    >
+    <modal-component v-model="value">
         <template #title>
             {{ dialogType === 'create' ? 'Create Game' : 'Edit Game'}}
         </template>
@@ -93,16 +90,13 @@ export default {
         FormErrorsComponent,
     },
     props: {
+        modelValue: Boolean,
         dialogType: {
             type: String,
             required: true,
             validator: function (value) {
                 return _.includes(['create', 'edit'], value);
             },
-        },
-        show: {
-            type: Boolean,
-            required: true,
         },
         gameId: {
             type: Number,
@@ -124,6 +118,16 @@ export default {
                 link: '',
             },
         };
+    },
+    computed: {
+        value: {
+            get() {
+                return this.modelValue;
+            },
+            set(value) {
+                this.$emit('update:modelValue', value);
+            },
+        },
     },
     watch: {
         async gameId() {
@@ -188,7 +192,7 @@ export default {
             } else if (this.dialogType === 'edit') {
                 await this.updateGame(this.gameId, this.form);
             }
-            this.$emit('close');
+            this.value = false;
         },
     },
 }
