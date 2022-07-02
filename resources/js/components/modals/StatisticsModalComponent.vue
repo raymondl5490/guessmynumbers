@@ -1,8 +1,5 @@
 <template>
-    <ModalComponent
-        :show="show"
-        @close="$emit('close')"
-    >
+    <ModalComponent v-model="value">
         <template #title>
             <div class="p-4 text-center bg-stone-200">
                 Statistics
@@ -68,10 +65,10 @@
 
             <div v-if="isPracticeMode" class="grid grid-cols-1 gap-1 sm:grid-cols-2">
                 <div>
-                    <el-button type="primary" class="w-full" :tabindex="-1" @click="$emit('close'); goToPracticeMode()">TRY AGAIN</el-button>
+                    <el-button type="primary" class="w-full" :tabindex="-1" @click="value = false; goToPracticeMode()">TRY AGAIN</el-button>
                 </div>
                 <div>
-                    <el-button type="success" class="w-full" :tabindex="-1" @click="$emit('close'); goToRegularMode()">GO TO REAL MODE</el-button>
+                    <el-button type="success" class="w-full" :tabindex="-1" @click="value = false; goToRegularMode()">GO TO REAL MODE</el-button>
                 </div>
             </div>
 
@@ -101,12 +98,8 @@ export default {
         ModalComponent,
         CutdownTimer,
     },
-    props: {
-        show: {
-            type: Boolean,
-            default: false,
-        }
-    },
+    props: ['modelValue'],
+    emits: ['update:modelValue', 'featureOwnNumbers'],
     data() {
         return {
         }
@@ -115,6 +108,14 @@ export default {
         ...mapState(useGameStore, ['currentGame']),
         ...mapState(useAttemptStore, ['isPracticeMode', 'won', 'attemptStatus']),
         ...mapState(useSettingStore, ['settingValueByKey']),
+        value: {
+            get() {
+                return this.modelValue;
+            },
+            set(value) {
+                this.$emit('update:modelValue', value);
+            },
+        },
         currentRoundWinPercentage() {
             const number_of_attempts = this.currentGame.number_of_attempts;
             const number_of_wons = this.currentGame.number_of_wons;

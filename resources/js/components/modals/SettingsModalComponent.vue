@@ -1,8 +1,5 @@
 <template>
-    <ModalComponent
-        :show="show"
-        @close="onClose"
-    >
+    <ModalComponent v-model="value">
         <template #title>
             <div class="p-4 text-center bg-stone-200">
                 Settings
@@ -64,20 +61,21 @@ import { useAttemptStore } from "../../store";
 
 export default {
     components: {IconComponent, ModalComponent},
-    props: {
-        show: {
-            type: Boolean,
-            default: false,
-        },
-    },
+    props: ['modelValue'],
+    emits: ['update:modelValue'],
     computed: {
         ...mapState(useAttemptStore, ['isPracticeMode']),
+        value: {
+            get() {
+                return this.modelValue;
+            },
+            set(value) {
+                this.$emit('update:modelValue', value);
+            },
+        },
     },
     methods: {
         ...mapActions(useAttemptStore, ['goToPracticeMode', 'goToRegularMode']),
-        onClose() {
-            this.$emit('close')
-        },
         isPracticeModeChanged(value) {
             if (value) {
                 this.goToPracticeMode();
