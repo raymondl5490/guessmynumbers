@@ -25,26 +25,26 @@ export default {
 </script>
 <style>
 .el-dialog {
-    width: 90% !important;
+    width: 100% !important;
 }
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     .el-dialog {
-        width: 370px !important;
+        width: 100% !important;
     }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
     .el-dialog {
-        width: 500px !important;
+        width: 600px !important;
     }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
     .el-dialog {
-        width: 600px !important;
+        width: 700px !important;
     }
 }
 

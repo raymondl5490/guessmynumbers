@@ -1,9 +1,9 @@
 <template>
     <ModalComponent v-model="value">
         <template #title>
-            <div class="p-4 text-center bg-stone-200">
-                Statistics
-            </div>
+            <h1 class="p-4 text-2xl font-extrabold text-center bg-stone-200">
+                {{ resultText || 'Statistics' }}
+            </h1>
         </template>
         <template #content>
             <div v-if="!isPracticeMode" class="grid w-full grid-cols-3 gap-8 my-5">
@@ -29,12 +29,7 @@
 
             <hr class="my-3" />
 
-            <div>
-                <h3 class="mb-8 text-xl font-medium text-center">
-                    {{ resultText }}
-                </h3>
-                <GameComponent :hide-numbers="true" />
-            </div>
+            <GameComponent :hide-numbers="true" />
 
             <div v-if="!isPracticeMode" class="grid w-full grid-cols-1 gap-8 my-5 md:grid-cols-2">
                 <div class="p-2 text-center bg-gray-100 md:p-4 col">
@@ -49,8 +44,8 @@
                     </div>
                     <div>
                         <el-button
+                            v-if="isFeatureButton"
                             class="w-full m-0 mt-1"
-                            :disabled="isPracticeMode || !won"
                             :tabindex="-1"
                             type="primary"
                             @click="$emit('featureOwnNumbers')"
@@ -115,6 +110,10 @@ export default {
             set(value) {
                 this.$emit('update:modelValue', value);
             },
+        },
+        isFeatureButton() {
+            return _.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.MODE_REGULAR)
+                && _.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.STATUS_ENDED_WIN);
         },
         currentRoundWinPercentage() {
             const number_of_attempts = this.currentGame.number_of_attempts;
