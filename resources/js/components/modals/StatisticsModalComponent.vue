@@ -47,7 +47,14 @@
                     class="flex flex-col justify-center"
                 >
                     <div>
-                        <el-button class="w-full" :tabindex="-1" type="success">SHARE</el-button>
+                        <el-button
+                            class="w-full"
+                            :tabindex="-1"
+                            type="success"
+                            @click="onShare"
+                        >
+                            SHARE
+                        </el-button>
                     </div>
                     <div>
                         <el-button
@@ -89,10 +96,68 @@ import IconComponent from "../ui/IconComponent";
 import GameComponent from "../GameComponent";
 import CutdownTimer from "../CutdownTimer";
 import { mapState, mapActions } from "pinia";
-import { useGameStore, useAttemptStore, useSettingStore } from "../../store";
+import { useGameStore, useAttemptStore, useSettingStore, useGuessStore } from "../../store";
 import { ATTEMPT_STATUS_CODES } from "../../utils/constants";
+import useClipboard from 'vue-clipboard3';
 
 export default {
+    setup() {
+        const { toClipboard } = useClipboard({appendToBody: true})
+
+        const shareText = () => {
+            // * Sample share text
+            // I guessed this 3-digit number in 2 tries. 
+
+            // ⬛⬛🟨
+            // 🟩🟨⬛
+            // 🟩🟩🟩
+
+            const guessStore = useGuessStore();
+            const attempStore = useAttemptStore();
+
+            let shareText = `I guessed this 3-digit number in ${guessStore.guesses.length} tries. \n\n`;
+
+            const correctNumbers = attempStore.correctNumbers;
+
+            for (let rowIndex = 0; rowIndex < guessStore.guesses.length; rowIndex++) {
+                const row = guessStore.board[rowIndex];
+                for (let colIndex = 0; colIndex < row.length; colIndex++) {
+                    const guessedNumber = row[colIndex] ?? null;
+                    const correctNumber = correctNumbers[colIndex];
+
+                    if (guessedNumber === correctNumber) {
+                        // return SQUARE_STATUS_CODES.SUBMITTED_CORRECT_RIGHT_SPOT;
+                        shareText += '🟩';
+                        continue;
+                    }
+                    if (_.includes(correctNumbers, guessedNumber)) {
+                        // return SQUARE_STATUS_CODES.SUBMITTED_CORRECT_WRONG_SPOT;
+                        shareText += '🟨';
+                        continue;
+                    }
+                    // return SQUARE_STATUS_CODES.SUBMITTED_INCORRECT;
+                    shareText += '⬛';
+                    continue;
+                }
+                shareText += '\n';
+            }
+            shareText += '\n';
+
+            return shareText;
+        };
+
+
+        const onShare = async () => {
+            try {
+                await toClipboard(shareText())
+                console.log('Copied to clipboard')
+            } catch (e) {
+                console.error(e)
+            }
+        }
+
+        return { onShare }
+    },
     components: {
         GameComponent,
         IconComponent,
