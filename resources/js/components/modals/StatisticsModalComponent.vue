@@ -31,20 +31,26 @@
 
             <GameComponent :hide-numbers="true" />
 
-            <div v-if="!isPracticeMode" class="grid w-full grid-cols-1 gap-8 my-5 md:grid-cols-2">
+            <div
+                v-if="!isPracticeMode"
+                class="grid w-full grid-cols-1 gap-8 my-5"
+                :class="wonOnRegularMode ? 'md:grid-cols-2' : ''"
+            >
                 <div class="p-2 text-center bg-gray-100 md:p-4 col">
                     <div class="text-xl font-bold sm:text-2xl">
                         <CutdownTimer />
                     </div>
                     <div class="text-xs text-gray-600">NEW NUMBER IN</div>
                 </div>
-                <div class="flex flex-col justify-center">
+                <div 
+                    v-if="wonOnRegularMode"
+                    class="flex flex-col justify-center"
+                >
                     <div>
                         <el-button class="w-full" :tabindex="-1" type="success">SHARE</el-button>
                     </div>
                     <div>
                         <el-button
-                            v-if="isFeatureButton"
                             class="w-full m-0 mt-1"
                             :tabindex="-1"
                             type="primary"
@@ -111,7 +117,7 @@ export default {
                 this.$emit('update:modelValue', value);
             },
         },
-        isFeatureButton() {
+        wonOnRegularMode() {
             return _.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.MODE_REGULAR)
                 && _.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.STATUS_ENDED_WIN);
         },
