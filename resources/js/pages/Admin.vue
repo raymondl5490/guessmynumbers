@@ -165,8 +165,8 @@
 
         <ResultTextForm class="p-4 m-8 border-2 rounded-md shadow-sm" />
 
-        <GameModalCreate :show="showGameModalCreate" :is-admin="true" @close="showGameModalCreate = false" />
-        <GameModalEdit :show="showGameModalEdit" :is-admin="true" :game-id="editingGameId" @close="showGameModalEdit = false" />
+        <GameModalCreate v-model="showGameModalCreate" :is-admin="true" />
+        <GameModalEdit v-model="showGameModalEdit" :is-admin="true" :game-id="editingGameId" />
 
     </div>
 </template>
