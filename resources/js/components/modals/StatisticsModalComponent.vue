@@ -99,6 +99,7 @@ import { mapState, mapActions } from "pinia";
 import { usePlayerStore, useGameStore, useAttemptStore, useSettingStore, useGuessStore } from "../../store";
 import { ATTEMPT_STATUS_CODES } from "../../utils/constants";
 import useClipboard from 'vue-clipboard3';
+import { ElMessage } from "element-plus";
 
 export default {
     setup() {
@@ -151,6 +152,7 @@ export default {
             try {
                 await toClipboard(shareText())
                 console.log('Copied to clipboard')
+                ElMessage({message: 'Copied to clipboard!', type: 'success'});
             } catch (e) {
                 console.error(e)
             }
