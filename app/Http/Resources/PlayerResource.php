@@ -19,6 +19,8 @@ class PlayerResource extends JsonResource
         return [
             'id' => $this->id,
             'attempts' => AttemptResource::collection($this->attempts),
+            'number_of_attempts' => $this->number_of_attempts,
+            'number_of_wons' => $this->number_of_wons,
         ];
     }
 }
