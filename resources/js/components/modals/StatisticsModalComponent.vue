@@ -6,24 +6,24 @@
             </h1>
         </template>
         <template #content>
-            <div v-if="!isPracticeMode" class="grid w-full grid-cols-3 gap-8 my-5">
-                <div class="p-2 text-center bg-gray-100 md:p-4 col">
+            <div v-if="!isPracticeMode" class="flex w-full my-5 space-x-2 sm:space-x-4 md:space-x-8">
+                <div v-if="currentPlayer" class="w-full p-2 text-center bg-gray-100 md:p-4 col">
                     <div class="text-3xl font-bold">
-                        {{ currentGame.number_of_wons }}
+                        {{ currentPlayer.number_of_wons }}
                     </div>
-                    <div class="text-xs text-gray-600">ROUNDS WINS</div>
+                    <div class="text-xs text-gray-600">YOU WON</div>
                 </div>
-                <div class="p-2 text-center bg-gray-100 md:p-4 col">
+                <div class="w-full p-2 text-center bg-gray-100 md:p-4 col">
                     <div class="text-3xl font-bold">
-                        {{ currentGame.number_of_attempts }}
+                        {{ currentPlayer.number_of_attempts }}
                     </div>
-                    <div class="text-xs text-gray-600">ROUNDS PLAYED</div>
+                    <div class="text-xs text-gray-600">YOU PLAYED</div>
                 </div>
-                <div class="p-2 text-center bg-gray-100 md:p-4 col">
+                <div class="w-full p-2 text-center bg-gray-100 md:p-4 col">
                     <div class="text-3xl font-bold">
                         {{ currentRoundWinPercentage }}
                     </div>
-                    <div class="text-xs text-gray-600">% OF WINS</div>
+                    <div class="text-xs text-gray-600">% OF WINS THIS ROUND</div>
                 </div>
             </div>
 
@@ -96,7 +96,7 @@ import IconComponent from "../ui/IconComponent";
 import GameComponent from "../GameComponent";
 import CutdownTimer from "../CutdownTimer";
 import { mapState, mapActions } from "pinia";
-import { useGameStore, useAttemptStore, useSettingStore, useGuessStore } from "../../store";
+import { usePlayerStore, useGameStore, useAttemptStore, useSettingStore, useGuessStore } from "../../store";
 import { ATTEMPT_STATUS_CODES } from "../../utils/constants";
 import useClipboard from 'vue-clipboard3';
 
@@ -171,6 +171,7 @@ export default {
         }
     },
     computed: {
+        ...mapState(usePlayerStore, ['currentPlayer']),
         ...mapState(useGameStore, ['currentGame']),
         ...mapState(useAttemptStore, ['isPracticeMode', 'won', 'attemptStatus']),
         ...mapState(useSettingStore, ['settingValueByKey']),

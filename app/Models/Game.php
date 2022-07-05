@@ -46,7 +46,7 @@ class Game extends Model
     /**
      * Number of attempts on this game.
      *
-     * @return bool
+     * @return int
      */
     public function getNumberOfAttemptsAttribute()
     {
@@ -58,7 +58,7 @@ class Game extends Model
     /**
      * Number of wons played this game.
      *
-     * @return bool
+     * @return int
      */
     public function getNumberOfWonsAttribute()
     {

@@ -37,4 +37,36 @@ class Player extends Model
     {
         return $this->hasManyThrough(Guess::class, Attempt::class);
     }
+
+    /**
+     * Number of attempts of this player.
+     *
+     * @return int
+     */
+    public function getNumberOfAttemptsAttribute()
+    {
+        $numberOfAttempts = Attempt::where('player_id', $this->id)
+            ->count();
+        return $numberOfAttempts;
+    }
+
+    /**
+     * Number of wons of this player.
+     *
+     * @return int
+     */
+    public function getNumberOfWonsAttribute()
+    {
+        $numberOfWons = Attempt::where('player_id', $this->id)
+            ->where('won', 1)
+            ->count();
+        return $numberOfWons;
+    }
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['number_of_attempts', 'number_of_wons'];
 }
