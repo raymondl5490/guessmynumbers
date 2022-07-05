@@ -20,4 +20,11 @@ export default {
             console.log({error});
         });
     },
+    async getOverallStatistics() {
+        return await axios.get('attempts/overall-statistics').then(response => {
+            return response.data;
+        }).catch(error => {
+            console.log({error});
+        });
+    },
 }

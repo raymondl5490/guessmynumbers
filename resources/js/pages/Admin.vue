@@ -22,7 +22,7 @@
             </p>
         </div>
 
-        <div class="grid grid-cols-3 gap-2 py-1 mx-8 my-1 sm:py-4 sm:my-8 md:gap-4">
+        <div class="grid grid-cols-3 gap-2 py-1 mx-8 my-1 sm:py-4 sm:my-2 md:my-3 md:gap-4">
             <div class="flex flex-col items-center justify-center p-2 border-2 rounded-md shadow-sm">
                 <div class="text-xl font-bold text-blue-900 sm:text-2xl md:text-3xl">{{currentGame.number_of_attempts}}</div>
                 <div class="text-xs text-gray-500 sm:text-sm">Players</div>
@@ -33,6 +33,23 @@
             </div>
             <div class="flex flex-col items-center justify-center p-2 border-2 rounded-md shadow-sm">
                 <div class="text-xl font-bold text-blue-900 sm:text-2xl md:text-3xl">{{winPercentage(currentGame)}}%</div>
+                <div class="text-xs text-gray-500 sm:text-sm">Winners/Players</div>
+            </div>
+        </div>
+
+        <div class="text-sm text-center text-gray-400 sm:text-base md:text-lg">Overall Statistics</div>
+
+        <div class="grid grid-cols-3 gap-2 py-1 mx-8 my-1 sm:py-4 sm:my-2 md:my-3 md:gap-4">
+            <div class="flex flex-col items-center justify-center p-2 border-2 rounded-md shadow-sm">
+                <div class="text-xl font-bold text-blue-900 sm:text-2xl md:text-3xl">{{overall_statistics.number_of_attempts}}</div>
+                <div class="text-xs text-gray-500 sm:text-sm">Players</div>
+            </div>
+            <div class="flex flex-col items-center justify-center p-2 border-2 rounded-md shadow-sm">
+                <div class="text-xl font-bold text-blue-900 sm:text-2xl md:text-3xl">{{overall_statistics.number_of_wons}}</div>
+                <div class="text-xs text-gray-500 sm:text-sm">Winners</div>
+            </div>
+            <div class="flex flex-col items-center justify-center p-2 border-2 rounded-md shadow-sm">
+                <div class="text-xl font-bold text-blue-900 sm:text-2xl md:text-3xl">{{winPercentage(overall_statistics)}}%</div>
                 <div class="text-xs text-gray-500 sm:text-sm">Winners/Players</div>
             </div>
         </div>
@@ -187,6 +204,7 @@ import ResultTextForm from "../components/forms/ResultTextForm.vue";
 import Sortable from 'sortablejs';
 import { v4 as uuidv4 } from 'uuid';
 import { nextTick } from "vue";
+import { attemptApi } from "../api";
 
 export default {
     components: {
@@ -206,6 +224,8 @@ export default {
             search: '',
             sortable: null,
             queuedTableKey: 'queued_games_table_',
+
+            overall_statistics: {},
         };
     },
     async created() {
@@ -213,6 +233,7 @@ export default {
             this.getCurrentGame(),
             this.refreshGames(),
         ]);
+        this.overall_statistics = await attemptApi.getOverallStatistics();
     },
     mounted() {
         this.initSortable();

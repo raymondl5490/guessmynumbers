@@ -59,4 +59,5 @@ Route::middleware('auth')->group(function() {
         Route::patch('/{id}/live-on', [GameController::class, 'updateLiveOn'])->name('games.update_live_on');
     });
     Route::apiResource('games', GameController::class)->except(['store']);
+    Route::get('/attempts/overall-statistics/', [AttemptController::class, 'overall_statistics'])->name('attempts.overall_statistics');
 });
