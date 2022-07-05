@@ -28,6 +28,7 @@ import HelpModalComponent from "../components/modals/HelpModalComponent";
 import StatisticsModalComponent from "../components/modals/StatisticsModalComponent";
 import SettingsModalComponent from "../components/modals/SettingsModalComponent";
 import GameModalCreate from "../components/modals/GameModalCreate";
+import { wait } from "../utils";
 
 export default {
     components: {
@@ -77,8 +78,9 @@ export default {
         ...mapState(useGameStore, ['currentGame']),
     },
     watch: {
-        isAttemptEnded() {
+        async isAttemptEnded() {
             if (this.isAttemptEnded) {
+                await wait(900);
                 this.showStatisticsModal = true;
             }
         },
