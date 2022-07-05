@@ -30,6 +30,8 @@ class GameResource extends JsonResource
             'link' => $this->link,
             'link_title' => $this->link_title,
             'created_at' => $this->created_at,
+            'number_of_attempts' => $this->number_of_attempts,
+            'number_of_wons' => $this->number_of_wons,
         ];
     }
 }

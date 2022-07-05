@@ -44,6 +44,31 @@ class Game extends Model
     ];
 
     /**
+     * Number of attempts on this game.
+     *
+     * @return bool
+     */
+    public function getNumberOfAttemptsAttribute()
+    {
+        $numberOfAttempts = Attempt::where('game_id', $this->id)
+            ->count();
+        return $numberOfAttempts;
+    }
+
+    /**
+     * Number of wons played this game.
+     *
+     * @return bool
+     */
+    public function getNumberOfWonsAttribute()
+    {
+        $numberOfWons = Attempt::where('game_id', $this->id)
+            ->where('won', 1)
+            ->count();
+        return $numberOfWons;
+    }
+
+    /**
      * @return HasMany
      */
     public function attempts(): HasMany
@@ -68,4 +93,11 @@ class Game extends Model
         return $query
             ->where('live_on', '=', Carbon::now('America/Los_Angeles')->format('Y-m-d a'));
     }
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['number_of_attempts', 'number_of_wons'];
 }
