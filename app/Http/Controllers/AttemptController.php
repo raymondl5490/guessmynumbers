@@ -7,6 +7,7 @@ use App\Http\Resources\AttemptResource;
 use App\Models\Attempt;
 use App\Models\Game;
 use App\Models\Player;
+use Illuminate\Http\JsonResponse;
 
 class AttemptController extends Controller
 {
@@ -33,6 +34,21 @@ class AttemptController extends Controller
         $attempt->won = 1;
         $attempt->save();
         return new AttemptResource($attempt);
+    }
+
+    /**
+     * Return overall number_of_attempts and number_of_wins
+     * 
+     * @return JsonResponse
+     */
+    public function overall_statistics(): JsonResponse
+    {
+        $numberOfAttempts = Attempt::whereNotNull('game_id')->count();
+        $numberOfWons = Attempt::where('won', 1)->count();
+        return response()->json([
+            'number_of_attempts' => $numberOfAttempts,
+            'number_of_wons' => $numberOfWons,
+        ]);
     }
 
 }
