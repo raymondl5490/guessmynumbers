@@ -19,6 +19,9 @@ export default {
     name: 'NumberSquareComponent',
     mixins: [NumberUsageMixin],
     props: {
+        colIndex: {
+            type: Number,
+        },
         correctNumber: {
             type: Number,
             required: true,
@@ -64,15 +67,8 @@ export default {
         isPurple() {
             return this.submitted && this.isNumberUsedMultipleTimes(this.guessedNumber);
         },
-        getAnimationClasses() {
-            if (this.guessedNumber == null) {
-                return '';
-            }
-
-            return this.animationClasses;
-        },
         customClasses() {
-            return _.join([this.getBackgroundClasses, this.getAnimationClasses], ' ');
+            return _.join([this.getBackgroundClasses, this.animationClasses], ' ');
         },
         svgPathData() {
             // * Draw a bezier curve for purple arc
@@ -94,20 +90,76 @@ export default {
         onResize(e) {
             this.width = this.$refs['square'].clientWidth;
         },
+        getAnimationClasses() {
+            if (this.guessedNumber == null || this.hideNumbers) {
+                this.animationClasses = '';
+                return;
+            }
+            if (!this.submitted) {
+                this.animationClasses = 'animate-scale-up';
+                return;
+            }
+            if (this.submitted) {
+                this.animationClasses = `animation-rotate-delay-${this.colIndex * 3}00 delay-transition-color-${this.colIndex * 3}00`;
+                return;
+            }
+        },
     },
     mounted() {
         this.width = this.$refs['square'].clientWidth;
     },
     watch: {
-        guessedNumber: {
-            handler(newValue, oldValue) {
-                if (newValue === null) {
-                    this.animationClasses = '';
-                }
-
-                this.animationClasses = 'animate-scale-up';
-            },
-        }
+        guessedNumber() {
+            this.getAnimationClasses();
+        },
+        submitted() {
+            this.getAnimationClasses();
+        },
+        hideNumbers() {
+            this.getAnimationClasses();
+        },
     },
 }
 </script>
+<style>
+
+.delay-transition-color-000 {
+    transition-property: all;
+    transition-delay: 0s;
+}
+
+.delay-transition-color-300 {
+    transition-property: all;
+    transition-delay: 0.3s;
+}
+
+.delay-transition-color-600 {
+    transition-property: all;
+    transition-delay: 0.6s;
+}
+
+.animation-rotate-delay-000 {
+    animation-name: rotateX180;
+    animation-duration: 0.3s;
+    animation-iteration-count: 1;
+    animation-delay: 0s;
+}
+.animation-rotate-delay-300 {
+    animation-name: rotateX180;
+    animation-duration: 0.3s;
+    animation-iteration-count: 1;
+    animation-delay: 0.3s;
+}
+.animation-rotate-delay-600 {
+    animation-name: rotateX180;
+    animation-duration: 0.3s;
+    animation-iteration-count: 1;
+    animation-delay: 0.6s;
+}
+@keyframes rotateX180 {
+	0% {transform: none;}
+	50% {transform: rotateX(180deg);}
+	100% {transform: none;}
+}
+
+</style>

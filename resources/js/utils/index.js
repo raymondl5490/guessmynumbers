@@ -22,3 +22,11 @@ export const nextLiveOn = function (current) {
         return currentDate.add(1, 'day').format('YYYY-MM-DD') + ' am';
     }
 };
+
+export const wait = function(miliseconds) {
+    return new Promise((res) => {
+        setTimeout(() => {
+            res('');
+        }, miliseconds);
+    })
+}

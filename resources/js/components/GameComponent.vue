@@ -9,6 +9,7 @@
                 <NumberSquareComponent
                     v-for="colIndex in [0, 1, 2]"
                     :key="`board_square_${rowIndex}_${colIndex}`"
+                    :col-index="colIndex"
                     :guessed-number="row[colIndex] ?? null"
                     :correct-number="correctNumbers[colIndex]"
                     :submitted="isRowSubmitted(rowIndex)"
