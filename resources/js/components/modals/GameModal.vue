@@ -73,7 +73,7 @@
 <script>
 import ModalComponent from "../ui/ModalComponent";
 import useVuelidate from "@vuelidate/core";
-import {required, numeric, maxValue, minValue, email, alphaNum, url, maxLength, minLength} from "@vuelidate/validators";
+import {required, numeric, maxValue, minValue, email, url, maxLength, minLength} from "@vuelidate/validators";
 import FormErrorsComponent from "../forms/FormErrorsComponent";
 
 import {mapActions} from "pinia";
@@ -166,7 +166,6 @@ export default {
                     email,
                 },
                 author_location: {
-                    alphaNum,
                     minLength: minLength(2),
                     maxLength: maxLength(255),
                 },
