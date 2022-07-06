@@ -7,7 +7,7 @@
         </template>
         <template #content>
             <div v-if="!isPracticeMode" class="flex w-full my-5 space-x-2 sm:space-x-4 md:space-x-8">
-                <div v-if="currentPlayer" class="w-full p-2 text-center bg-gray-100 md:p-4 col">
+                <div v-if="currentPlayer.number_of_wons" class="w-full p-2 text-center bg-gray-100 md:p-4 col">
                     <div class="text-3xl font-bold">
                         {{ currentPlayer.number_of_wons }}
                     </div>
