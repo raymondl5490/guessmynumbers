@@ -30,7 +30,9 @@ class YourGameIsScheduled extends Mailable
      */
     public function build()
     {
-        return $this->from('smartdev0322@gmail.com', 'Guess My Numbers')
+        $from = env('MAIL_FROM_ADDRESS', 'josh@guessmynumbers.com');
+        $name = env('MAIL_FROM_NAME', 'Guess My Numbers');
+        return $this->from($from, $name)
             ->subject('Your Game Is Scheduled!')
             ->view('emails.your_game_is_schduled');
     }
