@@ -34,7 +34,7 @@
             <div
                 v-if="!isPracticeMode"
                 class="grid w-full grid-cols-1 gap-8 my-5"
-                :class="wonOnRegularMode ? 'md:grid-cols-2' : ''"
+                :class="isGameFinishedOnRegularMode ? 'md:grid-cols-2' : ''"
             >
                 <div class="p-2 text-center bg-gray-100 md:p-4 col">
                     <div class="text-xl font-bold sm:text-2xl">
@@ -43,10 +43,9 @@
                     <div class="text-xs text-gray-600">NEW NUMBER IN</div>
                 </div>
                 <div 
-                    v-if="wonOnRegularMode"
                     class="flex flex-col justify-center"
                 >
-                    <div>
+                    <div v-if="isGameFinishedOnRegularMode">
                         <el-button
                             class="w-full"
                             :tabindex="-1"
@@ -56,7 +55,7 @@
                             SHARE
                         </el-button>
                     </div>
-                    <div>
+                    <div v-if="wonOnRegularMode">
                         <el-button
                             class="w-full m-0 mt-1"
                             :tabindex="-1"
@@ -188,6 +187,10 @@ export default {
         wonOnRegularMode() {
             return _.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.MODE_REGULAR)
                 && _.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.STATUS_ENDED_WIN);
+        },
+        isGameFinishedOnRegularMode() {
+            return _.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.MODE_REGULAR)
+                && _.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.STATUS_ENDED);
         },
         currentRoundWinPercentage() {
             const number_of_attempts = this.currentGame.number_of_attempts;

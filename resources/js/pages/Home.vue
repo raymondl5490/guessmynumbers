@@ -80,6 +80,9 @@ export default {
     watch: {
         async isAttemptEnded() {
             if (this.isAttemptEnded) {
+                await this.getPlayer(this.currentPlayer.id);
+                await this.getCurrentGame();
+
                 await wait(900);
                 this.showStatisticsModal = true;
             }
