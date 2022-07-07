@@ -100,7 +100,7 @@ export default {
                 return;
             }
             if (this.submitted) {
-                this.animationClasses = `animation-rotate-delay-${this.colIndex * 3}00 delay-transition-color-${this.colIndex * 3}00`;
+                this.animationClasses = `animation-rotate-delay-${this.colIndex * 7}00 delay-transition-color-${this.colIndex * 7}00`;
                 return;
             }
         },
@@ -128,37 +128,36 @@ export default {
     transition-delay: 0s;
 }
 
-.delay-transition-color-300 {
+.delay-transition-color-700 {
     transition-property: all;
-    transition-delay: 0.3s;
+    transition-delay: 0.7s;
 }
 
-.delay-transition-color-600 {
+.delay-transition-color-1400 {
     transition-property: all;
-    transition-delay: 0.6s;
+    transition-delay: 1.4s;
 }
 
 .animation-rotate-delay-000 {
     animation-name: rotateX180;
-    animation-duration: 0.3s;
+    animation-duration: 0.7s;
     animation-iteration-count: 1;
     animation-delay: 0s;
 }
-.animation-rotate-delay-300 {
+.animation-rotate-delay-700 {
     animation-name: rotateX180;
-    animation-duration: 0.3s;
+    animation-duration: 0.7s;
     animation-iteration-count: 1;
-    animation-delay: 0.3s;
+    animation-delay: 0.7s;
 }
-.animation-rotate-delay-600 {
+.animation-rotate-delay-1400 {
     animation-name: rotateX180;
-    animation-duration: 0.3s;
+    animation-duration: 0.7s;
     animation-iteration-count: 1;
-    animation-delay: 0.6s;
+    animation-delay: 1.4s;
 }
 @keyframes rotateX180 {
-	0% {transform: none;}
-	50% {transform: rotateX(180deg);}
+	0% {transform: rotateX(180deg);}
 	100% {transform: none;}
 }
 

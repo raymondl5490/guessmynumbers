@@ -24,15 +24,10 @@
             </div>
         </div>
         <div class="w-screen text-center sm:w-full">
-            <p v-if="isPracticeMode" class="text-xl text-center text-red-500 sm:text-2xl md:text-4xl">
+            <p v-if="isPracticeMode" class="mt-3 text-lg text-center text-red-500 sm:mt-6 sm:text-xl md:text-4xl">
                 YOU ARE IN PRACTICE MODE
-                <div class="grid grid-cols-1 gap-1 sm:grid-cols-2">
-                    <div class="flex justify-center sm:justify-end">
-                        <el-button type="primary" size="small" class="w-36" @click="goToPracticeMode">TRY AGAIN</el-button>
-                    </div>
-                    <div class="flex justify-center sm:justify-start">
-                        <el-button type="success" size="small" class="w-36" @click="goToRegularMode">GO TO REAL MODE</el-button>
-                    </div>
+                <div class="flex justify-center">
+                    <el-button type="success" size="small" class="w-36" @click="goToRegularMode">GO TO REAL MODE</el-button>
                 </div>
             </p>
             <p v-else class="mt-3 text-lg text-center text-gray-400 sm:mt-6 sm:text-xl md:text-4xl">
@@ -45,7 +40,7 @@
                     <img class="inline w-6" src="https://img.icons8.com/color/48/FAB005/approval--v3.png"/>
                 </span>
                 <p class="font-bold text-blue-900">
-                    {{(new Date(currentGame.created_at).toDateString())}}
+                    {{formatTimestamp2Date(currentGame.created_at)}}
                 </p>
             </p>
         </div>
@@ -55,6 +50,7 @@
 import {IconComponent} from "./ui";
 import {mapState, mapActions} from 'pinia';
 import {useGameStore, useAttemptStore}from '../store'
+import { formatTimestamp2Date } from "../utils";
 
 export default {
     components: {IconComponent},
@@ -63,7 +59,8 @@ export default {
         ...mapState(useAttemptStore, ['isPracticeMode']),
     },
     methods: {
-        ...mapActions(useAttemptStore, ['goToPracticeMode', 'goToRegularMode']),
+        ...mapActions(useAttemptStore, ['goToRegularMode']),
+        formatTimestamp2Date,
         onHelpOpen() {
             this.$emit('open-help');
         },

@@ -30,3 +30,22 @@ export const wait = function(miliseconds) {
         }, miliseconds);
     })
 }
+
+/**
+ * 
+ * @param {string} timestamp
+ * 
+ * @return {string} formatted date string
+ */
+
+export const formatTimestamp2Date = function (timestamp) {
+    return dayjs(timestamp).format('ddd MMMM DD YYYY');
+}
+
+/**
+ * 
+ * @returns {string} formatted date of now; ex: Sun July 06 2022
+ */
+export const formatCurrentTime = function () {
+    return dayjs().format('ddd MMMM DD YYYY');
+}

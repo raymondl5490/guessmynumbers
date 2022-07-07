@@ -6,24 +6,30 @@
             </h1>
         </template>
         <template #content>
-            <div v-if="!isPracticeMode" class="flex w-full my-5 space-x-2 sm:space-x-4 md:space-x-8">
-                <div v-if="currentPlayer.number_of_wons" class="w-full p-2 text-center bg-gray-100 md:p-4 col">
+            <div class="flex w-full my-5 space-x-2 sm:space-x-4 md:space-x-8">
+                <div v-if="!isPracticeMode && currentPlayer.number_of_wons" class="w-full p-2 text-center bg-gray-100 md:p-4 col">
                     <div class="text-3xl font-bold">
                         {{ currentPlayer.number_of_wons }}
                     </div>
                     <div class="text-xs text-gray-600">YOU WON</div>
                 </div>
-                <div class="w-full p-2 text-center bg-gray-100 md:p-4 col">
+                <div v-if="!isPracticeMode" class="w-full p-2 text-center bg-gray-100 md:p-4 col">
                     <div class="text-3xl font-bold">
                         {{ currentPlayer.number_of_attempts }}
                     </div>
                     <div class="text-xs text-gray-600">YOU PLAYED</div>
                 </div>
-                <div class="w-full p-2 text-center bg-gray-100 md:p-4 col">
+                <div v-if="!isPracticeMode" class="w-full p-2 text-center bg-gray-100 md:p-4 col">
                     <div class="text-3xl font-bold">
                         {{ currentRoundWinPercentage }}
                     </div>
-                    <div class="text-xs text-gray-600">% OF WINS THIS ROUND</div>
+                    <div class="text-xs text-gray-600 break-normal">CURRENT ROUND: GLOBAL WIN %</div>
+                </div>
+                <div v-if="hasLostOnPracticeMode" class="w-full p-2 text-center bg-gray-100 md:p-4 col">
+                    <div class="text-xs text-gray-600 break-normal">THE NUMBER WAS</div>
+                    <div class="text-3xl font-bold">
+                        {{correctNumbers[0]}} - {{correctNumbers[1]}} - {{correctNumbers[2]}}
+                    </div>
                 </div>
             </div>
 
@@ -62,7 +68,7 @@
                             type="primary"
                             @click="$emit('featureOwnNumbers')"
                         >
-                            FEATURE YOUR NUMBERS
+                            SUBMIT YOUR OWN NUMBERS
                         </el-button>
                     </div>
                 </div>
@@ -99,6 +105,7 @@ import { usePlayerStore, useGameStore, useAttemptStore, useSettingStore, useGues
 import { ATTEMPT_STATUS_CODES } from "../../utils/constants";
 import useClipboard from 'vue-clipboard3';
 import { ElMessage } from "element-plus";
+import { formatCurrentTime } from "../../utils";
 
 export default {
     setup() {
@@ -106,7 +113,8 @@ export default {
 
         const shareText = () => {
             // * Sample share text
-            // I guessed this 3-digit number in 2 tries. 
+            // *Date
+            // #GuessMyNumbers
 
             // ⬛⬛🟨
             // 🟩🟨⬛
@@ -115,7 +123,7 @@ export default {
             const guessStore = useGuessStore();
             const attempStore = useAttemptStore();
 
-            let shareText = `I guessed this 3-digit number in ${guessStore.guesses.length} tries. \n\n`;
+            let shareText = `*${formatCurrentTime()}\n#GuessMyNumbers\n\n`;
 
             const correctNumbers = attempStore.correctNumbers;
 
@@ -174,7 +182,7 @@ export default {
     computed: {
         ...mapState(usePlayerStore, ['currentPlayer']),
         ...mapState(useGameStore, ['currentGame']),
-        ...mapState(useAttemptStore, ['isPracticeMode', 'won', 'attemptStatus']),
+        ...mapState(useAttemptStore, ['isPracticeMode', 'won', 'attemptStatus', 'correctNumbers']),
         ...mapState(useSettingStore, ['settingValueByKey']),
         value: {
             get() {
@@ -191,6 +199,10 @@ export default {
         isGameFinishedOnRegularMode() {
             return _.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.MODE_REGULAR)
                 && _.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.STATUS_ENDED);
+        },
+        hasLostOnPracticeMode() {
+            return _.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.MODE_PRACTICE)
+                && _.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.STATUS_ENDED_LOSE);
         },
         currentRoundWinPercentage() {
             const number_of_attempts = this.currentGame.number_of_attempts;
