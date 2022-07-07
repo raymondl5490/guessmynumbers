@@ -31,14 +31,18 @@
                 </div>
             </p>
             <p v-else class="mt-3 text-lg text-center text-gray-400 sm:mt-6 sm:text-xl md:text-4xl">
-                SUBMITTED BY 
-                <span class="font-bold text-green-700">
-                    <a :href="currentGame.link" target="_blank" class="underline">
-                        {{currentGame.author_name}}
-                    </a>
-                    , {{currentGame.author_location}}
-                    <img class="inline w-6" src="https://img.icons8.com/color/48/FAB005/approval--v3.png"/>
-                </span>
+                <p class="flex flex-wrap items-center justify-center">
+                    <p class="whitespace-pre">
+                        SUBMITTED BY 
+                    </p>
+                    <p class="flex font-bold text-green-700 flex-nowrap">
+                        <a :href="currentGame.link" target="_blank" class="underline">
+                            {{currentGame.author_name}}
+                        </a>
+                        , {{currentGame.author_location}}
+                        <img class="inline w-6 h-6" src="https://img.icons8.com/color/48/FAB005/approval--v3.png"/>
+                    </p>
+                </p>
                 <p class="font-bold text-blue-900">
                     {{formatTimestamp2Date(currentGame.created_at)}}
                 </p>
