@@ -30,10 +30,10 @@
                     </a>
                 </div>
                 <div class="p-2 text-4xl font-bold text-center bg-gray-100 md:p-4">
+                    <div class="text-xs text-gray-600">Looking for a great book?</div>
                     <el-link href="https://amzn.to/3GP2yt4" target="_blank" type="success">
                         The Adventures of Rockford T. Honeypot
                     </el-link>
-                    <div class="text-xs text-gray-600">Looking for a great book?</div>
                 </div>
 
                 <hr />

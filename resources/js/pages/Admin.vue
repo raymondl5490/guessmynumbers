@@ -55,6 +55,48 @@
         </div>
 
         <el-collapse :model-value="['submitted', 'queued']" class="p-4 m-8 text-center border-2 rounded-md shadow-sm">
+
+            <el-collapse-item title="Queued Games" name="queued">
+                <el-table v-loading="queuedLoading" id="queued-games-table" :data="queuedGames" :key="queuedTableKey">
+                    <el-table-column label="ID" fixed prop="id" width="50px"/>
+                    <el-table-column label="NUMBERS" width="100px">
+                        <template #default="scope">
+                            {{scope.row.number_one}} - {{scope.row.number_two}} - {{scope.row.number_three}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="SUBMITTED BY">
+                        <template #default="scope">
+                            <p class="font-bold text-blue-900">
+                                <a :href="scope.row.link" class="underline">
+                                    {{scope.row.author_name}}
+                                </a>
+                                , {{scope.row.author_location}}
+                            </p>
+                            <el-link :href="'mailto:'+ scope.row.author_email" target="_blank" type="primary">
+                                {{scope.row.author_email}}
+                            </el-link>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="Live on" width="150">
+                        <template #default="scope">
+                            {{scope.row.live_on}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column fixed="right" width="100">
+                        <template #default="scope">
+                            <div class="grid grid-cols-1 gap-0">
+                                <div>
+                                    <el-button size="small" class="w-full" type="success" @click="onEditClicked(scope.$index, scope.row)">Edit</el-button>
+                                </div>
+                                <div>
+                                    <el-button size="small" class="w-full" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">Remove</el-button>
+                                </div>
+                            </div>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-collapse-item>
+
             <el-collapse-item title="Submitted Games" name="submitted">
                 <template #title>
                     <div class="flex items-center content-center justify-between w-full">
@@ -91,47 +133,6 @@
                                 <div>
                                     <el-button size="small" class="w-full" type="primary" @click="onApproveClicked(scope.$index, scope.row)">Approve</el-button>
                                 </div>
-                                <div>
-                                    <el-button size="small" class="w-full" type="success" @click="onEditClicked(scope.$index, scope.row)">Edit</el-button>
-                                </div>
-                                <div>
-                                    <el-button size="small" class="w-full" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">Remove</el-button>
-                                </div>
-                            </div>
-                        </template>
-                    </el-table-column>
-                </el-table>
-            </el-collapse-item>
-
-            <el-collapse-item title="Queued Games" name="queued">
-                <el-table v-loading="queuedLoading" id="queued-games-table" :data="queuedGames" :key="queuedTableKey">
-                    <el-table-column label="ID" fixed prop="id" width="50px"/>
-                    <el-table-column label="NUMBERS" width="100px">
-                        <template #default="scope">
-                            {{scope.row.number_one}} - {{scope.row.number_two}} - {{scope.row.number_three}}
-                        </template>
-                    </el-table-column>
-                    <el-table-column label="SUBMITTED BY">
-                        <template #default="scope">
-                            <p class="font-bold text-blue-900">
-                                <a :href="scope.row.link" class="underline">
-                                    {{scope.row.author_name}}
-                                </a>
-                                , {{scope.row.author_location}}
-                            </p>
-                            <el-link :href="'mailto:'+ scope.row.author_email" target="_blank" type="primary">
-                                {{scope.row.author_email}}
-                            </el-link>
-                        </template>
-                    </el-table-column>
-                    <el-table-column label="Live on" width="150">
-                        <template #default="scope">
-                            {{scope.row.live_on}}
-                        </template>
-                    </el-table-column>
-                    <el-table-column fixed="right" width="100">
-                        <template #default="scope">
-                            <div class="grid grid-cols-1 gap-0">
                                 <div>
                                     <el-button size="small" class="w-full" type="success" @click="onEditClicked(scope.$index, scope.row)">Edit</el-button>
                                 </div>

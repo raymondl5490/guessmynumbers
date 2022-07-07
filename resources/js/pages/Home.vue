@@ -83,7 +83,7 @@ export default {
                 await this.getPlayer(this.currentPlayer.id);
                 await this.getCurrentGame();
 
-                await wait(900);
+                await wait(2100);
                 this.showStatisticsModal = true;
             }
         },
