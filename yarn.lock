@@ -5604,6 +5604,11 @@ vue-clipboard3@^2.0.0:
   dependencies:
     clipboard "^2.0.6"
 
+vue-confetti@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/vue-confetti/-/vue-confetti-2.3.0.tgz#c8fbb0081a16ad8e5756ec63de8f454583ce054b"
+  integrity sha512-zmPniVzBKv0ie/BEXBR6Isi08hYSd6lS18b8VduG5BzZ2tv6bO/rlwISg+IpGY2XsqAFTXFdTC28YR+UPocnAw==
+
 vue-demi@*:
   version "0.13.1"
   resolved "https://registry.npmjs.org/vue-demi/-/vue-demi-0.13.1.tgz"
