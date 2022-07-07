@@ -1,5 +1,6 @@
 import {createPinia} from "pinia";
 import {createPersistedStatePlugin} from 'pinia-plugin-persistedstate-2'
+import VueConfetti from 'vue-confetti'
 
 require('./bootstrap');
 import {createApp} from 'vue';
@@ -17,6 +18,7 @@ pinia.use(createPersistedStatePlugin());
 app.use(pinia);
 
 app.use(ElementPlus)
+app.use(VueConfetti);
 
 app.mixin({
     methods: {

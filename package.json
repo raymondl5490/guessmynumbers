@@ -40,6 +40,7 @@
         "sortable": "^2.0.0",
         "uuid": "^8.3.2",
         "vue-clipboard3": "^2.0.0",
+        "vue-confetti": "^2.3.0",
         "vuedraggable": "^4.1.0"
     }
 }

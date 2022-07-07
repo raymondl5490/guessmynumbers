@@ -29,6 +29,7 @@ import StatisticsModalComponent from "../components/modals/StatisticsModalCompon
 import SettingsModalComponent from "../components/modals/SettingsModalComponent";
 import GameModalCreate from "../components/modals/GameModalCreate";
 import { wait } from "../utils";
+import { ATTEMPT_STATUS_CODES } from "../utils/constants";
 
 export default {
     components: {
@@ -74,8 +75,11 @@ export default {
     },
     computed: {
         ...mapState(usePlayerStore, ['currentPlayer']),
-        ...mapState(useAttemptStore, ['currentAttempt', 'isAttemptEnded']),
+        ...mapState(useAttemptStore, ['currentAttempt', 'attemptStatus', 'isAttemptEnded']),
         ...mapState(useGameStore, ['currentGame']),
+        hasWon() {
+            return _.includes(this.attemptStatus, ATTEMPT_STATUS_CODES.STATUS_ENDED_WIN);
+        },
     },
     watch: {
         async isAttemptEnded() {
@@ -84,6 +88,52 @@ export default {
                 await this.getCurrentGame();
 
                 await wait(2100);
+                if (this.hasWon) {
+                    this.$confetti.start({
+                        particles: [
+                            {
+                                type: 'rect',
+                                dropRate: 20,
+                                size: 7,
+                            },
+                            {
+                                type: 'heart',
+                                dropRate: 10,
+                                size: 10,
+                            },
+                            {
+                                type: 'circle',
+                                dropRate: 15,
+                                size: 5,
+                            },
+                        ],
+                        windSpeedMax: 1,
+                        particlesPerFrame: 10,
+                        defaultSize: 5,
+                        defaultType: 'rect',
+                    });
+                    await wait(200);
+                    this.$confetti.update({
+                        particles: [
+                            {
+                                type: 'rect',
+                                dropRate: 5,
+                            },
+                            {
+                                type: 'heart',
+                                dropRate: 10,
+                            },
+                            {
+                                type: 'circle',
+                                dropRate: 15,
+                            },
+                        ],
+                        windSpeedMax: 1,
+                        particlesPerFrame: 1,
+                    });
+                    await wait(2500);
+                    this.$confetti.stop();
+                }
                 this.showStatisticsModal = true;
             }
         },
