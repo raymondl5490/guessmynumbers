@@ -21,7 +21,7 @@
                 </div>
                 <div v-if="!isPracticeMode" class="w-full p-2 text-center bg-gray-100 md:p-4 col">
                     <div class="text-3xl font-bold">
-                        {{ currentRoundWinPercentage }}
+                        {{ currentRoundWinPercentage }}%
                     </div>
                     <div class="text-xs text-gray-600 break-normal">CURRENT ROUND: GLOBAL WIN %</div>
                 </div>
@@ -113,7 +113,7 @@ export default {
 
         const shareText = () => {
             // * Sample share text
-            // *Date
+            // *Thu July 07 2022
             // #GuessMyNumbers
 
             // ⬛⬛🟨
