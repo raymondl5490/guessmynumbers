@@ -65,11 +65,20 @@ export default {
             return 'bg-gray-500 text-white';
         },
         isPurple() {
-            
+            /**
+             * correct numbers are 399 and guessed 900, the purple should be ✅
+             * correct numbers are 399 and guessed 398, the purple should be ✅
+             * correct numbers are 399 and guessed 399, the purple should gone ✅
+             * correct numbers are 399 and guessed 199, the purple should gone ✅
+             * correct numbers are 399 and guessed 991, the purple should gone ✅ 
+             * 
+             * correct numbers are 999 and guessed 911, the purple should be ✅
+             * correct numbers are 999 and guessed 991, the purple should be ✅
+             * correct numbers are 999 and guessed 999, the purple should gone ✅
+             */
             return this.submitted
-                && this.isNumberUsedMultipleTimes(this.guessedNumber)
                 && _.countBy(this.correctNumbers, (n) => n == this.guessedNumber ? 'count' : 'miss')['count']
-                    > this.countCorrectSpotsOfLastSubmittedGuessNumbers;
+                    > _.countBy(this.lastSubmittedGuessNumbers, (n) => n == this.guessedNumber ? 'count' : 'miss')['count'];
         },
         customClasses() {
             return _.join([this.getBackgroundClasses, this.animationClasses], ' ');
