@@ -52,6 +52,8 @@ Route::get('/settings/{key}', [SettingController::class, 'value'])->name('settin
 Route::put('/settings/{key}', [SettingController::class, 'update'])->name('settings.update');
 
 Route::middleware('auth')->group(function() {
+    Route::get('/change-password', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('change-password');
+    Route::post('/update-password', [App\Http\Controllers\AdminController::class, 'updatePassword'])->name('update-password');
     Route::prefix('games')->group(function() {
         Route::get('/submitted', [GameController::class, 'submitted'])->name('games.submitted');
         Route::get('/queued', [GameController::class, 'queued'])->name('games.queued');
