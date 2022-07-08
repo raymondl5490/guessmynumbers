@@ -65,7 +65,11 @@ export default {
             return 'bg-gray-500 text-white';
         },
         isPurple() {
-            return this.submitted && this.isNumberUsedMultipleTimes(this.guessedNumber);
+            
+            return this.submitted
+                && this.isNumberUsedMultipleTimes(this.guessedNumber)
+                && _.countBy(this.correctNumbers, (n) => n == this.guessedNumber ? 'count' : 'miss')['count']
+                    > this.countCorrectSpotsOfLastSubmittedGuessNumbers;
         },
         customClasses() {
             return _.join([this.getBackgroundClasses, this.animationClasses], ' ');
