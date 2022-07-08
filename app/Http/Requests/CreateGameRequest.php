@@ -20,7 +20,7 @@ class CreateGameRequest extends FormRequest
             'author_name' => ['required', 'string', 'min:2', 'max:60'],
             'author_location' => ['present', 'nullable', 'string', 'min:2', 'max:255'],
             'author_email' => ['present', 'nullable', 'email'],
-            'link' => ['present', 'nullable', 'url'],
+            'link' => ['present', 'nullable'],
         ];
     }
 }
