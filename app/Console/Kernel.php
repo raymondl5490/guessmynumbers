@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
             // OR ->twiceDaily(11, 23)
             ->timezone('America/Los_Angeles')
             // ->onFailure(function () {dd('Failed');})
-            ->emailOutputOnFailure('smartdev0322@gmail.com');
+            ->emailOutputOnFailure(env('EMAIL_OUTPUT_ON_FAILURE'));
     }
 
     /**
