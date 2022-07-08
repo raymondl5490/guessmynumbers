@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AttemptController;
 use App\Http\Controllers\AttemptGuessController;
 use App\Http\Controllers\CurrentGameController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerCurrentAttemptController;
 use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +27,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
 
@@ -52,8 +54,8 @@ Route::get('/settings/{key}', [SettingController::class, 'value'])->name('settin
 Route::put('/settings/{key}', [SettingController::class, 'update'])->name('settings.update');
 
 Route::middleware('auth')->group(function() {
-    Route::get('/change-password', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('change-password');
-    Route::post('/update-password', [App\Http\Controllers\AdminController::class, 'updatePassword'])->name('update-password');
+    Route::get('/change-password', [AdminController::class, 'changePassword'])->name('change-password');
+    Route::post('/update-password', [AdminController::class, 'updatePassword'])->name('update-password');
     Route::prefix('games')->group(function() {
         Route::get('/submitted', [GameController::class, 'submitted'])->name('games.submitted');
         Route::get('/queued', [GameController::class, 'queued'])->name('games.queued');
