@@ -1,7 +1,9 @@
 <template>
     <modal-component v-model="value">
         <template #title>
-            {{ dialogType === 'create' ? 'Create Game' : 'Edit Game'}}
+            <h1 class="p-4 text-2xl font-extrabold text-center text-green-500 bg-stone-200">
+                VIP SECTION
+            </h1>
         </template>
         <template #content>
             <div class="flex flex-col">
@@ -69,7 +71,43 @@
                     </div>
                 </div>
 
-                <div class="my-5 text-center button button-primary" @click="onSubmitClicked">{{dialogType === 'create' ? 'Create' : 'Edit'}}</div>
+                <el-button type="success" class="w-full mt-4" :tabindex="-1" @click="onSubmitClicked">Submit Your Own Numbers!</el-button>
+
+                <el-collapse>
+                    <el-collapse-item>
+                        <template #title>
+                            <div class="w-full text-base font-bold text-center text-blue-500 sm:text-lg md:text-xl">
+                                How it works
+                            </div>
+                        </template>
+                        <div class="text-base break-normal whitespace-pre-wrap sm:text-lg md:text-xl">
+                            Congratulations!
+
+                            You guessed today's number! Hizzah!
+
+                            Please fill out the form in the super-secret VIP SECTION with YOUR numbers for the world to guess.
+
+                            You can be specific or vague with your location, so don't worry.
+
+                            If you include your email, you'll be the first to know some of our fun updates in the future as part of our VIP WINNERS CLUB.
+
+                            Due to the high volume of submissions, we cannot guarantee your number will be picked.
+
+                            However, the more you play every day, the higher the chance of being featured.
+
+                            If you have any questions, please email us or tweet us.
+
+                            Thanks again! And, as Rockford T. Honeypot would say, "CHEERS TO BOTH EARS!”
+                        </div>
+                    </el-collapse-item>
+                </el-collapse>
+
+                <div class="flex items-center justify-center">
+                    <el-link href="https://www.guessmynumbers.com" target="_blank" type="primary">
+                        www.guessmynumbers.com
+                    </el-link>
+                </div>
+
             </div>
         </template>
     </modal-component>
@@ -80,35 +118,19 @@ import useVuelidate from "@vuelidate/core";
 import {required, numeric, maxValue, minValue, email, url, maxLength, minLength} from "@vuelidate/validators";
 import FormErrorsComponent from "../forms/FormErrorsComponent";
 
-import {mapActions} from "pinia";
-import {useGameStore} from "../../store";
 import { gameApi } from '../../api';
 
 export default {
     setup() {
         return {v$: useVuelidate()}
     },
-    name: 'GameModal',
+    name: 'VipModal',
     components: {
         ModalComponent,
         FormErrorsComponent,
     },
     props: {
         modelValue: Boolean,
-        dialogType: {
-            type: String,
-            required: true,
-            validator: function (value) {
-                return _.includes(['create', 'edit'], value);
-            },
-        },
-        gameId: {
-            type: Number,
-        },
-        isAdmin: {
-            type: Boolean,
-            default: false,
-        },
     },
     data() {
         return {
@@ -131,13 +153,6 @@ export default {
             set(value) {
                 this.$emit('update:modelValue', value);
             },
-        },
-    },
-    watch: {
-        async gameId() {
-            if (this.dialogType === 'edit') {
-                this.form = await gameApi.getGameById(this.gameId);
-            }
         },
     },
     validations() {
@@ -180,21 +195,12 @@ export default {
         };
     },
     methods: {
-        ...mapActions(useGameStore, ['createGame', 'updateGame']),
         async onSubmitClicked() {
             const isFormCorrect = await this.v$.$validate()
             // you can show some extra alert to the user or just leave each field to show its `$errors`.
             if (!isFormCorrect) return
 
-            if (this.dialogType === 'create') {
-                if (this.isAdmin) {
-                    await this.createGame(this.form);
-                } else {
-                    await gameApi.store(this.form);
-                }
-            } else if (this.dialogType === 'edit') {
-                await this.updateGame(this.gameId, this.form);
-            }
+            await gameApi.store(this.form);
             this.value = false;
         },
     },

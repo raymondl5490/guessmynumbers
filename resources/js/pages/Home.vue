@@ -14,7 +14,7 @@
             @featureOwnNumbers="onFeatureOwnNumbers"
         />
         <SettingsModalComponent v-model="showSettingsModal" />
-        <GameModalCreate v-model="showGameModalCreate" />
+        <VipModal v-model="showGameModalCreate" />
     </div>
 </template>
 <script>
@@ -27,7 +27,7 @@ import {mapActions, mapState} from 'pinia';
 import HelpModalComponent from "../components/modals/HelpModalComponent";
 import StatisticsModalComponent from "../components/modals/StatisticsModalComponent";
 import SettingsModalComponent from "../components/modals/SettingsModalComponent";
-import GameModalCreate from "../components/modals/GameModalCreate";
+import VipModal from "../components/modals/VipModal";
 import { wait } from "../utils";
 import { ATTEMPT_STATUS_CODES } from "../utils/constants";
 
@@ -38,7 +38,7 @@ export default {
         HelpModalComponent,
         HeaderComponent,
         GameComponent,
-        GameModalCreate,
+        VipModal,
     },
     data() {
         return {
