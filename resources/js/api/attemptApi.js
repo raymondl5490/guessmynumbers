@@ -20,6 +20,13 @@ export default {
             console.log({error});
         });
     },
+    async hasSubmittedVipGame(attemptId) {
+        return await axios.patch(`attempts/${attemptId}/has-submitted-vip-game`).then(response => {
+            return response.data.data;
+        }).catch(error => {
+            console.log({error});
+        });
+    },
     async getOverallStatistics() {
         return await axios.get('attempts/overall-statistics').then(response => {
             return response.data;

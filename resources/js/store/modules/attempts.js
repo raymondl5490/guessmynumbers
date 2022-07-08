@@ -28,6 +28,9 @@ export default defineStore('attempts', {
                 return (this.currentAttempt && this.currentAttempt.won) ?? false;
             }
         },
+        hasSubmittedVipGame() {
+            return !!(this.currentAttempt && this.currentAttempt.has_submitted_vip_game);
+        },
         isAttemptEnded() {
             const guessStore = useGuessStore();
             return this.won || guessStore.guesses.length >= 3;
@@ -94,6 +97,9 @@ export default defineStore('attempts', {
         },
         async winAttempt() {
             this.currentAttempt = await attemptApi.winAttempt(this.currentAttempt.id);
+        },
+        async getHasSubmittedVipGame() {
+            this.currentAttempt = await attemptApi.hasSubmittedVipGame(this.currentAttempt.id);
         },
         generatePracticeNumbers() {
             this.practiceNumbers = [_.random(0, 9), _.random(0, 9), _.random(0, 9)];

@@ -71,7 +71,9 @@
                     </div>
                 </div>
 
-                <el-button type="success" class="w-full mt-4" :tabindex="-1" @click="onSubmitClicked">Submit Your Own Numbers!</el-button>
+                <el-button type="success" :disabled="hasSubmittedVipGame" class="w-full mt-4" :tabindex="-1" @click="onSubmitClicked">
+                    {{ hasSubmittedVipGame ? 'You Already Submitted' : 'Submit Your Own Numbers!' }}
+                </el-button>
 
                 <el-collapse>
                     <el-collapse-item>
@@ -118,6 +120,8 @@ import useVuelidate from "@vuelidate/core";
 import {required, numeric, maxValue, minValue, email, url, maxLength, minLength} from "@vuelidate/validators";
 import FormErrorsComponent from "../forms/FormErrorsComponent";
 
+import { useAttemptStore } from "../../store";
+import { mapActions, mapState } from "pinia";
 import { gameApi } from '../../api';
 
 export default {
@@ -146,6 +150,7 @@ export default {
         };
     },
     computed: {
+        ...mapState(useAttemptStore, ['hasSubmittedVipGame']),
         value: {
             get() {
                 return this.modelValue;
@@ -195,12 +200,14 @@ export default {
         };
     },
     methods: {
+        ...mapActions(useAttemptStore, ['getHasSubmittedVipGame']),
         async onSubmitClicked() {
             const isFormCorrect = await this.v$.$validate()
             // you can show some extra alert to the user or just leave each field to show its `$errors`.
             if (!isFormCorrect) return
 
             await gameApi.store(this.form);
+            await this.getHasSubmittedVipGame();
             this.value = false;
         },
     },

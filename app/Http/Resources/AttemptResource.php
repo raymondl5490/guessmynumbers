@@ -23,6 +23,7 @@ class AttemptResource extends JsonResource
             'game_id' => $this->game_id,
             'guesses' => GuessResource::collection($this->guesses),
             'won' => $this->won,
+            'has_submitted_vip_game' => $this->has_submitted_vip_game,
         ];
     }
 }

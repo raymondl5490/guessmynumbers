@@ -45,6 +45,7 @@ Route::prefix('players/{player}')->group(function() {
 Route::get('/games/current', CurrentGameController::class)->name('games.current');
 Route::apiResource('games', GameController::class)->only(['store']);
 Route::patch('/attempts/{id}/win', [AttemptController::class, 'win'])->name('attempts.win');
+Route::patch('/attempts/{id}/has-submitted-vip-game', [AttemptController::class, 'hasSubmittedVipGame'])->name('attempts.has_submitted_vip_game');
 
 Route::get('/settings/result-texts', [SettingController::class, 'resultTexts'])->name('settings.result_texts');
 Route::get('/settings/{key}', [SettingController::class, 'value'])->name('settings.value');
@@ -59,5 +60,5 @@ Route::middleware('auth')->group(function() {
         Route::patch('/{id}/live-on', [GameController::class, 'updateLiveOn'])->name('games.update_live_on');
     });
     Route::apiResource('games', GameController::class)->except(['store']);
-    Route::get('/attempts/overall-statistics/', [AttemptController::class, 'overall_statistics'])->name('attempts.overall_statistics');
+    Route::get('/attempts/overall-statistics/', [AttemptController::class, 'overallStatistics'])->name('attempts.overall_statistics');
 });

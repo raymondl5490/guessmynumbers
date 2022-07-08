@@ -65,10 +65,11 @@
                         <el-button
                             class="w-full m-0 mt-1"
                             :tabindex="-1"
+                            :disabled="hasSubmittedVipGame"
                             type="primary"
                             @click="$emit('featureOwnNumbers')"
                         >
-                            SUBMIT YOUR OWN NUMBERS
+                            {{ hasSubmittedVipGame ? 'YOU ALREADY SUBMITTED YOUR NUMBERS' : 'SUBMIT YOUR OWN NUMBERS' }}
                         </el-button>
                     </div>
                 </div>
@@ -182,7 +183,7 @@ export default {
     computed: {
         ...mapState(usePlayerStore, ['currentPlayer']),
         ...mapState(useGameStore, ['currentGame']),
-        ...mapState(useAttemptStore, ['isPracticeMode', 'won', 'attemptStatus', 'correctNumbers']),
+        ...mapState(useAttemptStore, ['isPracticeMode', 'won', 'attemptStatus', 'correctNumbers', 'hasSubmittedVipGame']),
         ...mapState(useSettingStore, ['settingValueByKey']),
         value: {
             get() {
