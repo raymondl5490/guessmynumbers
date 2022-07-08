@@ -9,7 +9,7 @@ import {useAttemptStore, useGuessStore} from "../store";
 export default {
     computed: {
         ...mapState(useAttemptStore, ['correctNumbers']),
-        ...mapState(useGuessStore, ['submittedGuessNumbers', 'guess', 'board', 'countCorrectSpotsOfLastSubmittedGuessNumbers']),
+        ...mapState(useGuessStore, ['submittedGuessNumbers', 'guess', 'board', 'lastSubmittedGuessNumbers']),
     },
     methods: {
         isNumberOnBoard(number) {
