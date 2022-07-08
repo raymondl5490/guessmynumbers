@@ -29,7 +29,7 @@ Route::get('/', function () {
 
 Auth::routes(['register' => false]);
 
-Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
+Route::get('/joosherino', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
 
 Route::post('players', [PlayerController::class, 'store'])->name('players.store');
 
