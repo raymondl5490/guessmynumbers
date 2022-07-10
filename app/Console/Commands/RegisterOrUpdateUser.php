@@ -13,7 +13,7 @@ class RegisterOrUpdateUser extends Command
      *
      * @var string
      */
-    protected $signature = 'user:register {email} {password}';
+    protected $signature = 'user:register {email} {name} {password}';
 
     /**
      * The console command description.
@@ -30,11 +30,12 @@ class RegisterOrUpdateUser extends Command
     public function handle()
     {
         $email = $this->argument('email');
+        $name = $this->argument('name');
         $password = $this->argument('password');
 
         User::updateOrInsert(
                 ['email' => $email],
-                ['password' => Hash::make($password)]
+                ['name' => $name, 'password' => Hash::make($password)]
             );
 
         $this->info('The command was successful!');
