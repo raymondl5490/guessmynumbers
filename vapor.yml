@@ -11,6 +11,9 @@ environments:
       - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
       - 'php artisan event:cache'
       - 'yarn install --frozen-lockfile && yarn prod && rm -rf node_modules'
+    deploy:
+      - 'php artisan migrate --force'
+      - 'php artisan db:seed --force'
   staging:
     database: guess-my-numbers-staging-db
     memory: 1024
