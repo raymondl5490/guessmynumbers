@@ -2,6 +2,7 @@ id: 31635
 name: guess-my-numbers
 environments:
   production:
+    domain: guessmynumbers.com
     database: guess-my-numbers-db
     memory: 1024
     cli-memory: 512
