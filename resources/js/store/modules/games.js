@@ -12,6 +12,7 @@ export default defineStore('games', {
     actions: {
         async refreshGames() {
             await Promise.all([
+                this.getCurrentGame(),
                 this.getSubmittedGames(),
                 this.getQueuedGames(),
                 this.getFinishedGames(),
