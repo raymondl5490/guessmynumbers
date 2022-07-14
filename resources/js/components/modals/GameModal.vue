@@ -36,7 +36,7 @@
                     <label class="block text-sm font-medium text-gray-700">Name</label>
                     <div class="mt-1">
                         <input v-model="form.author_name" class="input"
-                            placeholder="Josh"
+                            placeholder="Jone"
                             @input="v$.form.author_name.$touch"/>
                         <form-errors-component name="author_name" :validation="v$.form"/>
                     </div>
@@ -45,7 +45,7 @@
                     <label class="block text-sm font-medium text-gray-700">Email</label>
                     <div class="mt-1">
                         <input type="email" v-model="form.author_email" class="input"
-                            placeholder="josh@onelightstudios.com"
+                            placeholder="jone0322@gmail.com"
                             @input="v$.form.author_email.$touch"/>
                         <form-errors-component name="author_email" :validation="v$.form"/>
                     </div>
