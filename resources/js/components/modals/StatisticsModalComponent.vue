@@ -234,7 +234,7 @@ export default {
         handleTryAgain() {
             this.$gtag.event('play_practice', { 'event_category': 'UserBehavior', 'value': usePlayerStore().playerId });
             this.value = false;
-            goToPracticeMode();
+            this.goToPracticeMode();
         },
     },
 }
