@@ -57,7 +57,7 @@
 import ModalComponent from "../ui/ModalComponent";
 import IconComponent from "../ui/IconComponent";
 import { mapState, mapActions } from "pinia";
-import { useAttemptStore } from "../../store";
+import { usePlayerStore, useAttemptStore } from "../../store";
 
 export default {
     components: {IconComponent, ModalComponent},
@@ -78,6 +78,7 @@ export default {
         ...mapActions(useAttemptStore, ['goToPracticeMode', 'goToRegularMode']),
         isPracticeModeChanged(value) {
             if (value) {
+                this.$gtag.event('play_practice', { 'event_category': 'UserBehavior', 'value': usePlayerStore().playerId });
                 this.goToPracticeMode();
             } else {
                 this.goToRegularMode();

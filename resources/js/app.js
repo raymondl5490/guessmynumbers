@@ -1,6 +1,7 @@
 import {createPinia} from "pinia";
 import {createPersistedStatePlugin} from 'pinia-plugin-persistedstate-2'
 import VueConfetti from 'vue-confetti'
+import VueGtag from "vue-gtag";
 
 require('./bootstrap');
 import {createApp} from 'vue';
@@ -16,7 +17,9 @@ const app = createApp({});
 const pinia = createPinia();
 pinia.use(createPersistedStatePlugin());
 app.use(pinia);
-
+app.use(VueGtag, {
+  config: { id: process.env.MIX_GA_MEASUREMENT_ID }
+});
 app.use(ElementPlus)
 app.use(VueConfetti);
 
