@@ -36,7 +36,6 @@
                     <label class="block text-sm font-medium text-gray-700">Name</label>
                     <div class="mt-1">
                         <input v-model="form.author_name" class="input"
-                            placeholder="Jone"
                             @input="v$.form.author_name.$touch"/>
                         <form-errors-component name="author_name" :validation="v$.form"/>
                     </div>
@@ -45,7 +44,6 @@
                     <label class="block text-sm font-medium text-gray-700">Email</label>
                     <div class="mt-1">
                         <input type="email" v-model="form.author_email" class="input"
-                            placeholder="jone0322@gmail.com"
                             @input="v$.form.author_email.$touch"/>
                         <form-errors-component name="author_email" :validation="v$.form"/>
                     </div>
@@ -54,7 +52,6 @@
                     <label class="block text-sm font-medium text-gray-700">Location</label>
                     <div class="mt-1">
                         <input type="email" v-model="form.author_location" class="input"
-                            placeholder="Los Angeles"
                             @input="v$.form.author_location.$touch"/>
                         <form-errors-component name="author_location" :validation="v$.form"/>
                     </div>
@@ -63,7 +60,6 @@
                     <label class="block text-sm font-medium text-gray-700">Link</label>
                     <div class="mt-1">
                         <input type="url" v-model="form.link" class="input"
-                            placeholder="https://guessmynumbers.com"
                             @input="v$.form.link.$touch"/>
                         <form-errors-component name="link" :validation="v$.form"/>
                     </div>
