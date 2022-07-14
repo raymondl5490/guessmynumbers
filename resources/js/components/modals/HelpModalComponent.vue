@@ -36,7 +36,7 @@
             </p>
 
             <div class="flex justify-center my-4">
-                <el-button type="success" size="large" :tabindex="-1" @click="value = false">GOT IT, LET'S PLAY</el-button>
+                <el-button type="success" size="large" :tabindex="-1" @click="handleReadHelp">GOT IT, LET'S PLAY</el-button>
             </div>
 
             <hr/>
@@ -69,6 +69,12 @@ export default {
             set(value) {
                 this.$emit('update:modelValue', value);
             },
+        },
+    },
+    methods: {
+        handleReadHelp() {
+            this.$gtag.event('readHelp', { 'event_category': 'UserBehavior' });
+            this.value = false;
         },
     },
 }

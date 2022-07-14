@@ -79,7 +79,7 @@
 
             <div v-if="isPracticeMode" class="grid grid-cols-1 gap-1 sm:grid-cols-2">
                 <div>
-                    <el-button type="primary" class="w-full" :tabindex="-1" @click="value = false; goToPracticeMode()">TRY AGAIN</el-button>
+                    <el-button type="primary" class="w-full" :tabindex="-1" @click="handleTryAgain">TRY AGAIN</el-button>
                 </div>
                 <div>
                     <el-button type="success" class="w-full" :tabindex="-1" @click="value = false; goToRegularMode()">GO TO REAL MODE</el-button>
@@ -231,6 +231,11 @@ export default {
     },
     methods: {
         ...mapActions(useAttemptStore, ['goToPracticeMode', 'goToRegularMode']),
+        handleTryAgain() {
+            this.$gtag.event('play_practice', { 'event_category': 'UserBehavior', 'value': usePlayerStore().playerId });
+            this.value = false;
+            goToPracticeMode();
+        },
     },
 }
 </script>
