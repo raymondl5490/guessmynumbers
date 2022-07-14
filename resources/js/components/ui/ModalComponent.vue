@@ -41,7 +41,7 @@ export default {
 @media only screen and (max-width: 600px) {
     .el-dialog {
         width: 100% !important;
-        margin-top: 0 !important;
+        margin-top: 7vh !important;
     }
 }
 
@@ -49,7 +49,7 @@ export default {
 @media only screen and (min-width: 600px) {
     .el-dialog {
         width: 600px !important;
-        margin-top: 5vh !important;
+        margin-top: 10vh !important;
     }
 }
 
@@ -57,7 +57,7 @@ export default {
 @media only screen and (min-width: 768px) {
     .el-dialog {
         width: 700px !important;
-        margin-top: 10vh !important;
+        margin-top: 15vh !important;
     }
 }
 
