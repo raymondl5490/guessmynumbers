@@ -42,7 +42,7 @@
                     <img class="inline w-6 h-6" src="https://img.icons8.com/color/48/FAB005/approval--v3.png"/>
                 </p>
                 <p class="font-bold text-blue-900">
-                    {{formatTimestamp2Date(currentGame.created_at)}}
+                    {{formatCurrentTime()}}
                 </p>
             </p>
         </div>
@@ -52,7 +52,7 @@
 import {IconComponent} from "./ui";
 import {mapState, mapActions} from 'pinia';
 import {useGameStore, useAttemptStore}from '../store'
-import { formatTimestamp2Date } from "../utils";
+import { formatCurrentTime } from "../utils";
 
 export default {
     components: {IconComponent},
@@ -62,7 +62,7 @@ export default {
     },
     methods: {
         ...mapActions(useAttemptStore, ['goToRegularMode']),
-        formatTimestamp2Date,
+        formatCurrentTime,
         onHelpOpen() {
             this.$emit('open-help');
         },
