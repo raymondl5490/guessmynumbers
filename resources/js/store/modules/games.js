@@ -56,8 +56,8 @@ export default defineStore('games', {
             let now = currentLiveOn();
 
             for (let i = 0; i < this.queuedGames.length; i++) {
-                this.queuedGames[i].new_live_on = now;
                 now = nextLiveOn(now);
+                this.queuedGames[i].new_live_on = now;
             }
 
             await Promise.all(
