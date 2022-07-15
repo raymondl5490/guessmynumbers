@@ -14,7 +14,7 @@ export default {
         });
     },
     async queued() {
-        return await axios.get('games/queued-or-current').then(response => {
+        return await axios.get('games/queued').then(response => {
             return response.data.data;
         }).catch(error => {
             console.error({error});

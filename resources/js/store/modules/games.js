@@ -1,6 +1,6 @@
 import {currentGameApi, gameApi} from '../../api'
 import {defineStore} from "pinia";
-import {nextLiveOn} from '../../utils';
+import {nextLiveOn, currentLiveOn} from '../../utils';
 
 export default defineStore('games', {
     state: () => ({
@@ -46,21 +46,22 @@ export default defineStore('games', {
             await gameApi.remove(gameId);
             await this.refreshGames();
         },
-        async reorderGames(oldIndex, newIndex) {
-            const queuedGames = this.queuedGames;
-            const oldItem = queuedGames[oldIndex];
-            queuedGames.splice(oldIndex, 1);
-            queuedGames.splice(newIndex, 0, oldItem);
+        async handleQueueChange(oldIndex, newIndex) {
+            const oldItem = this.queuedGames[oldIndex];
+            this.queuedGames.splice(oldIndex, 1);
+            this.queuedGames.splice(newIndex, 0, oldItem);
+            await this.syncQueuedGames();
+        },
+        async syncQueuedGames() {
+            let now = currentLiveOn();
 
-            let now = this.currentGame.live_on;
-
-            for (let i = 0; i < queuedGames.length; i++) {
+            for (let i = 0; i < this.queuedGames.length; i++) {
+                this.queuedGames[i].new_live_on = now;
                 now = nextLiveOn(now);
-                queuedGames[i].new_live_on = now;
             }
 
             await Promise.all(
-                _.map(queuedGames, async (game) =>
+                _.map(this.queuedGames, async (game) =>
                     gameApi.updateLiveOn(game.id, {
                         live_on: game.new_live_on,
                     })

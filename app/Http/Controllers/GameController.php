@@ -45,10 +45,10 @@ class GameController extends Controller
     /**
      * @return AnonymousResourceCollection
      */
-    public function queuedOrCurrent(): AnonymousResourceCollection
+    public function queued(): AnonymousResourceCollection
     {
         $now = Carbon::now('America/Los_Angeles')->format('Y-m-d a');
-        $queuedGames = Game::where('live_on', '>=', $now)
+        $queuedGames = Game::where('live_on', '>', $now)
                 ->orderBy('live_on', 'asc')
                 ->get();
         return GameResource::collection($queuedGames);

@@ -5,21 +5,21 @@
                 {{currentGame.number_one}} - {{currentGame.number_two}} - {{currentGame.number_three}}
             </p>
             <p class="text-sm text-center text-gray-400 sm:text-base md:text-lg">
-                SUBMMITED BY 
-                <span class="text-xl font-bold text-green-700 sm:text-2xl md:text-3xl">
-                    <a :href="currentGame.link" class="underline">
+                <p class="whitespace-pre">
+                    Submitted by 
+                </p>
+                <p class="flex justify-center font-bold text-green-700 flex-nowrap">
+                    <a :href="currentGame.link" target="_blank" class="underline">
                         {{currentGame.author_name}}
                     </a>
                     , {{currentGame.author_location}}
-                    <img class="inline w-6" src="https://img.icons8.com/color/48/FAB005/approval--v3.png"/>
-                </span>
-                <p>
-                    AT
-                    <span class="font-bold text-blue-900">
-                        {{(new Date(currentGame.created_at).toDateString())}}
-                    </span>
+                    <img class="inline w-6 h-6" src="https://img.icons8.com/color/48/FAB005/approval--v3.png"/>
+                </p>
+                <p class="font-bold text-blue-900">
+                    {{formatCurrentTime()}}
                 </p>
             </p>
+            <el-button size="small" type="success" @click="onEditClicked(null, currentGame)">Edit Current Game</el-button>
         </div>
 
         <div class="grid grid-cols-3 gap-2 py-1 mx-8 my-1 sm:py-4 sm:my-2 md:my-3 md:gap-4">
@@ -206,6 +206,7 @@ import Sortable from 'sortablejs';
 import { v4 as uuidv4 } from 'uuid';
 import { nextTick } from "vue";
 import { attemptApi } from "../api";
+import { formatCurrentTime } from "../utils";
 
 export default {
     components: {
@@ -250,7 +251,7 @@ export default {
         },
     },
     methods: {
-        ...mapActions(useGameStore, ['getCurrentGame', 'refreshGames', 'approveGame', 'removeGame', 'reorderGames']),
+        ...mapActions(useGameStore, ['getCurrentGame', 'refreshGames', 'approveGame', 'removeGame', 'handleQueueChange']),
         winPercentage(game) {
             const number_of_attempts = game.number_of_attempts;
             const number_of_wons = game.number_of_wons;
@@ -265,7 +266,7 @@ export default {
                 onEnd: async evt => {
                     if (evt.oldIndex === evt.newIndex) return;
                     this.queuedLoading = true;
-                    await this.reorderGames(evt.oldIndex, evt.newIndex);
+                    await this.handleQueueChange(evt.oldIndex, evt.newIndex);
                     this.queuedLoading = false;
                     this.queuedTableKey = 'queued_games_table_' + uuidv4();
                     // location.reload();
@@ -285,6 +286,7 @@ export default {
         async onRemoveClicked(index, row) {
             await this.removeGame(row.id);
         },
+        formatCurrentTime,
     }
 }
 </script>

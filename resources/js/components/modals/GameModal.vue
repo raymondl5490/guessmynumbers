@@ -5,7 +5,7 @@
         </template>
         <template #content>
             <div class="flex flex-col">
-                <div class="flex flex-row">
+                <div v-if="!isEditingCurrentGame" class="flex flex-row">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Number One</label>
                         <div class="mt-1">
@@ -127,6 +127,9 @@ export default {
             set(value) {
                 this.$emit('update:modelValue', value);
             },
+        },
+        isEditingCurrentGame() {
+            return this.gameId === useGameStore().currentGame.id;
         },
     },
     watch: {

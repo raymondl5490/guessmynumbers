@@ -1,6 +1,10 @@
 const dayjs = require('dayjs');
 const customParseFormat = require('dayjs/plugin/customParseFormat')
+const utc = require('dayjs/plugin/utc')
+const timezone = require('dayjs/plugin/timezone') // dependent on utc plugin
 dayjs.extend(customParseFormat)
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 /**
  * Return next LiveOn time
@@ -21,6 +25,10 @@ export const nextLiveOn = function (current) {
         const currentDate = dayjs(current.substring(0, 10), 'YYYY-MM-DD', true);
         return currentDate.add(1, 'day').format('YYYY-MM-DD') + ' am';
     }
+};
+
+export const currentLiveOn = function () {
+    return dayjs().tz('America/Los_Angeles').format('YYYY-MM-DD a')
 };
 
 export const wait = function(miliseconds) {
