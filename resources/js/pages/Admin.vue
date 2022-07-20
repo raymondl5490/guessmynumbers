@@ -138,6 +138,7 @@
                                     {{scope.row.link}}
                                 </el-link>
                             </p>
+                            <p>{{convertISOFormat2Date(scope.row.created_at)}}</p>
                         </template>
                     </el-table-column>
                     <el-table-column fixed="right" width="70">
@@ -235,7 +236,7 @@ import Sortable from 'sortablejs';
 import { v4 as uuidv4 } from 'uuid';
 import { nextTick } from "vue";
 import { attemptApi } from "../api";
-import { formatCurrentTime } from "../utils";
+import { formatCurrentTime, convertISOFormat2Date } from "../utils";
 
 export default {
     components: {
@@ -316,6 +317,7 @@ export default {
             await this.removeGame(row.id);
         },
         formatCurrentTime,
+        convertISOFormat2Date,
     }
 }
 </script>

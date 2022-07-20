@@ -52,6 +52,17 @@ export const formatTimestamp2Date = function (timestamp) {
 
 /**
  * 
+ * @param {string} isoDate
+ * 
+ * @return {string} formatted date string
+ */
+
+export const convertISOFormat2Date = function (isoDate) {
+    return dayjs(isoDate).format('MM/DD/YY hh:mm a');
+}
+
+/**
+ * 
  * @returns {string} formatted date of now; ex: Sun July 06 2022
  */
 export const formatCurrentTime = function () {
