@@ -1,7 +1,10 @@
 <template>
-    <el-dialog v-model="value">
+    <el-dialog v-model="value" :show-close="false">
         <template #header="{ close, titleId, titleClass }">
             <slot name="title"></slot>
+            <button @click="close" class="absolute right-0 w-12 h-12 text-2xl border-0 top-2">
+                <el-icon><CloseBold /></el-icon>
+            </button>
         </template>
         <slot name="content"></slot>
     </el-dialog>
@@ -27,6 +30,14 @@ export default {
 .el-dialog {
     width: 100% !important;
     margin-top: 0 !important;
+}
+
+.el-dialog .el-dialog__header {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 7px;
+    padding-bottom: 0px;
+    margin-right: 0 !important;
 }
 
 .el-dialog .el-dialog__body {

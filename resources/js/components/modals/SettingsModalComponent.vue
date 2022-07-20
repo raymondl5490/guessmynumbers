@@ -1,7 +1,7 @@
 <template>
     <ModalComponent v-model="value">
         <template #title>
-            <h1 class="p-4 text-2xl font-extrabold text-center bg-stone-200">
+            <h1 class="px-4 py-2 text-2xl font-extrabold text-center bg-stone-200">
                 Settings
             </h1>
         </template>

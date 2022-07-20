@@ -2,7 +2,7 @@
     <ModalComponent v-model="value">
         <template #title>
             <img :src="asset('images/logo.jpeg')" class="w-40 h-auto mx-auto"/>
-            <h1 class="p-4 text-2xl font-extrabold text-center bg-stone-200">
+            <h1 class="px-4 py-2 text-2xl font-extrabold text-center bg-stone-200">
                 How to Play
             </h1>
         </template>

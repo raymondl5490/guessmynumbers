@@ -28,6 +28,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@element-plus/icons-vue": "^2.0.6",
         "@headlessui/vue": "^1.6.1",
         "@heroicons/vue": "^1.0.6",
         "@vuelidate/core": "^2.0.0-alpha.41",

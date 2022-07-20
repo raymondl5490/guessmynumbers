@@ -1,7 +1,7 @@
 <template>
     <modal-component v-model="value">
         <template #title>
-            <h1 class="p-4 text-2xl font-extrabold text-center text-green-500 bg-stone-200">
+            <h1 class="px-4 py-2 text-2xl font-extrabold text-center text-green-500 bg-stone-200">
                 VIP SECTION
             </h1>
         </template>
