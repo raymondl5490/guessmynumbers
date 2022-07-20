@@ -32,7 +32,7 @@
             </p>
             <p v-else class="mt-3 text-lg text-center text-gray-400 sm:mt-6 sm:text-xl md:text-4xl">
                 <p class="whitespace-pre">
-                    Submitted by 
+                    Submitted by: 
                 </p>
                 <p class="flex justify-center font-bold text-green-700 flex-nowrap">
                     <a :href="currentGame.link" target="_blank" class="underline">

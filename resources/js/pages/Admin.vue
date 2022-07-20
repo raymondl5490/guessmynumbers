@@ -6,7 +6,7 @@
             </p>
             <p class="text-sm text-center text-gray-400 sm:text-base md:text-lg">
                 <p class="whitespace-pre">
-                    Submitted by 
+                    Submitted by: 
                 </p>
                 <p class="flex justify-center font-bold text-green-700 flex-nowrap">
                     <a :href="currentGame.link" target="_blank" class="underline">
