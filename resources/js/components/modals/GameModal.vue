@@ -109,9 +109,9 @@ export default {
     data() {
         return {
             form: {
-                number_one: 0,
-                number_two: 0,
-                number_three: 0,
+                number_one: undefined,
+                number_two: undefined,
+                number_three: undefined,
                 author_name: '',
                 author_email: '',
                 author_location: '',
