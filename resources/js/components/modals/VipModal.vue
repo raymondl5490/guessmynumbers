@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="mt-3">
-                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                    <label class="block text-sm font-medium text-gray-700">Email (*optional)</label>
                     <div class="mt-1">
                         <input type="email" v-model="form.author_email" class="input"
                             @input="v$.form.author_email.$touch"/>
@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="mt-3">
-                    <label class="block text-sm font-medium text-gray-700">Link</label>
+                    <label class="block text-sm font-medium text-gray-700">Link (*optional)</label>
                     <div class="mt-1">
                         <input type="url" v-model="form.link" class="input"
                             @input="v$.form.link.$touch"/>
