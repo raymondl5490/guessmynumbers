@@ -67,14 +67,19 @@
                     <el-table-column label="SUBMITTED BY">
                         <template #default="scope">
                             <p class="font-bold text-blue-900">
-                                <a :href="scope.row.link" class="underline">
-                                    {{scope.row.author_name}}
-                                </a>
+                                {{scope.row.author_name}}
                                 , {{scope.row.author_location}}
                             </p>
-                            <el-link :href="'mailto:'+ scope.row.author_email" target="_blank" type="primary">
-                                {{scope.row.author_email}}
-                            </el-link>
+                            <p>
+                                <el-link :href="'mailto:'+ scope.row.author_email" target="_blank" type="primary">
+                                    {{scope.row.author_email}}
+                                </el-link>
+                            </p>
+                            <p>
+                                <el-link :href="scope.row.link" target="_blank" type="success">
+                                    {{scope.row.link}}
+                                </el-link>
+                            </p>
                         </template>
                     </el-table-column>
                     <el-table-column label="Live on" width="150">
@@ -82,14 +87,18 @@
                             {{scope.row.live_on}}
                         </template>
                     </el-table-column>
-                    <el-table-column fixed="right" width="100">
+                    <el-table-column fixed="right" width="70">
                         <template #default="scope">
                             <div class="grid grid-cols-1 gap-0">
                                 <div>
-                                    <el-button size="small" class="w-full" type="success" @click="onEditClicked(scope.$index, scope.row)">Edit</el-button>
+                                    <el-button size="small" class="w-full" type="success" @click="onEditClicked(scope.$index, scope.row)">
+                                        <el-icon><Edit /></el-icon>
+                                    </el-button>
                                 </div>
                                 <div>
-                                    <el-button size="small" class="w-full" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">Remove</el-button>
+                                    <el-button size="small" class="w-full" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">
+                                        <el-icon><Delete /></el-icon>
+                                    </el-button>
                                 </div>
                             </div>
                         </template>
@@ -101,7 +110,9 @@
                 <template #title>
                     <div class="flex items-center content-center justify-between w-full">
                         <p>Submitted Games</p>
-                        <el-button size="small" type="primary" @click.stop="showGameModalCreate = true">Create</el-button>
+                        <el-button size="small" type="primary" @click.stop="showGameModalCreate = true">
+                            <el-icon><Plus /></el-icon>
+                        </el-button>
                     </div>
                 </template>
                 <el-table :data="filteredSubmittedGames">
@@ -114,30 +125,41 @@
                     <el-table-column label="SUBMITTED BY">
                         <template #default="scope">
                             <p class="font-bold text-blue-900">
-                                <a :href="scope.row.link" class="underline">
-                                    {{scope.row.author_name}}
-                                </a>
+                                {{scope.row.author_name}}
                                 , {{scope.row.author_location}}
                             </p>
-                            <el-link :href="'mailto:'+ scope.row.author_email" target="_blank" type="primary">
-                                {{scope.row.author_email}}
-                            </el-link>
+                            <p>
+                                <el-link :href="'mailto:'+ scope.row.author_email" target="_blank" type="primary">
+                                    {{scope.row.author_email}}
+                                </el-link>
+                            </p>
+                            <p>
+                                <el-link :href="scope.row.link" target="_blank" type="success">
+                                    {{scope.row.link}}
+                                </el-link>
+                            </p>
                         </template>
                     </el-table-column>
-                    <el-table-column fixed="right" width="100">
+                    <el-table-column fixed="right" width="70">
                         <template #header>
                             <el-input v-model="search" size="small" placeholder="Type to search" />
                         </template>
                         <template #default="scope">
                             <div class="grid grid-cols-1 gap-0">
                                 <div>
-                                    <el-button size="small" class="w-full" type="primary" @click="onApproveClicked(scope.$index, scope.row)">Approve</el-button>
+                                    <el-button size="small" class="w-full" type="primary" @click="onApproveClicked(scope.$index, scope.row)">
+                                        <el-icon><Check /></el-icon>
+                                    </el-button>
                                 </div>
                                 <div>
-                                    <el-button size="small" class="w-full" type="success" @click="onEditClicked(scope.$index, scope.row)">Edit</el-button>
+                                    <el-button size="small" class="w-full" type="success" @click="onEditClicked(scope.$index, scope.row)">
+                                        <el-icon><Edit /></el-icon>
+                                    </el-button>
                                 </div>
                                 <div>
-                                    <el-button size="small" class="w-full" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">Remove</el-button>
+                                    <el-button size="small" class="w-full" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">
+                                        <el-icon><Delete /></el-icon>
+                                    </el-button>
                                 </div>
                             </div>
                         </template>
@@ -156,14 +178,19 @@
                     <el-table-column label="SUBMITTED BY">
                         <template #default="scope">
                             <p class="font-bold text-blue-900">
-                                <a :href="scope.row.link" class="underline">
-                                    {{scope.row.author_name}}
-                                </a>
+                                {{scope.row.author_name}}
                                 , {{scope.row.author_location}}
                             </p>
-                            <el-link :href="'mailto:'+ scope.row.author_email" target="_blank" type="primary">
-                                {{scope.row.author_email}}
-                            </el-link>
+                            <p>
+                                <el-link :href="'mailto:'+ scope.row.author_email" target="_blank" type="primary">
+                                    {{scope.row.author_email}}
+                                </el-link>
+                            </p>
+                            <p>
+                                <el-link :href="scope.row.link" target="_blank" type="success">
+                                    {{scope.row.link}}
+                                </el-link>
+                            </p>
                         </template>
                     </el-table-column>
                     <el-table-column label="Live on" width="150">
@@ -176,11 +203,13 @@
                             {{scope.row.number_of_wons}}/{{scope.row.number_of_attempts}}({{winPercentage(scope.row)}}%)
                         </template>
                     </el-table-column>
-                    <el-table-column fixed="right" width="100">
+                    <el-table-column fixed="right" width="70">
                         <template #default="scope">
                             <div class="grid grid-cols-1 gap-0">
                                 <div>
-                                    <el-button size="small" class="w-full" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">Remove</el-button>
+                                    <el-button size="small" class="w-full" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">
+                                        <el-icon><Delete /></el-icon>
+                                    </el-button>
                                 </div>
                             </div>
                         </template>
