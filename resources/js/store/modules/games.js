@@ -4,9 +4,9 @@ import {nextLiveOn, currentLiveOn} from '../../utils';
 
 export default defineStore('games', {
     state: () => ({
-        submittedGames: [],
+        submittedGamesPaginator: null,
         queuedGames: [], // queued order by live_on asc
-        finishedGames: [],
+        finishedGamesPaginator: null,
         currentGame: {},
     }),
     actions: {
@@ -18,14 +18,14 @@ export default defineStore('games', {
                 this.getFinishedGames(),
             ]);
         },
-        async getSubmittedGames() {
-            this.submittedGames = await gameApi.submitted();
+        async getSubmittedGames(page = 1) {
+            this.submittedGamesPaginator = await gameApi.submitted(page);
         },
         async getQueuedGames() {
             this.queuedGames = await gameApi.queued();
         },
-        async getFinishedGames() {
-            this.finishedGames = await gameApi.finished();
+        async getFinishedGames(page = 1) {
+            this.finishedGamesPaginator = await gameApi.finished(page);
         },
         async getCurrentGame() {
             this.currentGame = await currentGameApi.getCurrentGame();

@@ -6,9 +6,9 @@ export default {
             console.error({error});
         });
     },
-    async submitted() {
-        return await axios.get('games/submitted').then(response => {
-            return response.data.data;
+    async submitted(page = 1) {
+        return await axios.get('games/submitted?page=' + page).then(response => {
+            return response.data;
         }).catch(error => {
             console.error({error});
         });
@@ -20,9 +20,9 @@ export default {
             console.error({error});
         });
     },
-    async finished() {
-        return await axios.get('games/finished').then(response => {
-            return response.data.data;
+    async finished(page = 1) {
+        return await axios.get('games/finished?page=' + page).then(response => {
+            return response.data;
         }).catch(error => {
             console.error({error});
         });
