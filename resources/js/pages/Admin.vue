@@ -110,9 +110,19 @@
                 <template #title>
                     <div class="flex items-center content-center justify-between w-full">
                         <p>Submitted Games</p>
-                        <el-button size="small" type="primary" @click.stop="showGameModalCreate = true">
-                            <el-icon><Plus /></el-icon>
-                        </el-button>
+                        <div class="flex items-center content-center">
+                            <el-pagination
+                                layout="total, prev, pager, next"
+                                :total="submittedGamesPaginator && submittedGamesPaginator.meta.total"
+                                :page-size="submittedGamesPaginator && submittedGamesPaginator.meta.per_page"
+                                :current-page="submittedGamesPaginator && submittedGamesPaginator.meta.current_page"
+                                @update:current-page="getSubmittedGames"
+                                @click.stop=""
+                            />
+                            <el-button size="small" type="primary" @click.stop="showGameModalCreate = true">
+                                <el-icon><Plus /></el-icon>
+                            </el-button>
+                        </div>
                     </div>
                 </template>
                 <el-table :data="filteredSubmittedGames">
@@ -169,7 +179,20 @@
             </el-collapse-item>
 
             <el-collapse-item title="Finished Games" name="finished">
-                <el-table :data="finishedGames">
+                <template #title>
+                    <div class="flex items-center content-center justify-between w-full">
+                        <p>Finished Games</p>
+                        <el-pagination
+                            layout="total, prev, pager, next"
+                            :total="finishedGamesPaginator && finishedGamesPaginator.meta.total"
+                            :page-size="finishedGamesPaginator && finishedGamesPaginator.meta.per_page"
+                            :current-page="finishedGamesPaginator && finishedGamesPaginator.meta.current_page"
+                            @update:current-page="getFinishedGames"
+                            @click.stop
+                        />
+                    </div>
+                </template>
+                <el-table :data="finishedGamesPaginator && finishedGamesPaginator.data">
                     <el-table-column label="ID" fixed prop="id" width="50px"/>
                     <el-table-column label="NUMBERS" width="100px">
                         <template #default="scope">
@@ -271,9 +294,9 @@ export default {
         this.initSortable();
     },
     computed: {
-        ...mapState(useGameStore, ['currentGame', 'submittedGames', 'queuedGames', 'finishedGames']),
+        ...mapState(useGameStore, ['currentGame', 'submittedGamesPaginator', 'queuedGames', 'finishedGamesPaginator']),
         filteredSubmittedGames() {
-            return this.submittedGames.filter((data) =>
+            return this.submittedGamesPaginator && this.submittedGamesPaginator.data.filter((data) =>
                 !this.search ||
                 (data.author_name + data.author_email + data.author_location + data.link)
                 .toLowerCase().includes(this.search.toLowerCase())
@@ -281,7 +304,7 @@ export default {
         },
     },
     methods: {
-        ...mapActions(useGameStore, ['getCurrentGame', 'refreshGames', 'approveGame', 'removeGame', 'handleQueueChange']),
+        ...mapActions(useGameStore, ['getCurrentGame', 'getSubmittedGames', 'getFinishedGames', 'refreshGames', 'approveGame', 'removeGame', 'handleQueueChange']),
         winPercentage(game) {
             const number_of_attempts = game.number_of_attempts;
             const number_of_wons = game.number_of_wons;

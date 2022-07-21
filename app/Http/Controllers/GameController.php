@@ -38,7 +38,7 @@ class GameController extends Controller
     {
         $submittedGames = Game::whereNull('live_on')
                 ->orderBy('created_at', 'desc')
-                ->get();
+                ->paginate(50);
         return GameResource::collection($submittedGames);
     }
 
@@ -62,7 +62,7 @@ class GameController extends Controller
         $now = Carbon::now('America/Los_Angeles')->format('Y-m-d a');
         $finishedGames = Game::where('live_on', '<', $now)
                 ->orderBy('live_on', 'desc')
-                ->get();
+                ->paginate(50);
         return GameResource::collection($finishedGames);
     }
 
