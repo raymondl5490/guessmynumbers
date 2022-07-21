@@ -69,4 +69,11 @@ export default {
             console.error({error});
         })
     },
+    async getDailyStatistics() {
+        return await axios.get('games/daily-statistics').then(response => {
+            return response.data;
+        }).catch(error => {
+            console.log({error});
+        });
+    },
 }
