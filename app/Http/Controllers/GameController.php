@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Http\Resources\GameResource;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Models\Game;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -152,4 +153,28 @@ class GameController extends Controller
 
         return response()->noContent();
     }
+
+    /**
+     * Return daily number_of_attempts and number_of_wins
+     * 
+     * @return JsonResponse
+     */
+    public function dailyStatistics(): JsonResponse
+    {
+        $today = Carbon::now('America/Los_Angeles')->format('Y-m-d%');
+
+        $gamesOfToday = Game::where('live_on', 'like', $today)->get();
+        $numberOfAttempts = 0;
+        $numberOfWons = 0;
+        foreach ($gamesOfToday as $game) {
+            $numberOfAttempts += $game->number_of_attempts;
+            $numberOfWons += $game->number_of_wons;
+        }
+
+        return response()->json([
+            'number_of_attempts' => $numberOfAttempts,
+            'number_of_wons' => $numberOfWons,
+        ]);
+    }
+
 }
