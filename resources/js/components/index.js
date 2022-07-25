@@ -1,10 +1,10 @@
-import GameComponent from './GameComponent';
+import BoardComponent from './BoardComponent';
 import HeaderComponent from "./HeaderComponent";
 import InputNumbersComponent from "./InputNumbersComponent";
 import NumberSquareComponent from "./NumberSquareComponent";
 
 export {
-    GameComponent,
+    BoardComponent,
     HeaderComponent,
     InputNumbersComponent,
     NumberSquareComponent,

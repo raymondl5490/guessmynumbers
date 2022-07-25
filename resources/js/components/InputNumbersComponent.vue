@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-3 gap-x-2 gap-y-1">
+    <div class="grid grid-cols-3 gap-x-2 md:gap-x-6 gap-y-1 place-items-center">
         <NumberPadNumber
             v-for="number in [1, 2, 3]"
             :number="number"
@@ -49,9 +49,9 @@
 </template>
 <script>
 import {includes} from "lodash";
-import { useAttemptStore } from "../store";
+import { useGuessStore, useAttemptStore } from "../store";
 import NumberUsageMixin from "../mixins/NumberUsageMixin";
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { IconComponent, NumberPadNumber } from "./ui";
 
 export default {
@@ -89,14 +89,18 @@ export default {
         ...mapState(useAttemptStore, ['isAttemptEnded']),
     },
     methods: {
+        ...mapActions(useGuessStore, ['addNumberToGuess', 'removeNumberFromGuess', 'submitGuess']),
         handleNumberClick(number) {
-            this.$emit('number-selected', number);
+            // this.$emit('number-selected', number);
+            this.addNumberToGuess(number);
         },
         handleNumberDeleted() {
-            this.$emit('number-deleted');
+            // this.$emit('number-deleted');
+            this.removeNumberFromGuess();
         },
-        handleSubmit() {
-            this.$emit('submit');
+        async handleSubmit() {
+            // this.$emit('submit');
+            await this.submitGuess();
         },
         inputNumberStyle(number) {
             if (!this.isNumberOnBoard(number)) {
