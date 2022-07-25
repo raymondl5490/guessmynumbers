@@ -35,7 +35,7 @@
 
             <hr class="my-3" />
 
-            <GameComponent :hide-numbers="true" />
+            <BoardComponent :hide-numbers="true" />
 
             <div
                 v-if="!isPracticeMode"
@@ -99,7 +99,6 @@
 <script>
 import ModalComponent from "../ui/ModalComponent";
 import IconComponent from "../ui/IconComponent";
-import GameComponent from "../GameComponent";
 import CutdownTimer from "../CutdownTimer";
 import { mapState, mapActions } from "pinia";
 import { usePlayerStore, useGameStore, useAttemptStore, useSettingStore, useGuessStore } from "../../store";
@@ -107,6 +106,7 @@ import { ATTEMPT_STATUS_CODES } from "../../utils/constants";
 import useClipboard from 'vue-clipboard3';
 import { ElMessage } from "element-plus";
 import { formatCurrentTime } from "../../utils";
+import BoardComponent from "../BoardComponent.vue";
 
 export default {
     setup() {
@@ -169,10 +169,10 @@ export default {
         return { onShare }
     },
     components: {
-        GameComponent,
         IconComponent,
         ModalComponent,
         CutdownTimer,
+        BoardComponent
     },
     props: ['modelValue'],
     emits: ['update:modelValue', 'featureOwnNumbers'],

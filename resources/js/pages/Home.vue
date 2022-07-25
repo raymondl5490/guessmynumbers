@@ -1,12 +1,20 @@
 <template>
-    <div class="container mx-auto">
+    <div class="container flex flex-col h-screen mx-auto">
         <HeaderComponent
-            class="mb-6 sm:mb-10 md:mb-20 lg:mb-40"
+            class="mb-5 md:mb-10"
             @open-help="onOpenHelp"
             @open-statistics="onOpenStatistics"
             @open-settings="onOpenSettings"
         />
-        <GameComponent v-if="!loading" />
+        <BoardComponent
+            v-if="!loading"
+            class="flex-grow"
+        />
+
+        <InputNumbersComponent
+            v-if="!loading"
+            class="mx-auto my-2 w-fit"
+        />
 
         <HelpModalComponent v-model="showHelpModal" />
         <StatisticsModalComponent
@@ -19,7 +27,6 @@
 </template>
 <script>
 
-import GameComponent from "../components/GameComponent";
 import HeaderComponent from "../components/HeaderComponent";
 import {isEmpty} from 'lodash';
 import {useGameStore, useAttemptStore, usePlayerStore, useGuessStore, useSettingStore} from '../store';
@@ -30,16 +37,19 @@ import SettingsModalComponent from "../components/modals/SettingsModalComponent"
 import VipModal from "../components/modals/VipModal";
 import { wait } from "../utils";
 import { ATTEMPT_STATUS_CODES } from "../utils/constants";
+import BoardComponent from "../components/BoardComponent.vue";
+import InputNumbersComponent from "../components/InputNumbersComponent.vue";
 
 export default {
     components: {
-        SettingsModalComponent,
-        StatisticsModalComponent,
-        HelpModalComponent,
-        HeaderComponent,
-        GameComponent,
-        VipModal,
-    },
+    SettingsModalComponent,
+    StatisticsModalComponent,
+    HelpModalComponent,
+    HeaderComponent,
+    VipModal,
+    BoardComponent,
+    InputNumbersComponent
+},
     data() {
         return {
             loading: true,
