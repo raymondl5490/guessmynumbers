@@ -26,7 +26,7 @@
         />
         <button
             :disabled="isAttemptEnded"
-            class="flex items-center justify-center w-24 h-10 text-red-600 bg-gray-200 rounded-full cursor-pointer md:text-3xl md:w-36 md:h-20 hover:bg-gray-500 hover:text-white"
+            class="flex items-center justify-center w-24 h-10 text-red-600 bg-gray-200 rounded-full cursor-pointer md:text-3xl md:w-36 md:h-20 hover:brightness-90"
             @click="handleNumberDeleted"
         >
             <IconComponent icon="arrow-left" />
@@ -40,7 +40,7 @@
         />
         <button
             :disabled="isAttemptEnded"
-            class="flex items-center justify-center w-24 h-10 text-green-600 bg-gray-200 rounded-full cursor-pointer md:text-3xl md:w-36 md:h-20 hover:bg-gray-500 hover:text-white"
+            class="flex items-center justify-center w-24 h-10 text-green-600 bg-gray-200 rounded-full cursor-pointer md:text-3xl md:w-36 md:h-20 hover:brightness-90"
             @click="handleSubmit"
         >
             <IconComponent icon="check" />
@@ -103,7 +103,7 @@ export default {
                 return '';
             }
             if (!this.hasNumberBeenSubmitted(number)) {
-                return 'bg-gray-500 text-white';
+                return 'border border-gray-500 text-black';
             }
             if (this.isNumberCorrect(number) && this.isNumberInCorrectSpot(number)) {
                 return 'bg-green-600 text-white';
