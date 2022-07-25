@@ -131,10 +131,11 @@
                         <p>Submitted Games</p>
                         <div class="flex items-center content-center">
                             <el-pagination
+                                v-if="submittedGamesPaginator"
                                 layout="total, prev, pager, next"
-                                :total="submittedGamesPaginator && submittedGamesPaginator.meta.total"
-                                :page-size="submittedGamesPaginator && submittedGamesPaginator.meta.per_page"
-                                :current-page="submittedGamesPaginator && submittedGamesPaginator.meta.current_page"
+                                :total="submittedGamesPaginator.meta.total"
+                                :page-size="submittedGamesPaginator.meta.per_page"
+                                :current-page="submittedGamesPaginator.meta.current_page"
                                 @update:current-page="getSubmittedGames"
                                 @click.stop=""
                             />
@@ -202,10 +203,11 @@
                     <div class="flex items-center content-center justify-between w-full">
                         <p>Finished Games</p>
                         <el-pagination
+                            v-if="finishedGamesPaginator"
                             layout="total, prev, pager, next"
-                            :total="finishedGamesPaginator && finishedGamesPaginator.meta.total"
-                            :page-size="finishedGamesPaginator && finishedGamesPaginator.meta.per_page"
-                            :current-page="finishedGamesPaginator && finishedGamesPaginator.meta.current_page"
+                            :total="finishedGamesPaginator.meta.total"
+                            :page-size="finishedGamesPaginator.meta.per_page"
+                            :current-page="finishedGamesPaginator.meta.current_page"
                             @update:current-page="getFinishedGames"
                             @click.stop
                         />
