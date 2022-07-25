@@ -51,7 +51,7 @@ export default {
                 return '';
             }
             if (!this.submitted) {
-                return 'bg-gray-500 text-white';
+                return 'text-black';
             }
             if (this.guessedNumber === this.correctNumber) {
                 return 'bg-green-600 text-white';
@@ -138,17 +138,20 @@ export default {
 
 .delay-transition-color-000 {
     transition-property: all;
-    transition-delay: 0s;
+    transition-duration: 0.3s;
+    transition-delay: 0.4s;
 }
 
 .delay-transition-color-700 {
     transition-property: all;
-    transition-delay: 0.7s;
+    transition-duration: 0.3s;
+    transition-delay: 1.1s;
 }
 
 .delay-transition-color-1400 {
     transition-property: all;
-    transition-delay: 1.4s;
+    transition-duration: 0.3s;
+    transition-delay: 1.8s;
 }
 
 .animation-rotate-delay-000 {

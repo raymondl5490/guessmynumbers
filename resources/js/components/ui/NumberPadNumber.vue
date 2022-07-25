@@ -1,6 +1,6 @@
 <template>
     <button
-        class="w-24 h-10 text-center bg-gray-200 rounded-full cursor-pointer md:w-36 md:h-20 md:text-3xl hover:bg-gray-500 hover:text-white"
+        class="w-24 h-10 text-center bg-gray-200 rounded-full cursor-pointer md:w-36 md:h-20 md:text-3xl hover:brightness-90"
     >
         {{ number }}
     </button>
