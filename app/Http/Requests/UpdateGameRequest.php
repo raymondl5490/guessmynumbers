@@ -17,10 +17,10 @@ class UpdateGameRequest extends FormRequest
             'number_one' => ['sometimes', 'integer', 'min:0', 'max:9'],
             'number_two' => ['sometimes', 'integer', 'min:0', 'max:9'],
             'number_three' => ['sometimes', 'integer', 'min:0', 'max:9'],
-            'author_name' => ['sometimes', 'string', 'min:2', 'max:60'],
-            'author_location' => ['sometimes', 'nullable', 'string', 'min:2', 'max:255'],
+            'author_name' => ['sometimes', 'string', 'min:2', 'max:255'],
+            'author_location' => ['sometimes', 'nullable', 'string', 'max:255'],
             'author_email' => ['sometimes', 'nullable', 'email'],
-            'link' => ['sometimes', 'nullable', 'url'],
+            'link' => ['sometimes', 'nullable'],
         ];
     }
 }
