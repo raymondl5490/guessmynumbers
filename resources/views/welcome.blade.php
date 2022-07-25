@@ -8,13 +8,13 @@
     <meta property="og:title" content="Guess My Numbers - A Daily Numbers Game" />
     <meta property="og:type" content="summary_large_image" />
     <meta property="og:url" content="https://guessmynumbers.com" />
-    <meta property="og:image" content="https://i.imgur.com/qy5Yezj.jpeg" />
+    <meta property="og:image" content="https://i.imgur.com/17p2epe.png" />
     <meta property="og:description" content="Can you guess my three digit number? Updated twice a day." />
     <!-- Link preview for Twitter -->
     <meta property="twitter:title" content="Guess My Numbers - A Daily Numbers Game" />
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:site" content="https://guessmynumbers.com" />
-    <meta property="twitter:image" content="https://i.imgur.com/qy5Yezj.jpeg" />
+    <meta property="twitter:image" content="https://i.imgur.com/17p2epe.png" />
     <meta property="twitter:description" content="Can you guess my three digit number? Updated twice a day." />
 
     <title>{{ config('app.name') }}</title>
