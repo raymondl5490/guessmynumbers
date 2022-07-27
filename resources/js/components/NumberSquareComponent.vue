@@ -1,6 +1,6 @@
 <template>
     <div
-        class="relative flex items-center justify-center w-20 h-20 m-1 text-3xl font-bold text-white bg-gray-200 md:w-36 md:h-36 md:text-5xl"
+        class="relative flex items-center justify-center w-20 h-20 m-1 text-3xl font-bold bg-gray-200 md:w-32 md:h-32 md:text-5xl"
         :class="customClasses"
         ref="square"
     >
