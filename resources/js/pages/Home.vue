@@ -1,14 +1,13 @@
 <template>
-    <div class="container flex flex-col h-screen mx-auto">
+    <div class="container flex flex-col mx-auto" style="height: 85vh;">
         <HeaderComponent
-            class="mb-5 md:mb-10"
             @open-help="onOpenHelp"
             @open-statistics="onOpenStatistics"
             @open-settings="onOpenSettings"
         />
         <BoardComponent
             v-if="!loading"
-            class="flex-grow"
+            class="flex-grow m-4 md:m-8"
         />
 
         <InputNumbersComponent
