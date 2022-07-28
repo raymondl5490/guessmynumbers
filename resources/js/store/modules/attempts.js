@@ -111,7 +111,6 @@ export default defineStore('attempts', {
             guessStore.resetGuessStore();
         },
         goToRegularMode() {
-            this.isPracticeMode = false;
             location.reload();
         }
     },

@@ -107,18 +107,18 @@ export default {
                 return '';
             }
             if (!this.hasNumberBeenSubmitted(number)) {
-                return 'border border-gray-500 text-black';
+                return 'border border-gray-500 text-black delay-transition-color-1400';
             }
             if (this.isNumberCorrect(number) && this.isNumberInCorrectSpot(number)) {
-                return 'bg-green-600 text-white';
+                return 'bg-green-600 text-white delay-transition-color-1400';
             }
             // if (this.isNumberUsedMultipleTimes(this.guessedNumber)) {
-            //     return 'bg-purple-600 text-white';
+            //     return 'bg-purple-600 text-white delay-transition-color-1400';
             // }
             if (this.isNumberCorrect(number) && !this.isNumberInCorrectSpot(number)) {
-                return 'bg-yellow-500 text-white';
+                return 'bg-yellow-500 text-white delay-transition-color-1400';
             }
-            return 'bg-gray-500 text-white';
+            return 'bg-gray-500 text-white delay-transition-color-1400';
         },
     }
 }

@@ -96,7 +96,7 @@ export default {
                 await this.getPlayer(this.currentPlayer.id);
                 await this.getCurrentGame();
 
-                await wait(2100);
+                await wait(2800);
                 if (this.hasWon) {
                     this.$confetti.start({
                         particles: [
