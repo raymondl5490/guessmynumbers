@@ -82,7 +82,7 @@
                     <el-button type="primary" class="w-full" :tabindex="-1" @click="handleTryAgain">TRY AGAIN</el-button>
                 </div>
                 <div>
-                    <el-button type="success" class="w-full" :tabindex="-1" @click="value = false; goToRegularMode()">GO TO REAL MODE</el-button>
+                    <el-button type="success" class="w-full" :tabindex="-1" @click="goToRegularMode()">GO TO REAL MODE</el-button>
                 </div>
             </div>
 
@@ -160,7 +160,11 @@ export default {
             try {
                 await toClipboard(shareText())
                 console.log('Copied to clipboard')
-                ElMessage({message: 'Copied to clipboard!', type: 'success'});
+                ElMessage({
+                    message: 'Copied! Click paste anywhere to send!',
+                    type: 'success',
+                    duration: 4000,
+                });
             } catch (e) {
                 console.error(e)
             }
@@ -239,3 +243,32 @@ export default {
     },
 }
 </script>
+<style>
+.el-message {
+    font-size: 1rem;
+}
+
+.el-message .el-message__icon {
+    font-size: 1rem;
+}
+
+.el-message .el-message__content {
+    font-size: 1rem;
+}
+
+@media only screen and (min-width: 768px) {
+    .el-message {
+        width: fit-content;
+        font-size: 1.5rem;
+    }
+
+    .el-message .el-message__icon {
+        font-size: 1.5rem;
+    }
+
+    .el-message .el-message__content {
+        font-size: 1.5rem;
+    }
+}
+
+</style>

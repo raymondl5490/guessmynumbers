@@ -137,21 +137,27 @@ export default {
 <style>
 
 .delay-transition-color-000 {
-    transition-property: all;
+    transition-property: background-color, color;
     transition-duration: 0.3s;
-    transition-delay: 0.4s;
+    transition-delay: 0.7s;
 }
 
 .delay-transition-color-700 {
-    transition-property: all;
+    transition-property: background-color, color;
     transition-duration: 0.3s;
-    transition-delay: 1.1s;
+    transition-delay: 1.4s;
 }
 
 .delay-transition-color-1400 {
-    transition-property: all;
+    transition-property: background-color, color;
     transition-duration: 0.3s;
-    transition-delay: 1.8s;
+    transition-delay: 2.1s;
+}
+
+.delay-transition-color-2100 {
+    transition-property: background-color, color;
+    transition-duration: 0.3s;
+    transition-delay: 2.8s;
 }
 
 .animation-rotate-delay-000 {
