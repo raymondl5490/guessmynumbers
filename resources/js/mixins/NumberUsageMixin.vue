@@ -20,15 +20,24 @@ export default {
             return includes(this.correctNumbers, number);
         },
         isNumberInCorrectSpot(number) {
-            const correctIndex = indexOf(this.correctNumbers, number);
-            let inCorrectSpot = false;
-            forEach(this.submittedGuessNumbers, existingNumbers => {
-                if (existingNumbers[correctIndex] === number) {
-                    inCorrectSpot = true;
-                }
-            });
+            const findIndices = (values, target) => {
+                return _.chain(values)
+                    .map((value, index) => {
+                        return value === target ? index : null;
+                    })
+                    .filter((index) => !_.isNull(index))
+                    .value();
+            };
 
-            return inCorrectSpot;
+            const correctIndices = findIndices(this.correctNumbers, number);
+
+            for (let i = 0; i < this.submittedGuessNumbers.length; i++) {
+                const guessNumbers = this.submittedGuessNumbers[i];
+                if (!_.isEmpty(_.intersection(findIndices(guessNumbers, number), correctIndices))) {
+                    return true;
+                }
+            }
+            return false;
         },
         isNumberUsedMultipleTimes(number) {
             return _.countBy(this.correctNumbers, (n) => n == number ? 'count' : 'miss')['count'] > 1;
