@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Properties:
@@ -52,9 +53,20 @@ class Game extends Model
      */
     public function getNumberOfAttemptsAttribute()
     {
-        $numberOfAttempts = Attempt::where('game_id', $this->id)
+        $numberOfCompletedAttemptsOnThisGame = DB::table('attempts')
+            ->where('game_id', $this->id)
+            ->where(function ($query) {
+                $query->where(function ($query) {
+                    $query->selectRaw('count(guesses.id) as number_of_guesses')
+                        ->from('guesses')
+                        ->whereColumn('guesses.attempt_id', 'attempts.id')
+                        ->groupBy('attempt_id')
+                        ->limit(1);
+                }, '>=', 3)
+                ->orWhere('won', 1);
+            })
             ->count();
-        return $numberOfAttempts;
+        return $numberOfCompletedAttemptsOnThisGame;
     }
 
     /**

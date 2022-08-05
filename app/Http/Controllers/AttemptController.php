@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CreateAttemptRequest;
 use App\Http\Resources\AttemptResource;
 use App\Models\Attempt;
@@ -49,16 +50,27 @@ class AttemptController extends Controller
     }
 
     /**
-     * Return overall number_of_attempts and number_of_wins
+     * Return overall number_of_attempts and number_of_wons
      * 
      * @return JsonResponse
      */
     public function overallStatistics(): JsonResponse
     {
-        $numberOfAttempts = Attempt::whereNotNull('game_id')->count();
+        $numberOfCompletedAttempts = DB::table('attempts')
+            ->where(function ($query) {
+                $query->where(function ($query) {
+                    $query->selectRaw('count(guesses.id) as number_of_guesses')
+                        ->from('guesses')
+                        ->whereColumn('guesses.attempt_id', 'attempts.id')
+                        ->groupBy('attempt_id')
+                        ->limit(1);
+                }, '>=', 3)
+                ->orWhere('won', 1);
+            })
+            ->count();
         $numberOfWons = Attempt::where('won', 1)->count();
         return response()->json([
-            'number_of_attempts' => $numberOfAttempts,
+            'number_of_attempts' => $numberOfCompletedAttempts,
             'number_of_wons' => $numberOfWons,
         ]);
     }
