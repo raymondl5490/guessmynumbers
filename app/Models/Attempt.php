@@ -60,4 +60,22 @@ class Attempt extends Model
     {
         return $this->hasMany(Guess::class);
     }
+
+    /**
+     * Number of wons played this game.
+     *
+     * @return int
+     */
+    public function getIsEndedAttribute()
+    {
+        return Guess::where('attempt_id', $this->id)->count() >= 3;
+    }
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['is_ended'];
+
 }
