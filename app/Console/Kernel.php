@@ -15,13 +15,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('notify:player')
-            // ->cron('* * * * *')
-            ->cron('0 11,23 * * *')
-            // OR ->twiceDaily(11, 23)
-            ->timezone('America/Los_Angeles')
-            // ->onFailure(function () {dd('Failed');})
-            ->emailOutputOnFailure(env('EMAIL_OUTPUT_ON_FAILURE'));
+        // $schedule->command('notify:player')
+        //     // ->cron('* * * * *')
+        //     ->cron('0 11,23 * * *')
+        //     // OR ->twiceDaily(11, 23)
+        //     ->timezone('America/Los_Angeles')
+        //     // ->onFailure(function () {dd('Failed');})
+        //     ->emailOutputOnFailure(env('EMAIL_OUTPUT_ON_FAILURE'));
     }
 
     /**
