@@ -63,21 +63,25 @@ export default {
         this.loading = true;
 
         if (_.isEmpty(this.currentPlayer)) {
-            await this.createPlayer();
             this.showHelpModal = true;
+            await this.createPlayer();
         }
 
         // Refresh the player
-        await this.getPlayer(this.currentPlayer.id);
-        await this.getCurrentGame();
-        await this.getCurrentAttempt(this.currentPlayer.id)
+        await Promise.all([
+            this.getPlayer(this.currentPlayer.id),
+            this.getCurrentGame(),
+            this.getCurrentAttempt(this.currentPlayer.id),
+        ]);
         if (_.isEmpty(this.currentAttempt)) {
             await this.createAttempt(this.currentPlayer.id, {
-                game_id: this.currentGame.id
+                game_id: this.currentGame.id,
             });
         }
-        await this.getGuesses(this.currentPlayer.id, this.currentAttempt.id);
-        await this.getResultTexts();
+        await Promise.all([
+            this.getGuesses(this.currentPlayer.id, this.currentAttempt.id),
+            this.getResultTexts(),
+        ]);
 
         this.loading = false;
     },
