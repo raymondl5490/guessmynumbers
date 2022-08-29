@@ -41,14 +41,14 @@ import InputNumbersComponent from "../components/InputNumbersComponent.vue";
 
 export default {
     components: {
-    SettingsModalComponent,
-    StatisticsModalComponent,
-    HelpModalComponent,
-    HeaderComponent,
-    VipModal,
-    BoardComponent,
-    InputNumbersComponent
-},
+        SettingsModalComponent,
+        StatisticsModalComponent,
+        HelpModalComponent,
+        HeaderComponent,
+        VipModal,
+        BoardComponent,
+        InputNumbersComponent
+    },
     data() {
         return {
             loading: true,
