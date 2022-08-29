@@ -2,7 +2,6 @@ import {defineStore} from "pinia";
 
 import { guessApi } from '../../api';
 import {useAttemptStore, usePlayerStore} from "../index";
-import {forEach} from "lodash";
 
 export default defineStore('guesses', {
     state: () => ({
@@ -16,7 +15,7 @@ export default defineStore('guesses', {
          */
         submittedGuessNumbers() {
             const numbers = [];
-            forEach(this.guesses, guess => {
+            _.forEach(this.guesses, guess => {
                 numbers.push([
                     guess.number_one,
                     guess.number_two,
