@@ -27,7 +27,6 @@
 <script>
 
 import HeaderComponent from "../components/HeaderComponent";
-import {isEmpty} from 'lodash';
 import {useGameStore, useAttemptStore, usePlayerStore, useGuessStore, useSettingStore} from '../store';
 import {mapActions, mapState} from 'pinia';
 import HelpModalComponent from "../components/modals/HelpModalComponent";
@@ -63,7 +62,7 @@ export default {
 
         this.loading = true;
 
-        if (isEmpty(this.currentPlayer)) {
+        if (_.isEmpty(this.currentPlayer)) {
             await this.createPlayer();
             this.showHelpModal = true;
         }
@@ -72,7 +71,7 @@ export default {
         await this.getPlayer(this.currentPlayer.id);
         await this.getCurrentGame();
         await this.getCurrentAttempt(this.currentPlayer.id)
-        if (isEmpty(this.currentAttempt)) {
+        if (_.isEmpty(this.currentAttempt)) {
             await this.createAttempt(this.currentPlayer.id, {
                 game_id: this.currentGame.id
             });

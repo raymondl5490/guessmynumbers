@@ -48,7 +48,6 @@
     </div>
 </template>
 <script>
-import {includes} from "lodash";
 import { useGuessStore, useAttemptStore } from "../store";
 import NumberUsageMixin from "../mixins/NumberUsageMixin";
 import { mapState, mapActions } from "pinia";
@@ -72,7 +71,7 @@ export default {
             if (this.isAttemptEnded) return;
 
             const {key} = event;
-            if (includes(this.numbers, Number(key))) {
+            if (_.includes(this.numbers, Number(key))) {
                 this.handleNumberClick(Number(key));
             }
 

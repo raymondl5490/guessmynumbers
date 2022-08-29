@@ -74,7 +74,6 @@
 <script>
 import {mapActions} from "pinia";
 import {useGameStore} from "../../store";
-import {cloneDeep} from "lodash";
 import useVuelidate from "@vuelidate/core";
 import {required, numeric, maxValue, minValue, email, alpha, url, alphaNum} from "@vuelidate/validators";
 import FormErrorsComponent from "./FormErrorsComponent";
@@ -101,7 +100,7 @@ export default {
     },
     created() {
         if (this.game) {
-            this.editGame = cloneDeep(this.game)
+            this.editGame = _.cloneDeep(this.game)
         }
     },
     validations() {

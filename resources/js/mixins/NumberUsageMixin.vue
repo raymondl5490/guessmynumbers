@@ -2,7 +2,6 @@
 
 </template>
 <script>
-import {filter, flatten, forEach, includes, indexOf} from "lodash";
 import {mapState} from "pinia/dist/pinia.esm-browser";
 import {useAttemptStore, useGuessStore} from "../store";
 
@@ -13,11 +12,11 @@ export default {
     },
     methods: {
         isNumberOnBoard(number) {
-            const flatBoard = flatten(this.board);
-            return includes(flatBoard, number);
+            const flatBoard = _.flatten(this.board);
+            return _.includes(flatBoard, number);
         },
         isNumberCorrect(number) {
-            return includes(this.correctNumbers, number);
+            return _.includes(this.correctNumbers, number);
         },
         isNumberInCorrectSpot(number) {
             const findIndices = (values, target) => {
