@@ -2,7 +2,9 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Guess My Numbers is an online numbers game updated twice a day. Crack the code to reveal the featured number. Winners submit their own numbers to be featured!">
+    <meta name="keywords" content="guess, number, twice, daily, three, digit, California, kids">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=0">
 
     <!-- Link preview for Facebook, Skype -->
     <meta property="og:title" content="Guess My Numbers - A Daily Numbers Game" />
@@ -17,7 +19,7 @@
     <meta property="twitter:image" content="https://i.imgur.com/17p2epe.png" />
     <meta property="twitter:description" content="Can you guess my three digit number? Updated twice a day." />
 
-    <title>{{ config('app.name') }}</title>
+    <title>GUESS MY NUMBERS - Play fun and addictive guessing numbers game!</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/fontawesome/all.min.css') }}" rel="stylesheet">
 </head>
