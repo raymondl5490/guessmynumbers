@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function() {
         Route::get('/finished', [GameController::class, 'finished'])->name('games.finished');
         Route::get('/daily-statistics', [GameController::class, 'dailyStatistics'])->name('attempts.daily_statistics');
         Route::patch('/{id}/approve', [GameController::class, 'approve'])->name('games.approve');
+        Route::patch('/{id}/clone-and-queue', [GameController::class, 'cloneAndQueue'])->name('games.clone_and_queue');
         Route::patch('/{id}/live-on', [GameController::class, 'updateLiveOn'])->name('games.update_live_on');
     });
     Route::apiResource('games', GameController::class)->except(['store']);

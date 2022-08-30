@@ -42,6 +42,10 @@ export default defineStore('games', {
             await gameApi.approve(gameId);
             await this.refreshGames();
         },
+        async cloneAndQueueGame(gameId) {
+            await gameApi.cloneAndQueue(gameId);
+            await this.refreshGames();
+        },
         async removeGame(gameId) {
             await gameApi.remove(gameId);
             await this.refreshGames();

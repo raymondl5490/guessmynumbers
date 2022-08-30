@@ -116,6 +116,35 @@ class GameController extends Controller
     }
 
     /**
+     * @param $id
+     * @return GameResource
+     */
+    public function cloneAndQueue($id): GameResource
+    {
+        $now = Carbon::now('America/Los_Angeles')->format('Y-m-d a');
+
+        $queuedGames = Game::where('live_on', '>=', $now)->get();
+        $queuedLiveOns = [];
+        foreach ($queuedGames as $queuedGame) {
+            array_push($queuedLiveOns, $queuedGame->live_on);
+        }
+
+        $availableLiveOn = $now;
+        while (in_array($availableLiveOn, $queuedLiveOns)) {
+            $availableLiveOn = nextLiveOn($availableLiveOn);
+        }
+
+        $game = Game::find($id);
+        $clonedGame = $game->replicate()->fill([
+            'live_on' => $availableLiveOn,
+        ]);
+
+        $clonedGame->save();
+
+        return new GameResource($clonedGame);
+    }
+
+    /**
      * @param UpdateGameRequest $request
      * @param Game $game
      * @return Response
