@@ -252,6 +252,11 @@
                         <template #default="scope">
                             <div class="grid grid-cols-1 gap-0">
                                 <div>
+                                    <el-button size="small" class="w-full" type="success" @click="onCloneClicked(scope.$index, scope.row)">
+                                        <el-icon><RefreshLeft /></el-icon>
+                                    </el-button>
+                                </div>
+                                <div>
                                     <el-button size="small" class="w-full" type="danger" @click="onRemoveClicked(scope.$index, scope.row)">
                                         <el-icon><Delete /></el-icon>
                                     </el-button>
@@ -327,7 +332,7 @@ export default {
         },
     },
     methods: {
-        ...mapActions(useGameStore, ['getCurrentGame', 'getSubmittedGames', 'getFinishedGames', 'refreshGames', 'approveGame', 'removeGame', 'handleQueueChange']),
+        ...mapActions(useGameStore, ['getCurrentGame', 'getSubmittedGames', 'getFinishedGames', 'refreshGames', 'approveGame', 'cloneAndQueueGame', 'removeGame', 'handleQueueChange']),
         winPercentage(game) {
             const number_of_attempts = game.number_of_attempts;
             const number_of_wons = game.number_of_wons;
@@ -353,7 +358,9 @@ export default {
         },
         async onApproveClicked(index, row) {
             await this.approveGame(row.id);
-
+        },
+        async onCloneClicked(index, row) {
+            await this.cloneAndQueueGame(row.id);
         },
         onEditClicked(index, row) {
             this.editingGameId = row.id;

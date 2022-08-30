@@ -62,6 +62,13 @@ export default {
             console.error({error});
         })
     },
+    async cloneAndQueue(gameId) {
+        return await axios.patch(`games/${gameId}/clone-and-queue`).then(response => {
+            return response.data.data;
+        }).catch(error => {
+            console.error({error});
+        })
+    },
     async remove(gameId) {
         await axios.delete(`games/${gameId}`).then(response => {
             return response.data.data;
