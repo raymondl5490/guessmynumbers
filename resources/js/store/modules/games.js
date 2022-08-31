@@ -44,7 +44,10 @@ export default defineStore('games', {
         },
         async cloneAndQueueGame(gameId) {
             await gameApi.cloneAndQueue(gameId);
-            await this.refreshGames();
+            await Promise.all([
+                this.getCurrentGame(),
+                this.getQueuedGames(),
+            ]);
         },
         async removeGame(gameId) {
             await gameApi.remove(gameId);
