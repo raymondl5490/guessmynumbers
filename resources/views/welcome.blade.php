@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="description" content="Guess My Numbers is an online numbers game updated twice a day. Crack the code to reveal the featured number. Winners submit their own numbers to be featured!">
     <meta name="keywords" content="guess, number, twice, daily, three, digit, California, kids">
+    <meta name="google-site-verification" content="oMhOnoK8MaI4TilGQx8cA9Y2unX8bVP532ketLdhfp8" />
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=0">
 
     <!-- Link preview for Facebook, Skype -->
